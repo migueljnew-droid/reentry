@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Reduced motion — respect vestibular disorders */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @layer base {
   :root {
     --background: 255 255 255;
@@ -12,20 +22,38 @@
     @apply bg-white text-primary-950 antialiased;
   }
 
-  /* Large touch targets for accessibility */
+  /* Large touch targets for accessibility — 44px minimum */
   button, a, input, select, textarea {
     @apply min-h-[44px];
+  }
+
+  /* All interactive elements get cursor-pointer */
+  button, a, [role="button"], [tabindex="0"] {
+    cursor: pointer;
+  }
+
+  /* Focus visible for keyboard users */
+  :focus-visible {
+    @apply outline-none ring-4 ring-primary-300 ring-offset-2;
   }
 }
 
 @layer components {
+  /* Skip link — visible only on focus for keyboard users */
+  .skip-link {
+    @apply sr-only;
+  }
+  .skip-link:focus {
+    @apply not-sr-only fixed top-0 left-0 z-[9999] bg-primary-600 text-white px-6 py-3 text-lg font-bold;
+  }
+
   .btn-primary {
     @apply bg-primary-600 text-white px-6 py-3 rounded-xl font-semibold
            hover:bg-primary-700 active:bg-primary-800
            transition-all duration-150 ease-out
            focus:outline-none focus:ring-4 focus:ring-primary-300
            disabled:opacity-50 disabled:cursor-not-allowed
-           text-lg min-h-[52px];
+           cursor-pointer text-lg min-h-[52px];
   }
 
   .btn-secondary {
@@ -34,7 +62,7 @@
            hover:bg-primary-50 active:bg-primary-100
            transition-all duration-150 ease-out
            focus:outline-none focus:ring-4 focus:ring-primary-300
-           text-lg min-h-[52px];
+           cursor-pointer text-lg min-h-[52px];
   }
 
   .btn-accent {
@@ -42,12 +70,13 @@
            hover:bg-accent-700 active:bg-accent-800
            transition-all duration-150 ease-out
            focus:outline-none focus:ring-4 focus:ring-accent-300
-           text-lg min-h-[52px];
+           cursor-pointer text-lg min-h-[52px];
   }
 
   .card {
     @apply bg-white rounded-2xl border border-gray-100 shadow-sm p-6
-           hover:shadow-md transition-shadow duration-200;
+           hover:shadow-md transition-shadow duration-200
+           focus-within:ring-4 focus-within:ring-primary-200;
   }
 
   .card-elevated {
@@ -61,14 +90,14 @@
            hover:bg-primary-700 active:scale-95
            transition-all duration-150
            focus:outline-none focus:ring-4 focus:ring-primary-300
-           shadow-lg hover:shadow-xl;
+           shadow-lg hover:shadow-xl cursor-pointer;
   }
 
   .voice-btn-recording {
     @apply w-20 h-20 rounded-full bg-red-500 text-white
            flex items-center justify-center
            animate-pulse-gentle
-           shadow-lg shadow-red-200;
+           shadow-lg shadow-red-200 cursor-pointer;
   }
 
   /* Progress bar */

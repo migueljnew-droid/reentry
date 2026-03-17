@@ -47,7 +47,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
         <link rel="manifest" href="/manifest.json" />
@@ -62,7 +62,12 @@ export default function RootLayout({
         )}
       </head>
       <body className="font-sans min-h-screen">
-        {children}
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        <div id="main-content">
+          {children}
+        </div>
         <ServiceWorkerRegistration />
       </body>
     </html>
