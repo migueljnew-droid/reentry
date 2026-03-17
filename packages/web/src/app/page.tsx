@@ -125,7 +125,7 @@ export default function Home() {
               <Link href="/intake" className="btn-primary text-center text-xl px-10 py-5">
                 Start My Plan — It&apos;s Free
               </Link>
-              <a href="#how-it-works" className="btn-secondary border-white/20 text-white hover:bg-white/10 text-center">
+              <a href="#how-it-works" className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-lg min-h-[52px] border-2 border-white/50 text-white bg-white/10 hover:bg-white/20 transition-all duration-150 text-center cursor-pointer">
                 How It Works
               </a>
             </div>
