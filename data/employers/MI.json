@@ -1,0 +1,105 @@
+{
+  "state": "MI",
+  "lastUpdated": "2026-03-17",
+  "localEmployers": [
+    {
+      "name": "MVP Staffing",
+      "industry": "Staffing Agency",
+      "positions": ["Manufacturing", "Distribution", "Warehouse", "Light Industrial"],
+      "payRange": "$15-20/hr",
+      "address": "Multiple Detroit metro locations",
+      "phone": "Search mvpstaffing.com for nearest branch",
+      "applyUrl": "https://mvpstaffing.com",
+      "convictionPolicy": "Works with individuals with criminal backgrounds. Felon-friendly.",
+      "notes": "Specializes in manufacturing and warehouse. Detroit has many automotive parts plants."
+    },
+    {
+      "name": "S&K Staffing",
+      "industry": "Staffing Agency",
+      "positions": ["Manufacturing", "Assembly", "Warehouse", "General Labor"],
+      "payRange": "$14-19/hr",
+      "address": "Michigan-based",
+      "phone": "Visit website for locations",
+      "applyUrl": "Search 'S&K Staffing Michigan'",
+      "convictionPolicy": "Michigan-based agency. Works with returning citizens.",
+      "notes": "Local agency — more personal than national chains."
+    },
+    {
+      "name": "Onin Group",
+      "industry": "Staffing Agency",
+      "positions": ["Industrial", "Manufacturing", "Warehouse", "Assembly"],
+      "payRange": "$15-22/hr",
+      "address": "Detroit area",
+      "phone": "Visit oningroup.com",
+      "applyUrl": "https://oningroup.com",
+      "convictionPolicy": "Focuses on industrial jobs for individuals with criminal backgrounds.",
+      "notes": "One of the most felon-friendly staffing agencies. Fast placement."
+    },
+    {
+      "name": "Hired In Michigan Career Institute",
+      "industry": "Job Training / Placement",
+      "positions": ["Career training", "Job placement", "Resume assistance"],
+      "payRange": "Free service — places you with employers",
+      "address": "Detroit, MI",
+      "phone": "Visit hiredinmichigan.com",
+      "applyUrl": "https://hiredinmichigan.com",
+      "convictionPolicy": "Specifically connects returning citizens with hiring companies.",
+      "notes": "Offers short-term career training. Specializes in placing people with records."
+    },
+    {
+      "name": "SER Metro-Detroit (Jobs for Progress)",
+      "industry": "Workforce Development",
+      "positions": ["Job training", "Placement", "Career development"],
+      "payRange": "Free service",
+      "address": "Detroit, MI",
+      "phone": "313-846-2240",
+      "applyUrl": "https://www.sermetro.org",
+      "convictionPolicy": "Second chance employer network member. Serves returning citizens.",
+      "notes": "Nonprofit workforce development. Training + placement + support services."
+    },
+    {
+      "name": "Michigan Department of Corrections — Vocational Village",
+      "industry": "Government / Training",
+      "positions": ["CDL training", "Welding", "Coding", "Construction trades"],
+      "payRange": "Free training → $20-35/hr jobs after",
+      "address": "Multiple MI locations",
+      "phone": "Contact through Pure Michigan Talent Connect",
+      "applyUrl": "https://www.mitalent.org/returning-citizens",
+      "convictionPolicy": "State program for returning citizens.",
+      "notes": "Free skilled trades training while incarcerated or post-release. CDL and welding are highest demand."
+    },
+    {
+      "name": "Fiat Chrysler (Stellantis) — Suppliers",
+      "industry": "Automotive Manufacturing",
+      "positions": ["Assembly", "Parts Production", "Quality Inspection", "Forklift"],
+      "payRange": "$18-28/hr",
+      "address": "Detroit metro area — Sterling Heights, Warren, Auburn Hills",
+      "phone": "Apply through staffing agencies (MVP, Onin, Kelly Services)",
+      "applyUrl": "Most auto supplier positions filled through staffing agencies",
+      "convictionPolicy": "Tier 1-3 auto suppliers vary. Many accept felons through temp agencies.",
+      "notes": "The auto industry is Detroit's biggest employer. Going through a staffing agency bypasses direct background check from the OEM."
+    },
+    {
+      "name": "Amazon — DTW Warehouses",
+      "industry": "Warehousing / Logistics",
+      "positions": ["Warehouse Associate", "Sortation Associate", "Delivery"],
+      "payRange": "$17-23/hr",
+      "address": "Romulus, Livonia, Pontiac, and other Detroit metro locations",
+      "phone": "Apply online",
+      "applyUrl": "https://hiring.amazon.com",
+      "convictionPolicy": "Case-by-case. Ban the Box. Very felon-friendly.",
+      "notes": "Multiple warehouses near Detroit. Night shifts often available immediately."
+    },
+    {
+      "name": "City of Detroit — Returning Citizens Liaison",
+      "industry": "Government",
+      "positions": ["Various city positions", "Resource coordination"],
+      "payRange": "Varies",
+      "address": "Coleman A. Young Municipal Center, Detroit, MI 48226",
+      "phone": "313-224-3400",
+      "applyUrl": "https://detroitmi.gov/government/city-council/city-council-large/returning-citizens-task-force",
+      "convictionPolicy": "City of Detroit has a Returning Citizens Task Force. Fair chance employer.",
+      "notes": "The city itself hires returning citizens AND connects you with their network of employers, housing, and legal aid."
+    }
+  ]
+}

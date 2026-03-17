@@ -124,18 +124,26 @@
   "stateSpecific": {
     "GA": {
       "resources": [
+        {"name": "GA Reentry Partnership Housing (RPH)", "phone": "Contact DCA", "website": "dca.georgia.gov/affordable-housing/special-needs-housing/reentry-partnership-housing-rph", "notes": "State program: up to 6 months housing for people on parole/probation without valid residence plans. Apply through your parole officer."},
+        {"name": "THOR Directory (GA Pardons & Paroles)", "phone": "Contact your parole officer", "website": "pap.georgia.gov/reentry-services/transitional-housing-offender-reentry", "notes": "Online directory of ALL community-based housing for people under supervision. Structured housing + recovery residences statewide."},
+        {"name": "GA Dept of Community Supervision — Housing Programs", "phone": "404-651-6727", "website": "dcs.georgia.gov/reentry-services/housing-programs", "notes": "State-run housing programs specifically for returning citizens. Multiple options based on your situation."},
         {"name": "Atlanta Housing Authority", "phone": "404-892-4700", "website": "atlantahousing.org", "notes": "Section 8 waitlist — check monthly for openings"},
-        {"name": "Atlanta Mission Transitional Housing", "phone": "404-367-2493", "website": "atlantamission.org", "notes": "Free transitional housing with job training"},
+        {"name": "Atlanta Mission Transitional Housing", "phone": "404-367-2493", "website": "atlantamission.org", "notes": "Free transitional housing with job training + meals"},
+        {"name": "Project Return Atlanta", "phone": "Contact through GA Pardons & Paroles", "website": "pap.georgia.gov", "notes": "Transitional housing + employment services for returning citizens"},
         {"name": "Decatur Cooperative Ministry", "phone": "404-377-5365", "website": "decaturcooperativeministry.org", "notes": "Emergency housing + rapid re-housing in DeKalb County"},
         {"name": "Chris 180", "phone": "404-892-1177", "website": "chris180.org", "notes": "Transitional housing for young adults 18-24"}
       ]
     },
     "CA": {
       "resources": [
-        {"name": "LA Homeless Services Authority (LAHSA)", "phone": "800-548-6047", "website": "lahsa.org", "notes": "Coordinated entry for LA County housing"},
-        {"name": "Homeboy Industries Housing", "phone": "323-526-1254", "website": "homeboyindustries.org", "notes": "Housing assistance as part of reentry services"},
-        {"name": "Amity Foundation", "phone": "213-389-8810", "website": "amityfdn.org", "notes": "Therapeutic communities for returning citizens in LA"},
-        {"name": "Bay Area Community Services (BACS)", "phone": "510-613-0330", "website": "bayareacs.org", "notes": "Oakland/East Bay reentry housing"}
+        {"name": "Delancey Street Foundation", "phone": "415-957-9800", "website": "delanceystreetfoundation.org", "notes": "FREE 2-4 year live-in program: housing + meals + job training. Run entirely by formerly incarcerated people. SF + LA locations."},
+        {"name": "HealthRIGHT 360 / Walden House", "phone": "415-762-3700", "website": "healthright360.org", "notes": "Transitional housing facilities across California. Substance abuse + mental health focus."},
+        {"name": "ARC Housing (LA County)", "phone": "Contact LA County reentry services", "website": "Search 'ARC Housing Los Angeles'", "notes": "Transitional housing with live-in mentors. Life skills, trauma counseling, education, employment guidance."},
+        {"name": "LA Homeless Services Authority (LAHSA)", "phone": "800-548-6047", "website": "lahsa.org", "notes": "Coordinated entry for ALL LA County housing. Call to get into the system."},
+        {"name": "Homeboy Industries", "phone": "323-526-1254", "website": "homeboyindustries.org", "notes": "Housing assistance + employment + tattoo removal + legal + mental health. The gold standard."},
+        {"name": "Amity Foundation", "phone": "213-389-8810", "website": "amityfdn.org", "notes": "Therapeutic communities for returning citizens in LA. Long-term residential treatment."},
+        {"name": "Bay Area Community Services (BACS)", "phone": "510-613-0330", "website": "bayareacs.org", "notes": "Oakland/East Bay reentry housing + support services"},
+        {"name": "Center for Employment Opportunities (CEO)", "phone": "510-251-2240", "website": "ceoworks.org", "notes": "Not housing directly, but provides immediate transitional employment the WEEK you're released. Oakland, San Jose, San Diego, Stockton."}
       ]
     },
     "TN": {
@@ -144,6 +152,16 @@
         {"name": "Nashville Rescue Mission", "phone": "615-255-2475", "website": "nashvillerescuemission.org", "notes": "Emergency shelter + life recovery program"},
         {"name": "MDHA (Metro Nashville Housing Authority)", "phone": "615-252-8400", "website": "nashville-mdha.org", "notes": "Section 8 and public housing — check waitlist status"},
         {"name": "Memphis Housing Authority", "phone": "901-544-1199", "website": "memphisha.org", "notes": "Section 8 vouchers for Memphis area"}
+      ]
+    },
+    "MI": {
+      "resources": [
+        {"name": "Metro Transitional Housing", "phone": "Visit metrotransitionalhousing.com", "website": "metrotransitionalhousing.com", "notes": "Transitional housing for homelessness, reentry, domestic violence, substance abuse in Detroit"},
+        {"name": "Detroit Rescue Mission Ministries (DRMM)", "phone": "313-993-4700", "website": "drmm.org", "notes": "Largest housing and treatment provider in Detroit metro. Transitional + permanent housing. Serving since 1909."},
+        {"name": "Revive Center for Returning Citizens", "phone": "Visit rc4rc.org", "website": "rc4rc.org", "notes": "Felon reentry housing specifically. Housing + case management + employment support."},
+        {"name": "City of Detroit Returning Citizens Task Force", "phone": "313-224-3400", "website": "detroitmi.gov/government/city-council/city-council-large/returning-citizens-task-force", "notes": "City-run task force connecting returning citizens with housing, jobs, legal aid, family support. One-stop resource center at Michigan DOC Detroit Reentry Center."},
+        {"name": "Michigan State Housing Development Authority (MSHDA)", "phone": "517-241-4000", "website": "michigan.gov/mshda", "notes": "State housing authority — Section 8, rental assistance, emergency housing. Check waitlist status."},
+        {"name": "Cass Community Social Services", "phone": "313-883-2277", "website": "casscommunity.org", "notes": "Emergency shelter, transitional housing, and tiny homes program in Detroit."}
       ]
     }
   }

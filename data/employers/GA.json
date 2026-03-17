@@ -1,0 +1,105 @@
+{
+  "state": "GA",
+  "lastUpdated": "2026-03-17",
+  "localEmployers": [
+    {
+      "name": "Next Step Staffing",
+      "industry": "Staffing Agency",
+      "positions": ["Warehouse", "Production", "Assembly", "Janitorial"],
+      "payRange": "$14-18/hr",
+      "address": "2001 MLK Jr. Dr SW STE 440, Atlanta, GA 30310",
+      "phone": "404-564-3622",
+      "applyUrl": "Walk in with ID",
+      "convictionPolicy": "Felon-friendly staffing agency. Specializes in placing returning citizens.",
+      "notes": "Walk-in welcome. Fast placement. Bring valid ID and Social Security card."
+    },
+    {
+      "name": "Precision Employment Group",
+      "industry": "Staffing Agency",
+      "positions": ["Manufacturing", "Warehouse", "Production"],
+      "payRange": "$14-20/hr",
+      "address": "Atlanta, GA",
+      "phone": "404-214-0412",
+      "applyUrl": "Call to schedule",
+      "convictionPolicy": "Accepts felons — no felonies in the past 10 years for some positions.",
+      "notes": "Call first to discuss your situation. They work with multiple employers."
+    },
+    {
+      "name": "118 Staffing",
+      "industry": "Staffing Agency",
+      "positions": ["Warehouse", "Light Industrial", "Construction Labor"],
+      "payRange": "$14-19/hr",
+      "address": "Atlanta metro area",
+      "phone": "Visit 118staffing.com",
+      "applyUrl": "https://118staffing.com",
+      "convictionPolicy": "Felon-friendly, LGBTQ+ friendly, senior friendly.",
+      "notes": "Inclusive employer. Apply online or walk in."
+    },
+    {
+      "name": "Trojan Labor",
+      "industry": "Staffing / Day Labor",
+      "positions": ["Construction Labor", "Warehouse", "Moving", "Cleanup"],
+      "payRange": "$13-18/hr (daily pay available)",
+      "address": "Multiple locations in Atlanta metro",
+      "phone": "Search 'Trojan Labor Atlanta' for nearest branch",
+      "applyUrl": "Walk in before 5:30 AM for same-day work",
+      "convictionPolicy": "Day labor — minimal background check. Very felon-friendly.",
+      "notes": "Same-day pay available. Show up early (5-5:30 AM). Bring ID. Work that day."
+    },
+    {
+      "name": "PeopleReady",
+      "industry": "Staffing / Day Labor",
+      "positions": ["Construction", "Warehouse", "Event Setup", "Landscaping"],
+      "payRange": "$14-20/hr (same-day pay via app)",
+      "address": "Multiple Atlanta locations — search peopleready.com/locations",
+      "phone": "866-913-3706",
+      "applyUrl": "https://www.peopleready.com",
+      "convictionPolicy": "Fair chance employer. Works with many returning citizens.",
+      "notes": "Download the JobStack app for same-day pay. Walk into any branch with ID."
+    },
+    {
+      "name": "Coca-Cola Bottling (UNITED)",
+      "industry": "Manufacturing / Distribution",
+      "positions": ["Warehouse Associate", "CDL Driver", "Merchandiser"],
+      "payRange": "$17-25/hr",
+      "address": "Multiple facilities in Atlanta metro",
+      "phone": "Apply online",
+      "applyUrl": "https://www.cocacolaunited.com/careers",
+      "convictionPolicy": "Case-by-case review. Background check after conditional offer.",
+      "notes": "Major Atlanta employer. CDL drivers in high demand."
+    },
+    {
+      "name": "Waffle House",
+      "industry": "Food Service",
+      "positions": ["Cook", "Server", "Grill Operator"],
+      "payRange": "$12-16/hr + tips (servers)",
+      "address": "1,900+ locations — everywhere in Georgia",
+      "phone": "Walk into any location and ask for the manager",
+      "applyUrl": "https://www.wafflehouse.com/careers",
+      "convictionPolicy": "Known as one of the most felon-friendly restaurant chains in the South.",
+      "notes": "Headquartered in Norcross, GA. Apply in person — walk in during off-peak hours (2-4 PM)."
+    },
+    {
+      "name": "LifeChangers, Inc.",
+      "industry": "Reentry Services / Job Placement",
+      "positions": ["Job placement assistance", "Career coaching"],
+      "payRange": "Free service — places you with employers",
+      "address": "Atlanta, GA",
+      "phone": "Visit lifechangersinc.org",
+      "applyUrl": "https://lifechangersinc.org/resources/employment-resources/",
+      "convictionPolicy": "Reentry organization — exists to help returning citizens find work.",
+      "notes": "Not an employer — a FREE resource that connects you with felon-friendly employers. Also provides housing referrals."
+    },
+    {
+      "name": "Project Return (Atlanta)",
+      "industry": "Reentry Services / Job Placement",
+      "positions": ["Job readiness training", "Placement assistance"],
+      "payRange": "Free service",
+      "address": "Atlanta, GA",
+      "phone": "Contact through GA Pardons and Paroles",
+      "applyUrl": "https://pap.georgia.gov/employmentvocational-rehabilitation-links",
+      "convictionPolicy": "Nonprofit focused on returning citizen employment.",
+      "notes": "Offers transitional housing AND employment services."
+    }
+  ]
+}

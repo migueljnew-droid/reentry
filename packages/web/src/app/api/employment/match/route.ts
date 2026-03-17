@@ -5,16 +5,28 @@ import path from 'path';
 export async function POST(req: NextRequest) {
   const { state, convictionType, skills } = await req.json();
 
-  // Load real employer data
+  // Load national + state-specific employer data
   let employers: Array<Record<string, unknown>> = [];
   try {
-    const dataPath = path.join(process.cwd(), '..', '..', 'data', 'employers', 'national.json');
-    const raw = await fs.readFile(dataPath, 'utf-8');
+    const nationalPath = path.join(process.cwd(), '..', '..', 'data', 'employers', 'national.json');
+    const raw = await fs.readFile(nationalPath, 'utf-8');
     const data = JSON.parse(raw);
     employers = data.employers || [];
   } catch {
-    // Fallback if file not found (Vercel serverless)
     employers = getHardcodedEmployers();
+  }
+
+  // Load state-specific employers
+  if (state) {
+    try {
+      const statePath = path.join(process.cwd(), '..', '..', 'data', 'employers', `${state}.json`);
+      const stateRaw = await fs.readFile(statePath, 'utf-8');
+      const stateData = JSON.parse(stateRaw);
+      // State employers go FIRST (more relevant)
+      employers = [...(stateData.localEmployers || []), ...employers];
+    } catch {
+      // No state-specific data — national only
+    }
   }
 
   // Filter by conviction type restrictions

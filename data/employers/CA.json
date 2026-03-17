@@ -1,0 +1,94 @@
+{
+  "state": "CA",
+  "lastUpdated": "2026-03-17",
+  "localEmployers": [
+    {
+      "name": "Homeboy Industries",
+      "industry": "Social Enterprise / Multiple",
+      "positions": ["Bakery", "Cafe", "Catering", "Merchandise", "Maintenance", "Electronics Recycling"],
+      "payRange": "$17-22/hr",
+      "address": "130 W Bruno St, Los Angeles, CA 90012",
+      "phone": "323-526-1254",
+      "applyUrl": "https://homeboyindustries.org",
+      "convictionPolicy": "Founded specifically for formerly incarcerated and gang-involved. 100% second-chance employer.",
+      "notes": "THE gold standard for reentry employment. Also provides: tattoo removal, legal services, mental health, substance abuse treatment, job training. Apply in person."
+    },
+    {
+      "name": "Center for Employment Opportunities (CEO)",
+      "industry": "Job Training / Transitional Employment",
+      "positions": ["Work crew (cleaning, painting, landscaping)", "Transitional jobs", "Permanent placement"],
+      "payRange": "$16-20/hr (transitional) → higher for permanent placement",
+      "address": "Oakland: 510-251-2240 | San Jose | San Diego | Stockton",
+      "phone": "510-251-2240",
+      "applyUrl": "https://ceoworks.org",
+      "convictionPolicy": "Exclusively serves people with recent criminal justice involvement.",
+      "notes": "Start with paid transitional work crew the WEEK you're released. CEO then helps place you in permanent employment. One of the most effective reentry programs in the country."
+    },
+    {
+      "name": "Delancey Street Foundation",
+      "industry": "Social Enterprise / Multiple",
+      "positions": ["Restaurant", "Moving company", "Auto repair", "Bookkeeping", "Sales"],
+      "payRange": "Room + board + training (self-help model)",
+      "address": "600 Embarcadero, San Francisco, CA 94107 | Also in LA",
+      "phone": "415-957-9800",
+      "applyUrl": "https://www.delanceystreetfoundation.org",
+      "convictionPolicy": "100% second-chance. Run entirely by formerly incarcerated people.",
+      "notes": "Live-in program: free housing, food, and job training for 2-4 years. You work in their businesses (restaurant, moving company, auto shop) and learn a trade. No cost."
+    },
+    {
+      "name": "Root & Rebound",
+      "industry": "Legal Services / Employment Law",
+      "positions": ["Free legal help for employment discrimination"],
+      "payRange": "Free service",
+      "address": "1730 Franklin St, Suite 300, Oakland, CA 94612",
+      "phone": "510-279-4662",
+      "applyUrl": "https://www.rootandrebound.org",
+      "convictionPolicy": "Helps if you're DENIED a job due to your record. Know your rights under the Fair Chance Act.",
+      "notes": "If an employer in California asks about your conviction BEFORE a conditional offer, they're breaking the law (AB 1008). Root & Rebound can help you file a complaint."
+    },
+    {
+      "name": "HealthRIGHT 360",
+      "industry": "Healthcare / Social Services",
+      "positions": ["Peer counselor", "Case manager", "Administrative"],
+      "payRange": "$18-28/hr",
+      "address": "Multiple locations: SF, Oakland, LA",
+      "phone": "415-762-3700",
+      "applyUrl": "https://www.healthright360.org/careers",
+      "convictionPolicy": "Actively hires people with lived experience in the justice system.",
+      "notes": "Healthcare organization that VALUES your lived experience. Peer counselor positions specifically want people who've been through the system."
+    },
+    {
+      "name": "ARC Housing (Los Angeles)",
+      "industry": "Housing + Employment Services",
+      "positions": ["Job placement", "Life skills training"],
+      "payRange": "Free service + housing",
+      "address": "Los Angeles County",
+      "phone": "Contact through LA County reentry services",
+      "applyUrl": "Search 'ARC Housing Los Angeles'",
+      "convictionPolicy": "Transitional housing with live-in mentors. Employment guidance included.",
+      "notes": "Combined housing + employment support. Trauma counseling, education, and job placement."
+    },
+    {
+      "name": "LA County Fair Chance Hiring (All County Jobs)",
+      "industry": "Government",
+      "positions": ["Administrative", "Parks", "Public Works", "Social Services", "Many more"],
+      "payRange": "$18-40/hr (government scale)",
+      "address": "Los Angeles County",
+      "phone": "213-974-1234",
+      "applyUrl": "https://hr.lacounty.gov/fairchanceemployer/",
+      "convictionPolicy": "LA County is an official Fair Chance Employer. Cannot ask about convictions until after conditional offer.",
+      "notes": "LA County employs 100,000+ people. Fair chance policy means your record is reviewed AFTER they decide they want to hire you. Also offers WOTC tax credit ($2,400) to employers who hire you."
+    },
+    {
+      "name": "IBEW Local 11 (Electrical Workers Union — LA)",
+      "industry": "Construction / Electrical",
+      "positions": ["Electrical Apprentice → Journeyman Electrician"],
+      "payRange": "$20/hr apprentice → $55+/hr journeyman",
+      "address": "297 N Marengo Ave, Pasadena, CA 91101",
+      "phone": "626-243-9700",
+      "applyUrl": "https://www.ibew11.org",
+      "convictionPolicy": "Union apprenticeship. Background check is less restrictive than many employers.",
+      "notes": "5-year apprenticeship: earn while you learn. Electricians make $80-120K in LA. Union protection. The trades don't care about your past — they care if you show up and work."
+    }
+  ]
+}

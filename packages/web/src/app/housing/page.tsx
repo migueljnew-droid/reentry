@@ -73,6 +73,7 @@ export default function HousingPage() {
         <div className="flex gap-2 mb-8">
           {[
             { code: 'GA', label: 'Georgia' },
+            { code: 'MI', label: 'Michigan' },
             { code: 'CA', label: 'California' },
             { code: 'TN', label: 'Tennessee' },
           ].map((s) => (
