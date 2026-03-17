@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { AdSlot } from '@/components/shared/AdSlot';
 
 const stats = [
   { value: '700K', label: 'Released every year' },
@@ -207,6 +208,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Ad — between features and social proof */}
+      <div className="max-w-4xl mx-auto px-6 py-8">
+        <AdSlot slot="landing-mid" format="horizontal" />
+      </div>
 
       {/* Social Proof / Impact */}
       <section className="py-20 md:py-28 bg-primary-950 text-white">

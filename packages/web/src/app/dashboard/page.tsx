@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { AdSlot } from '@/components/shared/AdSlot';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 
 interface DashboardDeadline {
@@ -187,6 +188,11 @@ export default function DashboardPage() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Ad — dashboard */}
+        <div className="mb-6">
+          <AdSlot slot="dashboard-mid" format="rectangle" />
         </div>
 
         {/* Quick Actions */}
