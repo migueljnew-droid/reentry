@@ -1,0 +1,152 @@
+{
+  "state": "CA",
+  "stateName": "California",
+  "lastUpdated": "2026-03-17",
+  "idRequirements": {
+    "stateId": {
+      "documentsNeeded": ["birth_certificate_or_passport", "social_security_card", "two_proofs_of_residency"],
+      "alternativeDocuments": {
+        "birth_certificate_or_passport": ["certified_copy_birth_certificate", "us_passport", "consular_id"],
+        "two_proofs_of_residency": ["parole_letter", "shelter_letter", "utility_bill", "bank_statement"]
+      },
+      "fee": 35.00,
+      "feeWaiverAvailable": true,
+      "feeWaiverRequirements": "Homeless individuals and those receiving public assistance qualify for fee waiver",
+      "processingTimeDays": 14,
+      "locations": "Any California DMV office — find nearest at dmv.ca.gov/portal/office-visit/",
+      "onlineAvailable": false,
+      "notes": "California AB 2443 (2022) requires CDCR to help obtain birth certificate and Social Security card BEFORE release. Ask your counselor."
+    },
+    "birthCertificate": {
+      "requestUrl": "https://www.cdph.ca.gov/Programs/CHSI/Pages/Vital-Records-Obtaining-Certified-Copies-of-Birth-Records.aspx",
+      "documentsNeeded": ["government_issued_photo_id"],
+      "fee": 28.00,
+      "processingTimeDays": 21,
+      "expeditedAvailable": true,
+      "expeditedFee": 55.00,
+      "onlineAvailable": true,
+      "url": "https://www.cdph.ca.gov/"
+    },
+    "socialSecurityCard": {
+      "documentsNeeded": ["photo_id_or_two_secondary_ids"],
+      "fee": 0,
+      "processingTimeDays": 14,
+      "onlineAvailable": true,
+      "url": "https://www.ssa.gov/myaccount/"
+    }
+  },
+  "benefits": {
+    "calfresh": {
+      "name": "CalFresh (California SNAP)",
+      "agency": "California Department of Social Services (CDSS)",
+      "eligibility": {
+        "incomeLimitPercentFPL": 200,
+        "convictionRestrictions": [],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["California eliminated drug felony ban for CalFresh in 2015"]
+      },
+      "applicationUrl": "https://www.getcalfresh.org/",
+      "documentsNeeded": ["photo_id", "proof_of_income", "proof_of_address"],
+      "processingTimeDays": 30,
+      "expeditedAvailable": true,
+      "expeditedCriteria": "If monthly income is under $150 or destitute (under $100 in liquid assets), or if you are an unhoused individual"
+    },
+    "mediCal": {
+      "name": "Medi-Cal (California Medicaid)",
+      "agency": "Department of Health Care Services",
+      "eligibility": {
+        "incomeLimitPercentFPL": 138,
+        "convictionRestrictions": [],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["California automatically enrolls eligible individuals released from state prison via Medi-Cal Reentry initiative (2025)"]
+      },
+      "applicationUrl": "https://www.coveredca.com/",
+      "documentsNeeded": ["proof_of_identity", "proof_of_income"],
+      "processingTimeDays": 45,
+      "expeditedAvailable": false
+    },
+    "calworks": {
+      "name": "CalWORKs (California TANF)",
+      "agency": "CDSS",
+      "eligibility": {
+        "incomeLimitPercentFPL": 52,
+        "convictionRestrictions": ["fleeing_felon"],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Must have dependent children under 18", "48-month lifetime limit on cash aid"]
+      },
+      "applicationUrl": "https://www.cdss.ca.gov/calworks",
+      "documentsNeeded": ["photo_id", "proof_of_income", "proof_of_address", "childrens_birth_certificates"],
+      "processingTimeDays": 30,
+      "expeditedAvailable": false
+    },
+    "generalRelief": {
+      "name": "General Relief / General Assistance",
+      "agency": "County welfare office",
+      "eligibility": {
+        "incomeLimitPercentFPL": 100,
+        "convictionRestrictions": [],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Must not qualify for other cash aid programs", "County-specific — amounts vary ($221-$400/month)"]
+      },
+      "applicationUrl": "Contact your county welfare office",
+      "documentsNeeded": ["photo_id", "proof_of_address"],
+      "processingTimeDays": 30,
+      "expeditedAvailable": false
+    }
+  },
+  "employmentRestrictions": {
+    "general": {
+      "restrictedJobs": [],
+      "registrationRequired": false,
+      "banTheBox": true,
+      "lookBackPeriodYears": 7,
+      "notes": "California has strong Ban the Box protections (AB 1008, Fair Chance Act). Employers CANNOT ask about conviction history on initial applications. Background checks limited to 7 years for most offenses."
+    },
+    "sex_offense": {
+      "restrictedJobs": ["childcare", "education_k12", "healthcare_direct_patient"],
+      "registrationRequired": true,
+      "bufferZones": "Varies by tier — Tier 1 (10 years), Tier 2 (20 years), Tier 3 (lifetime)",
+      "banTheBox": true,
+      "lookBackPeriodYears": null
+    },
+    "violent_felony": {
+      "restrictedJobs": ["law_enforcement", "licensed_security"],
+      "registrationRequired": false,
+      "banTheBox": true,
+      "lookBackPeriodYears": 7
+    }
+  },
+  "supervision": {
+    "parole": {
+      "checkInFrequency": "As directed — typically monthly, may be reduced after 6 months good behavior",
+      "travelRestrictions": "Must get permission from parole agent to leave county. 50-mile rule for day trips.",
+      "drugTesting": "Random — electronic notification system",
+      "curfew": "As directed by parole agent"
+    }
+  },
+  "resources": {
+    "reentryOrganizations": [
+      {
+        "name": "Homeboy Industries",
+        "phone": "323-526-1254",
+        "website": "https://homeboyindustries.org",
+        "services": ["job_training", "tattoo_removal", "legal_services", "mental_health", "substance_abuse"],
+        "location": "Los Angeles"
+      },
+      {
+        "name": "The Center for Employment Opportunities (CEO)",
+        "phone": "510-251-2240",
+        "website": "https://ceoworks.org",
+        "services": ["immediate_employment", "job_coaching", "job_placement"],
+        "location": "Oakland, San Jose, San Diego, Stockton"
+      },
+      {
+        "name": "Root & Rebound",
+        "phone": "510-279-4662",
+        "website": "https://www.rootandrebound.org",
+        "services": ["legal_services", "know_your_rights", "reentry_legal_guide"],
+        "location": "Oakland (serves statewide)"
+      }
+    ]
+  }
+}

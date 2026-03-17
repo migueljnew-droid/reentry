@@ -1,0 +1,143 @@
+{
+  "state": "TN",
+  "stateName": "Tennessee",
+  "lastUpdated": "2026-03-17",
+  "idRequirements": {
+    "stateId": {
+      "documentsNeeded": ["birth_certificate", "social_security_card", "two_proofs_of_residency"],
+      "alternativeDocuments": {
+        "birth_certificate": ["passport", "certificate_of_citizenship"],
+        "two_proofs_of_residency": ["parole_officer_letter", "shelter_letter", "utility_bill", "voter_registration"]
+      },
+      "fee": 16.00,
+      "feeWaiverAvailable": true,
+      "feeWaiverRequirements": "Individuals experiencing homelessness or receiving public assistance may qualify",
+      "processingTimeDays": 7,
+      "locations": "Any Tennessee Driver Services Center — find nearest at tn.gov/safety/driver-services",
+      "onlineAvailable": false,
+      "notes": "Tennessee requires in-person visit. Bring ALL documents. Driver Services Centers typically less crowded in mornings."
+    },
+    "birthCertificate": {
+      "requestUrl": "https://www.tn.gov/health/health-program-areas/vital-records.html",
+      "documentsNeeded": ["government_issued_photo_id"],
+      "fee": 15.00,
+      "processingTimeDays": 10,
+      "expeditedAvailable": true,
+      "expeditedFee": 30.00,
+      "onlineAvailable": true,
+      "url": "https://www.tn.gov/health/health-program-areas/vital-records/certificate.html"
+    },
+    "socialSecurityCard": {
+      "documentsNeeded": ["photo_id_or_two_secondary_ids"],
+      "fee": 0,
+      "processingTimeDays": 14,
+      "onlineAvailable": true,
+      "url": "https://www.ssa.gov/myaccount/"
+    }
+  },
+  "benefits": {
+    "snap": {
+      "name": "Tennessee SNAP",
+      "agency": "Tennessee Department of Human Services (TDHS)",
+      "eligibility": {
+        "incomeLimitPercentFPL": 130,
+        "convictionRestrictions": ["drug_trafficking_felony_permanent_ban"],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Tennessee has NOT lifted the federal drug felony ban for SNAP — drug trafficking felons are permanently ineligible"]
+      },
+      "applicationUrl": "https://fabenefits.dhs.tn.gov/",
+      "documentsNeeded": ["photo_id", "proof_of_income", "proof_of_address", "social_security_number"],
+      "processingTimeDays": 30,
+      "expeditedAvailable": true,
+      "expeditedCriteria": "Monthly income below $150 or liquid resources below $100"
+    },
+    "tenncare": {
+      "name": "TennCare (Tennessee Medicaid)",
+      "agency": "TennCare Bureau",
+      "eligibility": {
+        "incomeLimitPercentFPL": 138,
+        "convictionRestrictions": [],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Tennessee expanded Medicaid eligibility in 2024 under TennCare III waiver"]
+      },
+      "applicationUrl": "https://www.tn.gov/tenncare/members-applicants/apply-for-tenncare.html",
+      "documentsNeeded": ["proof_of_identity", "proof_of_income", "proof_of_tennessee_residency"],
+      "processingTimeDays": 45,
+      "expeditedAvailable": false
+    },
+    "tanf": {
+      "name": "Families First (Tennessee TANF)",
+      "agency": "TDHS",
+      "eligibility": {
+        "incomeLimitPercentFPL": 50,
+        "convictionRestrictions": ["drug_felony_ban_unless_completed_treatment"],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Must have dependent children under 18", "60-month lifetime limit"]
+      },
+      "applicationUrl": "https://fabenefits.dhs.tn.gov/",
+      "documentsNeeded": ["photo_id", "proof_of_income", "proof_of_address", "childrens_birth_certificates"],
+      "processingTimeDays": 30,
+      "expeditedAvailable": false
+    }
+  },
+  "employmentRestrictions": {
+    "general": {
+      "restrictedJobs": [],
+      "registrationRequired": false,
+      "banTheBox": false,
+      "lookBackPeriodYears": null,
+      "notes": "Tennessee does NOT have a statewide Ban the Box law. Nashville/Davidson County has a local Fair Chance ordinance for city government jobs only. Employers CAN ask about convictions on applications."
+    },
+    "sex_offense": {
+      "restrictedJobs": ["childcare", "education_k12", "healthcare_direct_patient", "coaching_minors"],
+      "registrationRequired": true,
+      "bufferZones": "1000ft from schools, childcare facilities, parks, playgrounds, recreation centers",
+      "banTheBox": false,
+      "lookBackPeriodYears": null
+    },
+    "violent_felony": {
+      "restrictedJobs": ["law_enforcement", "licensed_security", "firearms_dealer"],
+      "registrationRequired": false,
+      "banTheBox": false,
+      "lookBackPeriodYears": null
+    }
+  },
+  "supervision": {
+    "parole": {
+      "checkInFrequency": "Monthly (may be reduced to quarterly for compliant parolees after 12 months)",
+      "travelRestrictions": "Must get written permission from parole officer to leave assigned county",
+      "drugTesting": "Random — typically 1-2 times per month",
+      "curfew": "Common condition for first 6-12 months"
+    },
+    "probation": {
+      "checkInFrequency": "Monthly or as directed by court",
+      "travelRestrictions": "Must get permission to leave judicial district",
+      "drugTesting": "As ordered by court",
+      "curfew": "As ordered by court"
+    }
+  },
+  "resources": {
+    "reentryOrganizations": [
+      {
+        "name": "Tennessee Department of Correction - Reentry",
+        "phone": "615-741-1000",
+        "website": "https://www.tn.gov/correction/redirect-program-services/reentry-services.html",
+        "services": ["case_management", "employment_assistance", "housing_referrals"]
+      },
+      {
+        "name": "Dismas House",
+        "phone": "615-242-1916",
+        "website": "https://dismas.org",
+        "services": ["transitional_housing", "employment", "life_skills"],
+        "location": "Nashville"
+      },
+      {
+        "name": "Nashville Career Advancement Center",
+        "phone": "615-862-8860",
+        "website": "https://www.nashville.gov/departments/social-services",
+        "services": ["job_training", "career_coaching", "employment_placement"],
+        "location": "Nashville"
+      }
+    ]
+  }
+}
