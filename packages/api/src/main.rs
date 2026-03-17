@@ -13,6 +13,9 @@ use config::AppConfig;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    // Immediate stdout to prove binary starts
+    eprintln!("REENTRY-API: Binary starting...");
+
     // Load .env
     dotenvy::dotenv().ok();
 
@@ -24,12 +27,17 @@ async fn main() -> std::io::Result<()> {
         )
         .init();
 
+    eprintln!("REENTRY-API: Loading config...");
     let config = AppConfig::from_env();
     let port = config.port;
+    eprintln!("REENTRY-API: Config loaded. Port={}", port);
 
     // Initialize database pool
+    eprintln!("REENTRY-API: Creating DB pool...");
     let db_pool = db::create_pool(&config.database_url).await;
+    eprintln!("REENTRY-API: DB pool created.");
 
+    eprintln!("REENTRY-API: Binding to 0.0.0.0:{}", port);
     tracing::info!("REENTRY API starting on port {}", port);
 
     HttpServer::new(move || {
