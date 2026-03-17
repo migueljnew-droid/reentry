@@ -1,6 +1,7 @@
 'use server';
 
 import { US_STATES } from '@reentry/shared';
+import { enhancePlanWithAI } from '@/lib/ai';
 
 interface IntakeData {
   fullName: string;
@@ -52,6 +53,50 @@ export async function generateReentryPlan(
 
   // Build the plan based on intake data + state requirements
   const plan = buildPlan(intake, stateData);
+
+  // Optionally enhance with AI-powered personalized tips
+  try {
+    const stateName = US_STATES[intake.state] || intake.state;
+    const aiTips = await enhancePlanWithAI({
+      state: intake.state,
+      stateName,
+      convictionType: intake.convictionType,
+      immediateNeeds: intake.immediateNeeds,
+      hasChildren: intake.hasChildren,
+      numberOfChildren: intake.numberOfChildren,
+      hasSupportNetwork: intake.hasSupportNetwork,
+      workHistory: intake.workHistory,
+      education: intake.education,
+      supervisionType: intake.supervisionType,
+      stateData,
+    });
+
+    if (aiTips) {
+      try {
+        const tips = JSON.parse(aiTips) as Array<{ title: string; tip: string; priority: number }>;
+        // Add AI tips as additional steps in the plan
+        const aiSteps = tips.map((t, i) => ({
+          id: `ai-tip-${i}`,
+          phase: 'ongoing' as const,
+          category: 'legal',
+          title: `💡 ${t.title}`,
+          description: t.tip,
+          instructions: [t.tip],
+          documentsNeeded: [] as string[],
+          deadline: '',
+          priority: t.priority || 3,
+        }));
+        const ongoingPhase = plan.phases.find((p) => p.id === 'ongoing');
+        if (ongoingPhase) {
+          ongoingPhase.steps.push(...aiSteps);
+        }
+      } catch {
+        // JSON parse failed — skip AI tips
+      }
+    }
+  } catch {
+    // AI enhancement is optional — plan works without it
+  }
 
   return plan;
 }
