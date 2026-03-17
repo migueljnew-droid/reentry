@@ -35,6 +35,24 @@ interface DemoPlan {
   phases: DemoPhase[];
 }
 
+function getCategoryIcon(category: string): string {
+  const icons: Record<string, string> = {
+    id: '🪪',
+    benefits: '💰',
+    housing: '🏠',
+    employment: '💼',
+    legal: '⚖️',
+    supervision: '📋',
+    healthcare: '🏥',
+    education: '📚',
+    family: '👨‍👩‍👧‍👦',
+    phone: '📱',
+    food: '🍽️',
+    financial: '🏦',
+  };
+  return icons[category] || '📌';
+}
+
 // Demo data — in production this comes from the API
 const DEMO_PLAN: DemoPlan = {
   id: 'demo-plan-001',
@@ -287,7 +305,37 @@ const DEMO_PLAN: DemoPlan = {
 };
 
 export default function PlanPage() {
-  const [plan, setPlan] = useState(DEMO_PLAN);
+  const [plan, setPlan] = useState<DemoPlan>(() => {
+    // Try to load generated plan from sessionStorage (from intake flow)
+    if (typeof window !== 'undefined') {
+      const stored = sessionStorage.getItem('reentry-plan');
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          // Map the generated plan format to our display format
+          return {
+            ...DEMO_PLAN,
+            id: parsed.id || DEMO_PLAN.id,
+            userName: parsed.userName || DEMO_PLAN.userName,
+            state: parsed.state || DEMO_PLAN.state,
+            stateName: parsed.stateName || DEMO_PLAN.stateName,
+            generatedAt: parsed.generatedAt || DEMO_PLAN.generatedAt,
+            phases: parsed.phases?.map((phase: DemoPhase) => ({
+              ...phase,
+              steps: phase.steps?.map((step: DemoStep) => ({
+                ...step,
+                icon: getCategoryIcon(step.category),
+                status: step.status || 'pending',
+              })) || [],
+            })) || DEMO_PLAN.phases,
+          };
+        } catch {
+          // Fall through to demo data
+        }
+      }
+    }
+    return DEMO_PLAN;
+  });
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
 
   const completedCount = plan.phases.reduce(

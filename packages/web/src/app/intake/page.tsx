@@ -1,9 +1,12 @@
 'use client';
 
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { ProgressBar } from '@/components/ui/ProgressBar';
 import { VoiceRecorder, isVoiceSupported } from '@/lib/voice';
+import { cachePlan } from '@/lib/offline';
+import { generateReentryPlan } from '@/app/actions/generate-plan';
 import { CONVICTION_TYPES, IMMEDIATE_NEEDS, US_STATES, PILOT_STATES } from '@reentry/shared';
 import Link from 'next/link';
 
@@ -85,9 +88,12 @@ export default function IntakePage() {
     checkInFrequency: '',
   });
   const [isRecording, setIsRecording] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generationProgress, setGenerationProgress] = useState(0);
   const [voiceSupported, setVoiceSupported] = useState(false);
   const recorderRef = useRef<VoiceRecorder | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   useEffect(() => {
     setVoiceSupported(isVoiceSupported());
@@ -537,7 +543,32 @@ export default function IntakePage() {
                   variant="accent"
                   size="lg"
                   className="flex-1"
-                  onClick={() => setStage('generating')}
+                  loading={isGenerating}
+                  onClick={async () => {
+                    setStage('generating');
+                    setIsGenerating(true);
+                    setGenerationProgress(20);
+
+                    try {
+                      setGenerationProgress(40);
+                      const plan = await generateReentryPlan(data);
+                      setGenerationProgress(80);
+
+                      // Cache plan offline
+                      cachePlan(plan.id, plan as unknown as Record<string, unknown>);
+                      setGenerationProgress(100);
+
+                      // Store in sessionStorage for the plan page
+                      sessionStorage.setItem('reentry-plan', JSON.stringify(plan));
+
+                      // Navigate to plan
+                      router.push(`/plan/${plan.id}`);
+                    } catch (err) {
+                      console.error('Plan generation failed:', err);
+                      setIsGenerating(false);
+                      setStage('review');
+                    }
+                  }}
                 >
                   Build My Action Plan
                 </Button>
@@ -557,7 +588,7 @@ export default function IntakePage() {
                 Cross-referencing {US_STATES[data.state] || 'your state'} requirements,
                 screening benefits, and finding resources near you.
               </p>
-              <ProgressBar value={65} label="Generating action plan" color="primary" />
+              <ProgressBar value={generationProgress} label="Generating action plan" color="primary" />
               <p className="text-sm text-gray-400 mt-4">
                 This usually takes less than 60 seconds.
               </p>
