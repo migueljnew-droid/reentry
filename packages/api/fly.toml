@@ -1,5 +1,5 @@
 app = "reentry-api"
-primary_region = "atl"
+primary_region = "dfw"
 
 [build]
   dockerfile = "Dockerfile"
