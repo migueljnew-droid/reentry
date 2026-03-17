@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd packages/web && npm run build",
+  "outputDirectory": "packages/web/.next",
+  "installCommand": "npm install --legacy-peer-deps",
+  "framework": "nextjs",
+  "env": {
+    "NEXT_PUBLIC_API_URL": "@reentry-api-url"
+  }
+}

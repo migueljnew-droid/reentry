@@ -1,0 +1,20 @@
+app = "reentry-api"
+primary_region = "atl"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
+[env]
+  ENVIRONMENT = "production"
+  RUST_LOG = "reentry_api=info,actix_web=info"
