@@ -35,6 +35,25 @@ interface DemoPlan {
   phases: DemoPhase[];
 }
 
+function mapParsedPlan(parsed: Record<string, unknown>): DemoPlan {
+  return {
+    ...DEMO_PLAN,
+    id: (parsed.id as string) || DEMO_PLAN.id,
+    userName: (parsed.userName as string) || DEMO_PLAN.userName,
+    state: (parsed.state as string) || DEMO_PLAN.state,
+    stateName: (parsed.stateName as string) || DEMO_PLAN.stateName,
+    generatedAt: (parsed.generatedAt as string) || DEMO_PLAN.generatedAt,
+    phases: (parsed.phases as DemoPhase[])?.map((phase: DemoPhase) => ({
+      ...phase,
+      steps: phase.steps?.map((step: DemoStep) => ({
+        ...step,
+        icon: getCategoryIcon(step.category),
+        status: step.status || 'pending',
+      })) || [],
+    })) || DEMO_PLAN.phases,
+  };
+}
+
 function getCategoryIcon(category: string): string {
   const icons: Record<string, string> = {
     id: '🪪',
@@ -305,35 +324,35 @@ const DEMO_PLAN: DemoPlan = {
 };
 
 export default function PlanPage() {
+  const [isOffline, setIsOffline] = useState(false);
   const [plan, setPlan] = useState<DemoPlan>(() => {
-    // Try to load generated plan from sessionStorage (from intake flow)
-    if (typeof window !== 'undefined') {
-      const stored = sessionStorage.getItem('reentry-plan');
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          // Map the generated plan format to our display format
-          return {
-            ...DEMO_PLAN,
-            id: parsed.id || DEMO_PLAN.id,
-            userName: parsed.userName || DEMO_PLAN.userName,
-            state: parsed.state || DEMO_PLAN.state,
-            stateName: parsed.stateName || DEMO_PLAN.stateName,
-            generatedAt: parsed.generatedAt || DEMO_PLAN.generatedAt,
-            phases: parsed.phases?.map((phase: DemoPhase) => ({
-              ...phase,
-              steps: phase.steps?.map((step: DemoStep) => ({
-                ...step,
-                icon: getCategoryIcon(step.category),
-                status: step.status || 'pending',
-              })) || [],
-            })) || DEMO_PLAN.phases,
-          };
-        } catch {
-          // Fall through to demo data
-        }
-      }
+    if (typeof window === 'undefined') return DEMO_PLAN;
+
+    // 1. Try sessionStorage (just generated from intake)
+    const session = sessionStorage.getItem('reentry-plan');
+    if (session) {
+      try {
+        const parsed = JSON.parse(session);
+        // Also save to localStorage for offline access
+        const cache = JSON.parse(localStorage.getItem('reentry-plan-cache') || '{}');
+        cache[parsed.id] = { id: parsed.id, data: parsed, cachedAt: new Date().toISOString() };
+        localStorage.setItem('reentry-plan-cache', JSON.stringify(cache));
+
+        return mapParsedPlan(parsed);
+      } catch { /* fall through */ }
     }
+
+    // 2. Try localStorage (offline cache)
+    try {
+      const cache = JSON.parse(localStorage.getItem('reentry-plan-cache') || '{}');
+      const plans = Object.values(cache) as Array<{ data: Record<string, unknown> }>;
+      if (plans.length > 0) {
+        setIsOffline(!navigator.onLine);
+        return mapParsedPlan(plans[plans.length - 1].data);
+      }
+    } catch { /* fall through */ }
+
+    // 3. Demo data
     return DEMO_PLAN;
   });
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
@@ -363,6 +382,12 @@ export default function PlanPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Offline banner */}
+      {isOffline && (
+        <div className="bg-warm-500 text-white text-center py-2 text-sm font-medium">
+          📴 You&apos;re offline — viewing your saved plan
+        </div>
+      )}
       {/* Header */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-3xl mx-auto px-6 py-4">
