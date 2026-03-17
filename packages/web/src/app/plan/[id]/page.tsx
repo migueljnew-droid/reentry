@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import { requestNotificationPermission, isNotificationSupported } from '@/lib/notifications';
 
 type StepStatus = 'pending' | 'in_progress' | 'completed' | 'skipped';
 
@@ -356,6 +357,17 @@ export default function PlanPage() {
     return DEMO_PLAN;
   });
   const [expandedStep, setExpandedStep] = useState<string | null>(null);
+  const [showNotifPrompt, setShowNotifPrompt] = useState(false);
+
+  useEffect(() => {
+    // After 5 seconds on plan page, ask for notification permission
+    const timer = setTimeout(() => {
+      if (isNotificationSupported() && Notification.permission === 'default') {
+        setShowNotifPrompt(true);
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const completedCount = plan.phases.reduce(
     (acc, phase) => acc + phase.steps.filter((s) => s.status === 'completed').length,
@@ -364,20 +376,42 @@ export default function PlanPage() {
   const totalCount = plan.phases.reduce((acc, phase) => acc + phase.steps.length, 0);
 
   const toggleStep = (stepId: string) => {
-    setPlan((prev) => ({
-      ...prev,
-      phases: prev.phases.map((phase) => ({
-        ...phase,
-        steps: phase.steps.map((step) =>
-          step.id === stepId
-            ? {
-                ...step,
-                status: step.status === 'completed' ? 'pending' as StepStatus : 'completed' as StepStatus,
-              }
-            : step
-        ),
-      })),
-    }));
+    setPlan((prev) => {
+      const updated = {
+        ...prev,
+        phases: prev.phases.map((phase) => ({
+          ...phase,
+          steps: phase.steps.map((step) =>
+            step.id === stepId
+              ? {
+                  ...step,
+                  status: step.status === 'completed' ? 'pending' as StepStatus : 'completed' as StepStatus,
+                }
+              : step
+          ),
+        })),
+      };
+
+      // Persist to localStorage so it survives refresh + offline
+      try {
+        const cache = JSON.parse(localStorage.getItem('reentry-plan-cache') || '{}');
+        cache[updated.id] = { id: updated.id, data: updated, cachedAt: new Date().toISOString() };
+        localStorage.setItem('reentry-plan-cache', JSON.stringify(cache));
+      } catch { /* storage full */ }
+
+      // Also sync to Supabase if online (fire and forget)
+      if (navigator.onLine) {
+        fetch(`/api/plans/${prev.id}/steps/${stepId}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: prev.phases.flatMap(p => p.steps).find(s => s.id === stepId)?.status === 'completed' ? 'pending' : 'completed',
+          }),
+        }).catch(() => { /* offline — already saved locally */ });
+      }
+
+      return updated;
+    });
   };
 
   return (
@@ -386,6 +420,34 @@ export default function PlanPage() {
       {isOffline && (
         <div className="bg-warm-500 text-white text-center py-2 text-sm font-medium">
           📴 You&apos;re offline — viewing your saved plan
+        </div>
+      )}
+      {/* Notification prompt */}
+      {showNotifPrompt && (
+        <div className="bg-primary-50 border-b border-primary-100 px-6 py-3 flex items-center justify-between animate-slide-up">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">🔔</span>
+            <p className="text-sm text-primary-800">
+              <strong>Never miss a deadline.</strong> Get reminders for parole check-ins, court dates, and benefits recertification.
+            </p>
+          </div>
+          <div className="flex gap-2 flex-shrink-0">
+            <button
+              className="px-4 py-2 text-sm font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700"
+              onClick={async () => {
+                await requestNotificationPermission();
+                setShowNotifPrompt(false);
+              }}
+            >
+              Enable
+            </button>
+            <button
+              className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700"
+              onClick={() => setShowNotifPrompt(false)}
+            >
+              Later
+            </button>
+          </div>
         </div>
       )}
       {/* Header */}
@@ -398,7 +460,7 @@ export default function PlanPage() {
               </div>
               <span className="font-bold text-primary-950">REENTRY</span>
             </Link>
-            <Button variant="secondary" size="sm">
+            <Button variant="secondary" size="sm" onClick={() => window.print()}>
               Print Plan
             </Button>
           </div>

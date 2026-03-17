@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { AdSlot } from '@/components/shared/AdSlot';
+import { ReturnToPlan } from '@/components/shared/ReturnToPlan';
 
 const stats = [
   { value: '700K', label: 'Released every year' },
@@ -68,6 +69,7 @@ const steps = [
 export default function Home() {
   return (
     <main className="min-h-screen">
+      <ReturnToPlan />
       {/* Hero */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary-950 via-primary-900 to-primary-800 text-white">
         {/* Subtle grid pattern */}
