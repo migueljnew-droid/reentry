@@ -6,34 +6,22 @@ pub mod queries;
 pub type DbPool = PgPool;
 
 pub async fn create_pool(database_url: &str) -> DbPool {
-    // Try to connect, but NEVER panic — the API must start even without DB
+    // Always use lazy pool — connects on first query, never blocks startup
+    tracing::info!("Creating lazy database pool");
     match PgPoolOptions::new()
         .max_connections(20)
-        .acquire_timeout(std::time::Duration::from_secs(5))
-        .connect(database_url)
-        .await
+        .connect_lazy(database_url)
     {
         Ok(pool) => {
-            tracing::info!("Database connected successfully");
+            tracing::info!("Lazy database pool created successfully");
             pool
         }
         Err(e) => {
-            tracing::warn!("Database connection failed: {}. API will run without persistent storage.", e);
-            // Create a lazy pool that won't panic — queries will fail at runtime instead
-            match PgPoolOptions::new()
+            tracing::warn!("Lazy pool creation failed: {}. Using localhost fallback.", e);
+            PgPoolOptions::new()
                 .max_connections(1)
-                .connect_lazy(database_url)
-            {
-                Ok(pool) => pool,
-                Err(e2) => {
-                    tracing::error!("Lazy pool creation also failed: {}. Using dummy URL.", e2);
-                    // Last resort: create pool with dummy URL — queries will fail but server runs
-                    PgPoolOptions::new()
-                        .max_connections(1)
-                        .connect_lazy("postgres://localhost:5432/reentry")
-                        .expect("Failed to create fallback pool with localhost URL")
-                }
-            }
+                .connect_lazy("postgres://localhost:5432/reentry")
+                .expect("Fallback pool must succeed")
         }
     }
 }
