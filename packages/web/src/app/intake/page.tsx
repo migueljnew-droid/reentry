@@ -7,6 +7,7 @@ import { ProgressBar } from '@/components/ui/ProgressBar';
 import { VoiceRecorder, isVoiceSupported } from '@/lib/voice';
 import { cachePlan } from '@/lib/offline';
 import { generateReentryPlan } from '@/app/actions/generate-plan';
+import { transcribeVoice } from '@/app/actions/transcribe';
 import { CONVICTION_TYPES, IMMEDIATE_NEEDS, US_STATES, PILOT_STATES } from '@reentry/shared';
 import Link from 'next/link';
 
@@ -118,14 +119,38 @@ export default function IntakePage() {
     }
   }, [stage]);
 
+  const [transcribing, setTranscribing] = useState(false);
+
   const toggleRecording = async () => {
     if (!recorderRef.current) return;
 
     if (isRecording) {
       const blob = await recorderRef.current.stop();
       setIsRecording(false);
-      // In production: send to Whisper API for transcription
-      console.log('Voice recording:', blob.size, 'bytes');
+      setTranscribing(true);
+
+      try {
+        // Send to Whisper API for transcription
+        const formData = new FormData();
+        formData.append('audio', blob, 'recording.webm');
+        const result = await transcribeVoice(formData);
+
+        if (result.transcript) {
+          // Auto-fill the current field based on stage
+          const text = result.transcript.trim();
+          if (stage === 'welcome' && !data.fullName) {
+            setData((prev) => ({ ...prev, fullName: text }));
+          } else if (stage === 'family') {
+            setData((prev) => ({ ...prev, workHistory: prev.workHistory ? `${prev.workHistory} ${text}` : text }));
+          }
+          // For other stages, voice is used to navigate — show transcript
+          console.log('Transcription:', text);
+        }
+      } catch (err) {
+        console.error('Transcription error:', err);
+      } finally {
+        setTranscribing(false);
+      }
     } else {
       await recorderRef.current.start();
       setIsRecording(true);
@@ -600,11 +625,28 @@ export default function IntakePage() {
         {voiceSupported && stage !== 'generating' && stage !== 'supervision' && (
           <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
             <button
-              className={isRecording ? 'voice-btn-recording' : 'voice-btn'}
+              className={
+                transcribing
+                  ? 'voice-btn animate-pulse-gentle'
+                  : isRecording
+                  ? 'voice-btn-recording'
+                  : 'voice-btn'
+              }
               onClick={toggleRecording}
-              aria-label={isRecording ? 'Stop recording' : 'Start voice input'}
+              disabled={transcribing}
+              aria-label={
+                transcribing
+                  ? 'Processing voice...'
+                  : isRecording
+                  ? 'Stop recording'
+                  : 'Start voice input'
+              }
             >
-              {isRecording ? (
+              {transcribing ? (
+                <svg className="w-8 h-8 animate-spin" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+              ) : isRecording ? (
                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
                   <rect x="6" y="6" width="12" height="12" rx="2" />
                 </svg>
@@ -615,7 +657,7 @@ export default function IntakePage() {
               )}
             </button>
             <p className="text-center text-xs text-gray-400 mt-2">
-              {isRecording ? 'Listening...' : 'Tap to speak'}
+              {transcribing ? 'Processing...' : isRecording ? 'Listening...' : 'Tap to speak'}
             </p>
           </div>
         )}

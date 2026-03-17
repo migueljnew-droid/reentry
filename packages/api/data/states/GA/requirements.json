@@ -1,0 +1,182 @@
+{
+  "state": "GA",
+  "stateName": "Georgia",
+  "lastUpdated": "2026-03-17",
+  "idRequirements": {
+    "stateId": {
+      "documentsNeeded": ["birth_certificate", "social_security_card", "proof_of_address"],
+      "alternativeDocuments": {
+        "birth_certificate": ["passport", "hospital_birth_record", "court_order_name_change"],
+        "proof_of_address": ["shelter_letter", "parole_officer_letter", "halfway_house_letter"],
+        "social_security_card": ["w2_form", "pay_stub_with_ssn", "1099_form"]
+      },
+      "fee": 32.00,
+      "feeWaiverAvailable": true,
+      "feeWaiverRequirements": "Must show proof of indigence — letter from parole officer or shelter",
+      "processingTimeDays": 7,
+      "locations": "Any Georgia DDS Customer Service Center — find nearest at dds.georgia.gov/locations",
+      "onlineAvailable": false,
+      "notes": "Georgia requires in-person visit for first-time ID. Bring ALL documents. No appointments needed but expect 1-2 hour wait."
+    },
+    "birthCertificate": {
+      "requestUrl": "https://dph.georgia.gov/vital-records",
+      "documentsNeeded": ["photo_id_or_two_secondary_ids"],
+      "fee": 25.00,
+      "processingTimeDays": 15,
+      "expeditedAvailable": true,
+      "expeditedFee": 50.00,
+      "onlineAvailable": true,
+      "url": "https://services.dph.georgia.gov/vitalrecords/"
+    },
+    "socialSecurityCard": {
+      "documentsNeeded": ["photo_id_or_two_secondary_ids"],
+      "fee": 0,
+      "processingTimeDays": 14,
+      "onlineAvailable": true,
+      "url": "https://www.ssa.gov/myaccount/"
+    }
+  },
+  "benefits": {
+    "snap": {
+      "name": "Georgia SNAP (Food Stamps)",
+      "agency": "Georgia Division of Family and Children Services (DFCS)",
+      "eligibility": {
+        "incomeLimitPercentFPL": 130,
+        "convictionRestrictions": ["drug_trafficking_felony_after_1996_unless_completed_treatment"],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Must register for work if able-bodied"]
+      },
+      "applicationUrl": "https://gateway.ga.gov/",
+      "documentsNeeded": ["photo_id", "proof_of_income", "proof_of_address", "social_security_number"],
+      "processingTimeDays": 30,
+      "expeditedAvailable": true,
+      "expeditedCriteria": "Monthly income below $150, liquid resources below $100, or homeless"
+    },
+    "medicaid": {
+      "name": "Georgia Medicaid / PeachCare",
+      "agency": "Georgia Department of Community Health",
+      "eligibility": {
+        "incomeLimitPercentFPL": 138,
+        "convictionRestrictions": [],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Georgia expanded Medicaid in 2024"]
+      },
+      "applicationUrl": "https://gateway.ga.gov/",
+      "documentsNeeded": ["proof_of_identity", "proof_of_income", "proof_of_georgia_residency"],
+      "processingTimeDays": 45,
+      "expeditedAvailable": false
+    },
+    "tanf": {
+      "name": "Georgia TANF (Cash Assistance)",
+      "agency": "Georgia DFCS",
+      "eligibility": {
+        "incomeLimitPercentFPL": 50,
+        "convictionRestrictions": ["drug_felony_ban_unless_completed_treatment"],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Must have dependent children under 18", "Must participate in work program"]
+      },
+      "applicationUrl": "https://gateway.ga.gov/",
+      "documentsNeeded": ["photo_id", "proof_of_income", "proof_of_address", "childrens_birth_certificates"],
+      "processingTimeDays": 30,
+      "expeditedAvailable": false
+    },
+    "liheap": {
+      "name": "Georgia LIHEAP (Energy Assistance)",
+      "agency": "Georgia Department of Human Services",
+      "eligibility": {
+        "incomeLimitPercentFPL": 150,
+        "convictionRestrictions": [],
+        "waitingPeriodDays": 0,
+        "additionalRequirements": ["Must have utility bill in your name or household member's name"]
+      },
+      "applicationUrl": "https://dfcs.georgia.gov/liheap",
+      "documentsNeeded": ["photo_id", "proof_of_income", "utility_bill"],
+      "processingTimeDays": 30,
+      "expeditedAvailable": false
+    }
+  },
+  "employmentRestrictions": {
+    "sex_offense": {
+      "restrictedJobs": ["childcare", "education_k12", "healthcare_direct_patient", "coaching_minors"],
+      "registrationRequired": true,
+      "bufferZones": "1000ft from schools, childcare facilities, churches, parks, playgrounds, swimming pools",
+      "banTheBox": false,
+      "lookBackPeriodYears": null
+    },
+    "violent_felony": {
+      "restrictedJobs": ["law_enforcement", "licensed_security", "firearms_dealer"],
+      "registrationRequired": false,
+      "banTheBox": false,
+      "lookBackPeriodYears": 7
+    },
+    "nonviolent_drug": {
+      "restrictedJobs": ["pharmacy", "dea_registered_positions"],
+      "registrationRequired": false,
+      "banTheBox": false,
+      "lookBackPeriodYears": 5
+    },
+    "general": {
+      "restrictedJobs": [],
+      "registrationRequired": false,
+      "banTheBox": false,
+      "lookBackPeriodYears": 7,
+      "notes": "Georgia does NOT have a statewide Ban the Box law. Atlanta has a city ordinance (Fair Chance Ordinance). Employers CAN ask about convictions on applications outside Atlanta."
+    }
+  },
+  "supervision": {
+    "parole": {
+      "checkInFrequency": "Monthly (can be reduced to quarterly for good behavior after 12 months)",
+      "travelRestrictions": "Must get written permission from parole officer to leave assigned county or state",
+      "drugTesting": "Random — typically 1-2 times per month",
+      "curfew": "Varies by condition — common for first 6 months"
+    },
+    "probation": {
+      "checkInFrequency": "Monthly",
+      "travelRestrictions": "Must get permission to leave judicial circuit",
+      "drugTesting": "As ordered by court",
+      "curfew": "As ordered by court"
+    }
+  },
+  "resources": {
+    "reentryOrganizations": [
+      {
+        "name": "Georgia Department of Community Supervision - Reentry Services",
+        "phone": "404-651-6727",
+        "website": "https://dcs.georgia.gov/reentry-services",
+        "services": ["case_management", "employment_assistance", "housing_referrals"]
+      },
+      {
+        "name": "Atlanta Mission",
+        "phone": "404-367-2493",
+        "website": "https://atlantamission.org",
+        "services": ["shelter", "food", "job_training", "substance_abuse"]
+      },
+      {
+        "name": "Goodwill of North Georgia",
+        "phone": "404-420-9900",
+        "website": "https://ging.org",
+        "services": ["job_training", "employment", "career_coaching"]
+      }
+    ],
+    "emergencyShelters": [
+      {
+        "name": "Atlanta Mission - My Sister's House (Women)",
+        "phone": "404-367-2493",
+        "address": "921 Howell Mill Rd NW, Atlanta, GA 30318"
+      },
+      {
+        "name": "Atlanta Mission - The Shepherd's Inn (Men)",
+        "phone": "404-367-2493",
+        "address": "165 Alexander St NW, Atlanta, GA 30313"
+      }
+    ],
+    "legalAid": [
+      {
+        "name": "Georgia Legal Services Program",
+        "phone": "404-206-5175",
+        "website": "https://glsp.org",
+        "services": ["record_expungement", "child_support_modification", "benefits_appeals"]
+      }
+    ]
+  }
+}
