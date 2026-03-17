@@ -1,0 +1,93 @@
+{
+  "state": "FED",
+  "stateName": "Federal",
+  "lastUpdated": "2026-03-17",
+  "description": "Federal requirements that apply in ALL states",
+  "idRequirements": {
+    "socialSecurityCard": {
+      "documentsNeeded": ["photo_id_or_two_secondary_ids"],
+      "fee": 0,
+      "processingTimeDays": 14,
+      "maxReplacementsPerYear": 3,
+      "maxReplacementsLifetime": 10,
+      "onlineAvailable": true,
+      "url": "https://www.ssa.gov/myaccount/",
+      "inPersonUrl": "https://secure.ssa.gov/ICON/main.jsp",
+      "notes": "Free. Can request online with my Social Security account or in-person at SSA office. Many returning citizens need to visit in person if they don't have online access."
+    }
+  },
+  "benefits": {
+    "snap": {
+      "name": "SNAP (Supplemental Nutrition Assistance Program)",
+      "description": "Monthly food benefits on EBT card",
+      "federalEligibility": {
+        "grossIncomeLimitPercentFPL": 130,
+        "netIncomeLimitPercentFPL": 100,
+        "assetLimit": 2750,
+        "assetLimitElderly": 4250,
+        "convictionRestrictions": "Drug trafficking felony conviction after 8/22/1996 — states may opt out of this ban",
+        "workRequirements": "ABAWDs (Able-Bodied Adults Without Dependents) ages 18-52: must work 80hrs/month or lose benefits after 3 months in 36-month period"
+      },
+      "monthlyBenefits2026": {
+        "household1": 292,
+        "household2": 536,
+        "household3": 768,
+        "household4": 975,
+        "household5": 1158,
+        "household6": 1390,
+        "household7": 1536,
+        "household8": 1756,
+        "additionalPerson": 220
+      }
+    },
+    "medicaid": {
+      "name": "Medicaid",
+      "description": "Free or low-cost health insurance",
+      "federalEligibility": {
+        "incomeLimitExpansionStates": 138,
+        "incomeLimitNonExpansion": "varies_by_category",
+        "convictionRestrictions": "None — Medicaid cannot deny based on criminal history",
+        "notes": "Most states auto-qualify returning citizens. Apply immediately upon release."
+      }
+    },
+    "ssi": {
+      "name": "Supplemental Security Income",
+      "description": "Monthly cash for disabled/elderly with limited income",
+      "federalEligibility": {
+        "mustBeDisabledOrOver65": true,
+        "assetLimit": 2000,
+        "monthlyBenefit2026": 943,
+        "convictionRestrictions": "Cannot receive while incarcerated. Must reapply upon release. Outstanding warrants may affect eligibility.",
+        "notes": "Apply at SSA office. Can take 3-6 months for disability determination. Apply immediately."
+      }
+    },
+    "lifeline": {
+      "name": "Lifeline Program",
+      "description": "Free or discounted phone service",
+      "federalEligibility": {
+        "incomeLimitPercentFPL": 135,
+        "categoricalEligibility": ["snap", "medicaid", "ssi", "veterans_pension", "tribal_programs"],
+        "convictionRestrictions": "None",
+        "benefit": "Free phone with minutes/data from participating carriers",
+        "applicationUrl": "https://www.lifelinesupport.org/"
+      }
+    },
+    "pellGrant": {
+      "name": "Federal Pell Grant",
+      "description": "College/vocational training financial aid — no repayment",
+      "federalEligibility": {
+        "maxAward2026": 7395,
+        "convictionRestrictions": "FAFSA Simplification Act (2024) removed incarceration question. All returning citizens eligible.",
+        "notes": "Major policy change — previously incarcerated students were banned. Now fully eligible. Apply via FAFSA."
+      }
+    }
+  },
+  "supervision": {
+    "federalSupervision": {
+      "checkInFrequency": "As directed by probation officer — typically monthly",
+      "travelRestrictions": "Must get permission from USPO for any travel outside district",
+      "drugTesting": "Random as directed",
+      "specialConditions": "May include substance abuse treatment, mental health treatment, employment requirement, computer monitoring"
+    }
+  }
+}

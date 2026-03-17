@@ -1,0 +1,93 @@
+export const FEDERAL_PROGRAMS = [
+  {
+    id: 'snap',
+    name: 'SNAP (Food Stamps)',
+    type: 'snap' as const,
+    description: 'Supplemental Nutrition Assistance Program — monthly food benefits loaded onto an EBT card',
+    federal: true,
+    monthlyValueRange: '$234 - $1,751',
+  },
+  {
+    id: 'medicaid',
+    name: 'Medicaid',
+    type: 'medicaid' as const,
+    description: 'Free or low-cost health coverage for low-income individuals',
+    federal: true,
+    monthlyValueRange: 'Full healthcare coverage',
+  },
+  {
+    id: 'ssi',
+    name: 'Supplemental Security Income (SSI)',
+    type: 'ssi' as const,
+    description: 'Monthly cash assistance for disabled or elderly individuals with limited income',
+    federal: true,
+    monthlyValueRange: 'Up to $943/month',
+  },
+  {
+    id: 'tanf',
+    name: 'Temporary Assistance for Needy Families (TANF)',
+    type: 'tanf' as const,
+    description: 'Cash assistance and support services for families with children',
+    federal: true,
+    monthlyValueRange: 'Varies by state ($200-$700)',
+  },
+  {
+    id: 'liheap',
+    name: 'LIHEAP (Energy Assistance)',
+    type: 'liheap' as const,
+    description: 'Help paying heating and cooling bills',
+    federal: true,
+    monthlyValueRange: '$200-$1,000/year',
+  },
+  {
+    id: 'section8',
+    name: 'Section 8 Housing Choice Voucher',
+    type: 'section8' as const,
+    description: 'Rental assistance vouchers for low-income families',
+    federal: true,
+    monthlyValueRange: 'Covers 70% of rent',
+  },
+  {
+    id: 'lifeline',
+    name: 'Lifeline (Free Phone)',
+    type: 'lifeline' as const,
+    description: 'Free or discounted phone service for low-income individuals',
+    federal: true,
+    monthlyValueRange: 'Free phone + service',
+  },
+  {
+    id: 'pell_grant',
+    name: 'Pell Grant',
+    type: 'pell_grant' as const,
+    description: 'Federal financial aid for college or vocational training',
+    federal: true,
+    monthlyValueRange: 'Up to $7,395/year',
+  },
+  {
+    id: 'wic',
+    name: 'WIC (Women, Infants, Children)',
+    type: 'wic' as const,
+    description: 'Nutrition assistance for pregnant women and children under 5',
+    federal: true,
+    monthlyValueRange: '$50-$75/month in food',
+  },
+] as const;
+
+export const PLAN_PHASES = [
+  { value: 'immediate', label: 'First 72 Hours', description: 'Emergency needs — shelter, food, phone, transport' },
+  { value: 'week_1', label: 'Week 1', description: 'ID, Medicaid, parole check-in, bank account' },
+  { value: 'month_1', label: 'Month 1', description: 'Benefits, employment, housing, legal obligations' },
+  { value: 'ongoing', label: 'Months 2-12', description: 'Compliance, training, expungement, stability' },
+] as const;
+
+export const STEP_CATEGORIES = [
+  { value: 'id', label: 'Identification', icon: '🪪' },
+  { value: 'benefits', label: 'Benefits', icon: '💰' },
+  { value: 'housing', label: 'Housing', icon: '🏠' },
+  { value: 'employment', label: 'Employment', icon: '💼' },
+  { value: 'legal', label: 'Legal', icon: '⚖️' },
+  { value: 'supervision', label: 'Supervision', icon: '📋' },
+  { value: 'healthcare', label: 'Healthcare', icon: '🏥' },
+  { value: 'education', label: 'Education', icon: '📚' },
+  { value: 'family', label: 'Family', icon: '👨‍👩‍👧‍👦' },
+] as const;

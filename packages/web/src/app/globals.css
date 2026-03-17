@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 255 255 255;
+    --foreground: 23 43 84;
+  }
+
+  body {
+    @apply bg-white text-primary-950 antialiased;
+  }
+
+  /* Large touch targets for accessibility */
+  button, a, input, select, textarea {
+    @apply min-h-[44px];
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary-600 text-white px-6 py-3 rounded-xl font-semibold
+           hover:bg-primary-700 active:bg-primary-800
+           transition-all duration-150 ease-out
+           focus:outline-none focus:ring-4 focus:ring-primary-300
+           disabled:opacity-50 disabled:cursor-not-allowed
+           text-lg min-h-[52px];
+  }
+
+  .btn-secondary {
+    @apply bg-white text-primary-700 px-6 py-3 rounded-xl font-semibold
+           border-2 border-primary-200 hover:border-primary-400
+           hover:bg-primary-50 active:bg-primary-100
+           transition-all duration-150 ease-out
+           focus:outline-none focus:ring-4 focus:ring-primary-300
+           text-lg min-h-[52px];
+  }
+
+  .btn-accent {
+    @apply bg-accent-600 text-white px-6 py-3 rounded-xl font-semibold
+           hover:bg-accent-700 active:bg-accent-800
+           transition-all duration-150 ease-out
+           focus:outline-none focus:ring-4 focus:ring-accent-300
+           text-lg min-h-[52px];
+  }
+
+  .card {
+    @apply bg-white rounded-2xl border border-gray-100 shadow-sm p-6
+           hover:shadow-md transition-shadow duration-200;
+  }
+
+  .card-elevated {
+    @apply bg-white rounded-2xl shadow-lg p-6;
+  }
+
+  /* Voice recording button */
+  .voice-btn {
+    @apply w-20 h-20 rounded-full bg-primary-600 text-white
+           flex items-center justify-center
+           hover:bg-primary-700 active:scale-95
+           transition-all duration-150
+           focus:outline-none focus:ring-4 focus:ring-primary-300
+           shadow-lg hover:shadow-xl;
+  }
+
+  .voice-btn-recording {
+    @apply w-20 h-20 rounded-full bg-red-500 text-white
+           flex items-center justify-center
+           animate-pulse-gentle
+           shadow-lg shadow-red-200;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply h-3 bg-gray-100 rounded-full overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full bg-accent-500 rounded-full transition-all duration-500 ease-out;
+  }
+}
