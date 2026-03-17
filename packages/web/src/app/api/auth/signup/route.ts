@@ -2,42 +2,58 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@/lib/supabase-server';
 
 export async function POST(req: NextRequest) {
-  const { phone, fullName } = await req.json();
+  const { fullName, stateOfRelease, convictionType } = await req.json();
   const supabase = createServerClient();
 
   if (!supabase) {
-    // No DB — generate anonymous session
     const sessionId = crypto.randomUUID();
-    return NextResponse.json({ userId: sessionId, token: sessionId });
+    return NextResponse.json({ userId: sessionId, anonymous: true });
   }
 
-  // Phone-based signup — no email needed
-  const { data: authData, error: authError } = await supabase.auth.signUp({
-    phone,
-    password: crypto.randomUUID(), // Auto-generated, user uses OTP
-  });
+  // Anonymous sign-in — no phone, no email, no friction
+  const { data: authData, error: authError } = await supabase.auth.signInAnonymously();
 
   if (authError) {
-    return NextResponse.json({ error: authError.message }, { status: 400 });
+    // Fallback: create user directly without auth
+    const { data: user, error: userError } = await supabase
+      .from('users')
+      .insert({
+        full_name: fullName || 'Anonymous',
+        state_of_release: stateOfRelease || '',
+        conviction_type: convictionType || '',
+        role: 'citizen',
+      })
+      .select()
+      .single();
+
+    if (userError) {
+      // Last resort: anonymous session ID
+      return NextResponse.json({ userId: crypto.randomUUID(), anonymous: true });
+    }
+
+    return NextResponse.json({ userId: user.id, anonymous: false });
   }
 
-  // Create user profile
+  // Create user profile linked to anonymous auth
   const { data: user, error: userError } = await supabase
     .from('users')
     .insert({
       auth_id: authData.user?.id,
-      phone,
-      full_name: fullName,
-      state_of_release: '',
-      conviction_type: '',
+      full_name: fullName || 'Anonymous',
+      state_of_release: stateOfRelease || '',
+      conviction_type: convictionType || '',
       role: 'citizen',
     })
     .select()
     .single();
 
   if (userError) {
-    return NextResponse.json({ error: userError.message }, { status: 500 });
+    return NextResponse.json({ userId: authData.user?.id, anonymous: true });
   }
 
-  return NextResponse.json({ userId: user.id, token: authData.session?.access_token });
+  return NextResponse.json({
+    userId: user.id,
+    token: authData.session?.access_token,
+    anonymous: false,
+  });
 }
