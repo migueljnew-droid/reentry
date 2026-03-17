@@ -92,6 +92,12 @@ export default function Home() {
             <span className="text-xl font-bold tracking-tight">REENTRY</span>
           </div>
           <div className="flex items-center gap-4">
+            <Link href="/jobs" className="text-white/80 hover:text-white text-sm font-medium hidden sm:block">
+              Jobs
+            </Link>
+            <Link href="/housing" className="text-white/80 hover:text-white text-sm font-medium hidden sm:block">
+              Housing
+            </Link>
             <Link
               href="/intake"
               className="btn-primary bg-white text-primary-900 hover:bg-gray-100"

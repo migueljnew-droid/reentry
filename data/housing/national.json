@@ -1,0 +1,150 @@
+{
+  "lastUpdated": "2026-03-17",
+  "description": "Housing resources and strategies for people with felony convictions",
+  "housingTypes": [
+    {
+      "type": "Transitional Housing / Halfway Houses",
+      "description": "Structured living for 6-24 months after release. Often includes job training, counseling, and case management.",
+      "howToFind": [
+        "Contact your parole/probation officer — they have a list of approved transitional housing",
+        "Call 211 and ask for 'reentry housing' or 'transitional housing'",
+        "Search the Federal Bureau of Prisons Residential Reentry Center list: bop.gov/locations/rrc/",
+        "Contact your state's Department of Corrections reentry division"
+      ],
+      "cost": "Free to $400/month (income-based, often covered by reentry programs)",
+      "convictionFriendly": true,
+      "restrictions": "Sex offenders may have limited options due to proximity rules. Some facilities are substance-abuse specific.",
+      "tips": "Apply BEFORE release if possible. Waitlists can be 2-8 weeks."
+    },
+    {
+      "type": "Oxford Houses",
+      "description": "Self-supporting, democratically-run sober living homes. No paid staff. Residents manage the house together.",
+      "howToFind": [
+        "oxfordhouse.org — search by state",
+        "Call Oxford House World Services: 301-587-2916",
+        "Over 3,000 houses in 44 states"
+      ],
+      "cost": "$90-$160/week (covers rent, utilities, and house expenses)",
+      "convictionFriendly": true,
+      "restrictions": "Must be in recovery (substance abuse). Must stay sober. Must pay rent. Must be employed or actively seeking.",
+      "tips": "One of the best options for returning citizens in recovery. Democratic vote to admit new members. Very supportive community."
+    },
+    {
+      "type": "Salvation Army Adult Rehabilitation Centers",
+      "description": "Free 6-month residential program including housing, meals, and work therapy.",
+      "howToFind": [
+        "Call 1-800-SAL-ARMY (1-800-725-2769)",
+        "Walk into any Salvation Army — ask about ARC program",
+        "salvationarmyusa.org/usn/provide-shelter/"
+      ],
+      "cost": "FREE — work therapy program covers costs",
+      "convictionFriendly": true,
+      "restrictions": "Must participate in work therapy (thrift store). Faith-based environment. Substance abuse focus.",
+      "tips": "No ID required to enter. No background check. Walk in same day. Meals and housing provided immediately."
+    },
+    {
+      "type": "Rescue Missions / Gospel Missions",
+      "description": "Emergency and transitional shelter through faith-based organizations. Usually free.",
+      "howToFind": [
+        "agrm.org — Association of Gospel Rescue Missions (300+ missions)",
+        "Call 211 for local rescue mission",
+        "Search '[your city] rescue mission'"
+      ],
+      "cost": "FREE",
+      "convictionFriendly": true,
+      "restrictions": "Faith-based programming (chapel services). Some require sobriety.",
+      "tips": "Best for immediate shelter when you have nothing. Many provide meals, clothing, job training. No questions asked."
+    },
+    {
+      "type": "Private Landlords (Felon-Friendly)",
+      "description": "Individual landlords and small property management companies are more likely to rent to people with records than large corporate complexes.",
+      "howToFind": [
+        "Search Craigslist, Facebook Marketplace for 'room for rent' or 'private landlord'",
+        "Drive through neighborhoods looking for 'For Rent' signs (small landlords)",
+        "Ask at local churches — members sometimes rent rooms",
+        "Contact local reentry organizations — they often have landlord lists",
+        "helpexit.org and rentingwithfelonies.com for felon-friendly landlord databases"
+      ],
+      "cost": "Varies ($500-$1,500/month depending on area)",
+      "convictionFriendly": "Varies — individual landlords are generally more flexible than corporate",
+      "restrictions": "Sex offenders face proximity restrictions. Landlords can legally deny based on conviction in most states.",
+      "tips": [
+        "Small/private landlords are 3x more likely to rent to someone with a record than large property management companies",
+        "Be upfront about your record — landlords appreciate honesty",
+        "Get a reference letter from your parole officer, case manager, or employer",
+        "Offer to pay extra security deposit",
+        "If denied, ask: 'Is there anything I can provide to change your decision?' (reference letters, proof of employment, etc.)"
+      ]
+    },
+    {
+      "type": "Section 8 Housing Choice Voucher",
+      "description": "Federal program that pays 70% of rent. Administered by local housing authorities.",
+      "howToFind": [
+        "Contact your local Public Housing Authority (PHA)",
+        "Search: hud.gov/program_offices/public_indian_housing/pha/contacts",
+        "Apply when the waitlist opens (check monthly)"
+      ],
+      "cost": "You pay 30% of your income. Program pays the rest.",
+      "convictionFriendly": "Partial — most felons are eligible EXCEPT those with lifetime sex offender registration or methamphetamine production conviction in federally-assisted housing.",
+      "restrictions": "Long waitlists (6 months to 5+ years depending on area). Must meet income requirements (<50% Area Median Income). Background check.",
+      "tips": [
+        "Apply to MULTIPLE housing authorities — each has its own waitlist",
+        "Some PHAs have preferences for veterans, homeless, or disabled — check if you qualify",
+        "While waiting, ask about 'Project-Based Vouchers' which may have shorter waitlists",
+        "HUD does NOT have a blanket ban on renting to felons. In 2016, HUD issued guidance that blanket bans may violate Fair Housing Act."
+      ]
+    },
+    {
+      "type": "Sober Living Homes",
+      "description": "Structured homes for people in recovery. Drug/alcohol free environment with peer support.",
+      "howToFind": [
+        "soberhousing.net — national directory",
+        "afterinpatient.com — verified listings",
+        "Ask your substance abuse counselor or parole officer"
+      ],
+      "cost": "$400-$800/month (some accept insurance or state funding)",
+      "convictionFriendly": true,
+      "restrictions": "Must maintain sobriety. Regular drug testing. Must follow house rules.",
+      "tips": "Many will work with you on payment if you're newly released. Some accept state reentry funding."
+    },
+    {
+      "type": "Rapid Re-Housing Programs",
+      "description": "Short-term rental assistance (3-24 months) to help people quickly exit homelessness.",
+      "howToFind": [
+        "Contact your local Continuum of Care (CoC) — hud.gov/program_offices/comm_planning/coc",
+        "Call 211 and ask for 'rapid re-housing'",
+        "Apply through your local homeless services agency"
+      ],
+      "cost": "Subsidized — you pay what you can afford, program covers the rest",
+      "convictionFriendly": "Yes — HUD rapid re-housing has no criminal history exclusion",
+      "restrictions": "Must meet HUD definition of homeless (shelter, street, institutional)",
+      "tips": "If you're in a shelter or on the street, you likely qualify. These programs also help with move-in costs (deposit, first/last month)."
+    }
+  ],
+  "stateSpecific": {
+    "GA": {
+      "resources": [
+        {"name": "Atlanta Housing Authority", "phone": "404-892-4700", "website": "atlantahousing.org", "notes": "Section 8 waitlist — check monthly for openings"},
+        {"name": "Atlanta Mission Transitional Housing", "phone": "404-367-2493", "website": "atlantamission.org", "notes": "Free transitional housing with job training"},
+        {"name": "Decatur Cooperative Ministry", "phone": "404-377-5365", "website": "decaturcooperativeministry.org", "notes": "Emergency housing + rapid re-housing in DeKalb County"},
+        {"name": "Chris 180", "phone": "404-892-1177", "website": "chris180.org", "notes": "Transitional housing for young adults 18-24"}
+      ]
+    },
+    "CA": {
+      "resources": [
+        {"name": "LA Homeless Services Authority (LAHSA)", "phone": "800-548-6047", "website": "lahsa.org", "notes": "Coordinated entry for LA County housing"},
+        {"name": "Homeboy Industries Housing", "phone": "323-526-1254", "website": "homeboyindustries.org", "notes": "Housing assistance as part of reentry services"},
+        {"name": "Amity Foundation", "phone": "213-389-8810", "website": "amityfdn.org", "notes": "Therapeutic communities for returning citizens in LA"},
+        {"name": "Bay Area Community Services (BACS)", "phone": "510-613-0330", "website": "bayareacs.org", "notes": "Oakland/East Bay reentry housing"}
+      ]
+    },
+    "TN": {
+      "resources": [
+        {"name": "Dismas House Nashville", "phone": "615-242-1916", "website": "dismas.org", "notes": "Transitional housing specifically for returning citizens"},
+        {"name": "Nashville Rescue Mission", "phone": "615-255-2475", "website": "nashvillerescuemission.org", "notes": "Emergency shelter + life recovery program"},
+        {"name": "MDHA (Metro Nashville Housing Authority)", "phone": "615-252-8400", "website": "nashville-mdha.org", "notes": "Section 8 and public housing — check waitlist status"},
+        {"name": "Memphis Housing Authority", "phone": "901-544-1199", "website": "memphisha.org", "notes": "Section 8 vouchers for Memphis area"}
+      ]
+    }
+  }
+}
