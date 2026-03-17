@@ -9,3 +9,5 @@ dist/
 
 # SPEAR Framework - Ignore output artifacts (keep config and templates)
 .spear/output/
+.vercel
+supabase/.temp/
