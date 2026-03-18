@@ -1,6 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { logAudit } from '@/lib/audit';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  await logAudit({
+    action: 'read',
+    resourceType: 'dashboard_analytics',
+    request: req,
+  });
+
   return NextResponse.json({
     totalClients: 4,
     activeClients: 3,

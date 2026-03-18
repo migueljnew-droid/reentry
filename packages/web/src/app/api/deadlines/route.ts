@@ -1,7 +1,14 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { randomUUID } from 'crypto';
+import { logAudit } from '@/lib/audit';
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  await logAudit({
+    action: 'read',
+    resourceType: 'deadlines',
+    request: req,
+  });
+
   return NextResponse.json({
     deadlines: [
       { id: randomUUID(), title: 'Parole check-in', dueDate: '2026-03-24T10:00:00Z', category: 'supervision', status: 'upcoming' },

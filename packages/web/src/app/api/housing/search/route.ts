@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { validateRequest } from '@/lib/validate';
+import { housingSearchSchema } from '@/lib/schemas';
+import { logAudit } from '@/lib/audit';
 
 export async function POST(req: NextRequest) {
-  const { state, convictionType, needsImmediate } = await req.json();
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+
+  const validated = validateRequest(housingSearchSchema, body);
+  if (!validated.success) return validated.response;
+
+  const { state, convictionType, needsImmediate } = validated.data;
 
   let housingData: Record<string, unknown> = {};
   try {
@@ -29,7 +42,14 @@ export async function POST(req: NextRequest) {
   }
 
   // Add state-specific resources
-  const stateResources = stateSpecific[state]?.resources || [];
+  const stateResources = stateSpecific[state || '']?.resources || [];
+
+  await logAudit({
+    action: 'search',
+    resourceType: 'housing',
+    details: { state, needsImmediate, totalOptions: results.length },
+    request: req,
+  });
 
   return NextResponse.json({
     state,

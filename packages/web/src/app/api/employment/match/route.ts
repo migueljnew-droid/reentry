@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import { validateRequest } from '@/lib/validate';
+import { employmentMatchSchema } from '@/lib/schemas';
+import { logAudit } from '@/lib/audit';
 
 export async function POST(req: NextRequest) {
-  const { state, convictionType, skills } = await req.json();
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+
+  const validated = validateRequest(employmentMatchSchema, body);
+  if (!validated.success) return validated.response;
+
+  const { state, convictionType } = validated.data;
 
   // Load national + state-specific employer data
   let employers: Array<Record<string, unknown>> = [];
@@ -50,6 +63,13 @@ export async function POST(req: NextRequest) {
 
   // Sort by match score (best matches first)
   filtered.sort((a, b) => (b.matchScore as number) - (a.matchScore as number));
+
+  await logAudit({
+    action: 'match',
+    resourceType: 'employment_matches',
+    details: { state, totalMatches: filtered.length },
+    request: req,
+  });
 
   return NextResponse.json({
     state,
