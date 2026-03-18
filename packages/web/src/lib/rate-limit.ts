@@ -15,7 +15,9 @@ import { Redis } from '@upstash/redis';
 
 export type RateLimitTier = 'ai' | 'auth' | 'general';
 
-const TIER_LIMITS: Record<RateLimitTier, { requests: number; window: string }> = {
+type Duration = `${number} ${'ms' | 's' | 'm' | 'h' | 'd'}` | `${number}${'ms' | 's' | 'm' | 'h' | 'd'}`;
+
+const TIER_LIMITS: Record<RateLimitTier, { requests: number; window: Duration }> = {
   ai: { requests: 10, window: '1 m' },
   auth: { requests: 5, window: '1 m' },
   general: { requests: 60, window: '1 m' },
