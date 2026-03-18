@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 import { logAudit } from '@/lib/audit';
+import { whisperCircuit, CircuitOpenError } from '@/lib/circuit-breaker';
 
 const openai = process.env.OPENAI_API_KEY ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY }) : null;
 
@@ -28,12 +29,28 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const transcription = await openai.audio.transcriptions.create({
-    model: 'whisper-1',
-    file: audio,
-    language: 'en',
-    response_format: 'text',
-  });
+  let transcription: unknown;
+  try {
+    transcription = await whisperCircuit.execute(() =>
+      openai.audio.transcriptions.create({
+        model: 'whisper-1',
+        file: audio,
+        language: 'en',
+        response_format: 'text',
+      })
+    );
+  } catch (error) {
+    if (error instanceof CircuitOpenError) {
+      return NextResponse.json(
+        { error: 'Service temporarily unavailable, please try again shortly' },
+        { status: 503 }
+      );
+    }
+    return NextResponse.json(
+      { error: 'Voice transcription failed' },
+      { status: 502 }
+    );
+  }
 
   await logAudit({
     action: 'transcribe',
