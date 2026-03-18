@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
+import { checkRateLimit, getTier } from '@/lib/rate-limit';
 
 const PUBLIC_PATHS = ['/api/health'];
 
@@ -38,6 +39,29 @@ export async function middleware(request: NextRequest) {
     return new NextResponse('CORS: Origin not allowed', { status: 403 });
   }
 
+  // Rate limit auth routes by IP (before auth check)
+  const tier = getTier(pathname);
+  if (tier === 'auth') {
+    const ip =
+      request.headers.get('x-forwarded-for')?.split(',')[0].trim() ||
+      request.headers.get('x-real-ip') ||
+      'unknown';
+    const rlResult = await checkRateLimit(ip, 'auth');
+    if (rlResult && !rlResult.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests' },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rlResult.retryAfterSeconds),
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': String(rlResult.reset),
+          },
+        }
+      );
+    }
+  }
+
   // JWT validation via Supabase
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -74,6 +98,28 @@ export async function middleware(request: NextRequest) {
       { error: 'Unauthorized — valid session required' },
       { status: 401 }
     );
+  }
+
+  // Rate limit authenticated routes by user ID (AI and general tiers)
+  if (tier !== 'auth') {
+    const rlResult = await checkRateLimit(user.id, tier);
+    if (rlResult && !rlResult.allowed) {
+      return NextResponse.json(
+        { error: 'Too many requests' },
+        {
+          status: 429,
+          headers: {
+            'Retry-After': String(rlResult.retryAfterSeconds),
+            'X-RateLimit-Remaining': '0',
+            'X-RateLimit-Reset': String(rlResult.reset),
+          },
+        }
+      );
+    }
+    if (rlResult) {
+      response.headers.set('X-RateLimit-Remaining', String(rlResult.remaining));
+      response.headers.set('X-RateLimit-Reset', String(rlResult.reset));
+    }
   }
 
   return addSecurityHeaders(response);
