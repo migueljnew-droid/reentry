@@ -1,4 +1,3 @@
-import { SupabaseClient } from '@supabase/supabase-js';
 import { NextRequest } from 'next/server';
 import { createServiceClient, createUserClient } from './supabase-server';
 

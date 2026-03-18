@@ -13,8 +13,9 @@ export function validateRequest<T>(
 
   if (!result.success) {
     // Zod v4 uses .issues, Zod v3 used .errors — support both
-    const issues = (result.error as any).issues ?? (result.error as any).errors ?? [];
-    const details = issues.map((e: { path: (string | number)[]; message: string }) => ({
+    const errorObj = result.error as unknown as Record<string, unknown>;
+    const issues = (errorObj.issues ?? errorObj.errors ?? []) as Array<{ path: (string | number)[]; message: string }>;
+    const details = issues.map((e) => ({
       field: e.path.join('.'),
       message: e.message,
     }));
@@ -40,8 +41,9 @@ export function parseJsonBody(body: unknown): unknown {
 
 export function formatZodError(error: ZodError): string {
   // Zod v4 uses .issues, Zod v3 used .errors — support both
-  const issues = (error as any).issues ?? (error as any).errors ?? [];
+  const errorObj = error as unknown as Record<string, unknown>;
+  const issues = (errorObj.issues ?? errorObj.errors ?? []) as Array<{ path: (string | number)[]; message: string }>;
   return issues
-    .map((e: { path: (string | number)[]; message: string }) => `${e.path.join('.')}: ${e.message}`)
+    .map((e) => `${e.path.join('.')}: ${e.message}`)
     .join('; ');
 }

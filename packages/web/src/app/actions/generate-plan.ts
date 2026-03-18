@@ -131,7 +131,7 @@ function buildPlan(
   const planId = crypto.randomUUID();
   const stateName = US_STATES[intake.state] || intake.state;
 
-  const steps: PlanStep[] = [];
+  const _steps: PlanStep[] = [];
   let stepCounter = 0;
 
   const nextId = () => {

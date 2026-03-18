@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { auditAction } from '@/lib/audit';
 
 // ==========================================
@@ -42,7 +42,7 @@ describe('logAudit', () => {
       cookies: { get: () => undefined },
       method: 'POST',
       nextUrl: { pathname: '/api/test' },
-    } as any;
+    } as unknown as import('next/server').NextRequest;
 
     // Should not throw — silently skips when no service client
     await expect(
