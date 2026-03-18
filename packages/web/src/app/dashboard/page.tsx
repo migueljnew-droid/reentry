@@ -59,9 +59,9 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50" role="banner">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2" aria-label="REENTRY home">
             <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-sm font-bold text-primary-700">
               R
             </div>
@@ -196,18 +196,18 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-3">
+        <nav aria-label="Quick actions" className="grid grid-cols-2 gap-3">
           <Link href="/plan/demo" className="card text-center hover:border-primary-300">
             <div className="text-2xl mb-2">📋</div>
             <div className="font-semibold text-primary-950">View Plan</div>
             <div className="text-xs text-gray-500">Full action plan</div>
           </Link>
           <Link href="/intake" className="card text-center hover:border-primary-300">
-            <div className="text-2xl mb-2">🔄</div>
+            <div className="text-2xl mb-2" aria-hidden="true">🔄</div>
             <div className="font-semibold text-primary-950">Update Info</div>
             <div className="text-xs text-gray-500">Changed situation</div>
           </Link>
-        </div>
+        </nav>
       </main>
     </div>
   );

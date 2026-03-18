@@ -16,6 +16,37 @@
   :root {
     --background: 255 255 255;
     --foreground: 23 43 84;
+    --hc-border-width: 1px;
+    --hc-font-scale: 1;
+  }
+
+  /* High contrast theme — WCAG 2.1 AA compliant */
+  [data-theme="high-contrast"] {
+    --background: 255 255 255;
+    --foreground: 0 0 0;
+    --hc-border-width: 3px;
+    --hc-font-scale: 1.1;
+  }
+
+  [data-theme="high-contrast"] body {
+    @apply bg-white text-black;
+    font-size: calc(1rem * var(--hc-font-scale));
+  }
+
+  [data-theme="high-contrast"] a,
+  [data-theme="high-contrast"] button {
+    text-decoration: underline;
+    border-width: var(--hc-border-width);
+  }
+
+  [data-theme="high-contrast"] .card,
+  [data-theme="high-contrast"] .card-elevated {
+    @apply border-black border-2;
+  }
+
+  [data-theme="high-contrast"] :focus-visible {
+    @apply outline-4 outline-black outline-offset-4;
+    outline-style: solid;
   }
 
   body {

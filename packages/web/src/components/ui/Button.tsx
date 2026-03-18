@@ -31,9 +31,9 @@ export function Button({
             variant === 'accent',
           'bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-300':
             variant === 'ghost',
-          'px-4 py-2.5 text-sm min-h-[44px]': size === 'sm',
-          'px-6 py-3 text-base min-h-[48px]': size === 'md',
-          'px-8 py-4 text-lg min-h-[56px]': size === 'lg',
+          'px-4 py-2.5 text-sm min-h-[44px] min-w-[44px]': size === 'sm',
+          'px-6 py-3 text-base min-h-[48px] min-w-[48px]': size === 'md',
+          'px-8 py-4 text-lg min-h-[56px] min-w-[56px]': size === 'lg',
           'opacity-50 cursor-not-allowed': disabled || loading,
         },
         className

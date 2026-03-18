@@ -27,8 +27,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  userScalable: true,
   themeColor: '#2577eb',
 };
 
@@ -65,9 +65,9 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        <div id="main-content">
+        <main id="main-content" role="main">
           {children}
-        </div>
+        </main>
         <ServiceWorkerRegistration />
       </body>
     </html>

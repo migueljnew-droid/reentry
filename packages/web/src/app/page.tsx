@@ -84,7 +84,7 @@ export default function Home() {
           />
         </div>
 
-        <nav className="relative z-10 max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+        <nav aria-label="Main navigation" className="relative z-10 max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/10 backdrop-blur flex items-center justify-center text-xl font-bold">
               R
@@ -143,7 +143,7 @@ export default function Home() {
         </div>
 
         {/* Stats bar */}
-        <div className="relative z-10 border-t border-white/10">
+        <div className="relative z-10 border-t border-white/10" role="region" aria-label="Statistics">
           <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat) => (
               <div key={stat.label} className="text-center">
@@ -285,7 +285,7 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 py-12">
+      <footer className="border-t border-gray-100 py-12" role="contentinfo">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
@@ -297,7 +297,7 @@ export default function Home() {
                 by FathersCAN, Inc.
               </span>
             </div>
-            <div className="flex items-center gap-6 text-sm text-gray-500">
+            <nav aria-label="Footer navigation" className="flex items-center gap-6 text-sm text-gray-500">
               <a href="#" className="hover:text-primary-600">
                 Privacy Policy
               </a>
@@ -310,7 +310,7 @@ export default function Home() {
               <a href="#" className="hover:text-primary-600">
                 Contact
               </a>
-            </div>
+            </nav>
           </div>
           <div className="mt-8 text-center text-xs text-gray-400">
             REENTRY is a project of FathersCAN, Inc., a 501(c)(3) nonprofit.

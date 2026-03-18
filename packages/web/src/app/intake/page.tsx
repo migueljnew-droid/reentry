@@ -171,9 +171,9 @@ export default function IntakePage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50" role="banner">
         <div className="max-w-2xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2" aria-label="REENTRY home">
             <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-sm font-bold text-primary-700">
               R
             </div>
@@ -186,9 +186,9 @@ export default function IntakePage() {
       {/* Chat-style intake */}
       <main className="max-w-2xl mx-auto px-6 py-8 pb-32">
         {/* Assistant message */}
-        <div className="animate-fade-in mb-8">
+        <div className="animate-fade-in mb-8" aria-live="polite" aria-atomic="true">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-lg flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-lg flex-shrink-0" aria-hidden="true">
               🤝
             </div>
             <div className="bg-white rounded-2xl rounded-tl-md p-5 shadow-sm border border-gray-100 max-w-[85%]">
@@ -203,9 +203,12 @@ export default function IntakePage() {
         <div className="animate-slide-up">
           {stage === 'welcome' && (
             <div className="space-y-4">
+              <label htmlFor="intake-name" className="sr-only">Your name</label>
               <input
+                id="intake-name"
                 type="text"
                 placeholder="Your name"
+                aria-label="Your name"
                 className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 text-lg focus:border-primary-400 focus:ring-4 focus:ring-primary-100 outline-none"
                 value={data.fullName}
                 onChange={(e) => setData({ ...data, fullName: e.target.value })}
@@ -309,8 +312,11 @@ export default function IntakePage() {
 
           {stage === 'conviction' && (
             <div className="space-y-4">
+              <label htmlFor="intake-release-date" className="sr-only">Release date</label>
               <input
+                id="intake-release-date"
                 type="date"
+                aria-label="Release date"
                 className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 text-lg focus:border-primary-400 focus:ring-4 focus:ring-primary-100 outline-none"
                 value={data.releaseDate}
                 onChange={(e) => setData({ ...data, releaseDate: e.target.value })}
@@ -399,17 +405,22 @@ export default function IntakePage() {
                 </button>
               </div>
               {data.hasChildren && (
-                <input
-                  type="number"
-                  min="1"
-                  max="20"
-                  placeholder="How many children?"
-                  className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 text-lg focus:border-primary-400 outline-none"
-                  value={data.numberOfChildren || ''}
-                  onChange={(e) =>
-                    setData({ ...data, numberOfChildren: parseInt(e.target.value) || 0 })
-                  }
-                />
+                <>
+                  <label htmlFor="intake-children-count" className="sr-only">Number of children</label>
+                  <input
+                    id="intake-children-count"
+                    type="number"
+                    min="1"
+                    max="20"
+                    placeholder="How many children?"
+                    aria-label="Number of children"
+                    className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 text-lg focus:border-primary-400 outline-none"
+                    value={data.numberOfChildren || ''}
+                    onChange={(e) =>
+                      setData({ ...data, numberOfChildren: parseInt(e.target.value) || 0 })
+                    }
+                  />
+                </>
               )}
               <div className="grid grid-cols-2 gap-3">
                 <button
@@ -444,14 +455,20 @@ export default function IntakePage() {
 
           {stage === 'family' && (
             <div className="space-y-4">
+              <label htmlFor="intake-work-history" className="sr-only">Work history and skills</label>
               <textarea
+                id="intake-work-history"
                 placeholder="What kind of work did you do before? Any trades, skills, or certifications? (Example: 'I did construction for 5 years and have a CDL')"
+                aria-label="Work history and skills"
                 className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 text-lg focus:border-primary-400 outline-none resize-none"
                 rows={4}
                 value={data.workHistory}
                 onChange={(e) => setData({ ...data, workHistory: e.target.value })}
               />
+              <label htmlFor="intake-education" className="sr-only">Education level</label>
               <select
+                id="intake-education"
+                aria-label="Education level"
                 className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 text-lg focus:border-primary-400 outline-none"
                 value={data.education}
                 onChange={(e) => setData({ ...data, education: e.target.value })}
@@ -492,18 +509,23 @@ export default function IntakePage() {
                 ))}
               </div>
               {data.supervisionType && data.supervisionType !== 'none' && (
-                <select
-                  className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 text-lg focus:border-primary-400 outline-none"
-                  value={data.checkInFrequency}
-                  onChange={(e) => setData({ ...data, checkInFrequency: e.target.value })}
-                >
-                  <option value="">How often do you check in?</option>
+                <>
+                  <label htmlFor="intake-check-in" className="sr-only">Check-in frequency</label>
+                  <select
+                    id="intake-check-in"
+                    aria-label="Check-in frequency"
+                    className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 text-lg focus:border-primary-400 outline-none"
+                    value={data.checkInFrequency}
+                    onChange={(e) => setData({ ...data, checkInFrequency: e.target.value })}
+                  >
+                    <option value="">How often do you check in?</option>
                   <option value="weekly">Weekly</option>
                   <option value="biweekly">Every two weeks</option>
                   <option value="monthly">Monthly</option>
                   <option value="quarterly">Quarterly</option>
                   <option value="unknown">I&apos;m not sure</option>
                 </select>
+                </>
               )}
               <div className="flex gap-3">
                 <Button variant="ghost" onClick={prevStage}>Back</Button>

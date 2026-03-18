@@ -25,6 +25,7 @@ export function ReturnToPlan() {
   return (
     <Link
       href={`/plan/${planId}`}
+      aria-label="Return to your action plan"
       className="fixed bottom-6 right-6 z-50 bg-accent-600 text-white px-6 py-3 rounded-full shadow-lg hover:bg-accent-700 transition-all font-semibold flex items-center gap-2 animate-slide-up"
     >
       <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

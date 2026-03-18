@@ -434,6 +434,7 @@ export default function PlanPage() {
           <div className="flex gap-2 flex-shrink-0">
             <button
               className="px-4 py-2 text-sm font-semibold text-white bg-primary-600 rounded-lg hover:bg-primary-700"
+              aria-label="Enable deadline notifications"
               onClick={async () => {
                 await requestNotificationPermission();
                 setShowNotifPrompt(false);
@@ -443,6 +444,7 @@ export default function PlanPage() {
             </button>
             <button
               className="px-4 py-2 text-sm text-gray-500 hover:text-gray-700"
+              aria-label="Dismiss notification prompt"
               onClick={() => setShowNotifPrompt(false)}
             >
               Later
@@ -451,10 +453,10 @@ export default function PlanPage() {
         </div>
       )}
       {/* Header */}
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50" role="banner">
         <div className="max-w-3xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between mb-3">
-            <Link href="/" className="flex items-center gap-2">
+            <Link href="/" className="flex items-center gap-2" aria-label="REENTRY home">
               <div className="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-sm font-bold text-primary-700">
                 R
               </div>
@@ -522,11 +524,23 @@ export default function PlanPage() {
                     >
                       <div
                         className="flex items-start gap-4"
+                        role="button"
+                        tabIndex={0}
+                        aria-expanded={expandedStep === step.id}
+                        aria-controls={`step-details-${step.id}`}
                         onClick={() =>
                           setExpandedStep(
                             expandedStep === step.id ? null : step.id
                           )
                         }
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            setExpandedStep(
+                              expandedStep === step.id ? null : step.id
+                            );
+                          }
+                        }}
                       >
                         <button
                           className={`w-7 h-7 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 transition-all ${
@@ -597,7 +611,7 @@ export default function PlanPage() {
                       </div>
 
                       {expandedStep === step.id && (
-                        <div className="mt-4 ml-11 border-t border-gray-100 pt-4">
+                        <div id={`step-details-${step.id}`} className="mt-4 ml-11 border-t border-gray-100 pt-4">
                           <ol className="space-y-3">
                             {step.instructions.map((instruction, i) => (
                               <li
