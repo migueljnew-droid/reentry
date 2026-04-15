@@ -103,17 +103,39 @@ describe.skipIf(!canRunIntegration)('RLS Integration Tests', () => {
     await adminClient.from('users').delete().eq('id', userBId);
   });
 
+  function mintUserJwt(authId: string): string {
+    // Mint a Supabase-compatible JWT signed with the local JWT secret so
+    // RLS policies see the expected auth.uid(). HS256 → base64url
+    // header.payload.signature with HMAC-SHA256 over "header.payload".
+    const secret = process.env.SUPABASE_JWT_SECRET
+      ?? 'super-secret-jwt-token-with-at-least-32-characters-long';
+    const header = { alg: 'HS256', typ: 'JWT' };
+    const now = Math.floor(Date.now() / 1000);
+    const payload = {
+      aud: 'authenticated',
+      role: 'authenticated',
+      sub: authId,
+      iat: now,
+      exp: now + 3600,
+    };
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const crypto = require('crypto') as typeof import('crypto');
+    const b64url = (obj: object | Buffer): string =>
+      (Buffer.isBuffer(obj) ? obj : Buffer.from(JSON.stringify(obj)))
+        .toString('base64')
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    const signingInput = `${b64url(header)}.${b64url(payload)}`;
+    const signature = crypto.createHmac('sha256', secret).update(signingInput).digest();
+    return `${signingInput}.${b64url(signature)}`;
+  }
+
   function createUserClient(authId: string): SupabaseClient {
-    // Create a client that impersonates a specific user via RLS
-    // In real Supabase, this would use a JWT; for testing, we use
-    // the service role with a custom auth context
+    const jwt = mintUserJwt(authId);
     return createClient(SUPABASE_URL!, SUPABASE_ANON_KEY!, {
       global: {
-        headers: {
-          // Supabase local dev supports setting auth.uid() via header
-          Authorization: `Bearer ${authId}`,
-        },
+        headers: { Authorization: `Bearer ${jwt}` },
       },
+      auth: { persistSession: false, autoRefreshToken: false },
     });
   }
 
