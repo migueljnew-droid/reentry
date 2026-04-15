@@ -365,3 +365,80 @@ To add a new intake state:
 | `packages/web/src/lib/voice/prompts.ts` | Plain-English prompt templates |
 | `packages/web/src/app/api/intake/voice/route.ts` | HTTP route (POST + GET) |
 | `packages/web/src/__tests__/voice/transcript.test.ts` | 18 vitest tests |
+
+## Conviction-Aware Employment Matcher
+
+Shipped as part of the INNOVATE protocol. Directly advances the mission of
+breaking the recidivism cycle by connecting returning citizens to employers
+who will actually hire them — filtered by their specific conviction history
+and state.
+
+### What Was Built
+
+| File | Purpose |
+|------|---------|
+| `packages/web/src/lib/employment/fair-chance-db.ts` | 25 real fair-chance employers across warehousing/construction/hospitality/tech/food-service/nonprofit. `getEmployersByState(state, convictions[])` filters by location and conviction exclusions. |
+| `packages/web/src/lib/employment/ban-the-box.ts` | All 50 states + DC ban-the-box rules. `getBanTheBoxProtection(state)` returns timing, sector coverage, employee threshold, and a plain-English summary. |
+| `packages/web/src/lib/employment/matcher.ts` | Pure `matchEmployers(profile)` function. Scores employers 0–100 by policy type, state legal protection, and remote availability. Returns ranked matches with explanations, hiring tips, and a voice-ready summary. |
+| `packages/web/src/app/api/employment/match/route.ts` | `POST /api/employment/match` — Zod-validated, `withErrorHandler`-wrapped. Accepts `{ state, convictions[], remoteOk, industries? }`. |
+| `packages/web/src/__tests__/employment/matcher.test.ts` | 15+ Vitest tests covering scoring, filtering, voice summary, edge cases. |
+
+### API Usage
+
+```ts
+POST /api/employment/match
+Content-Type: application/json
+
+{
+  "state": "GA",
+  "convictions": ["drug"],
+  "remoteOk": false,
+  "industries": ["food-service", "warehousing"]
+}
+
+// Response
+{
+  "ok": true,
+  "totalFound": 8,
+  "voiceSummary": "We found 8 employers that may hire you. Your top match is Wendy's...",
+  "banTheBoxProtection": { "state": "GA", "level": "public", ... },
+  "matches": [
+    {
+      "id": "greyston-bakery-ny",
+      "name": "Greyston Bakery",
+      "score": 100,
+      "explanation": "Greyston Bakery hires without any conviction restrictions...",
+      "tips": ["Apply directly at: https://greyston.org/open-hiring/"]
+    }
+  ]
+}
+```
+
+### Scoring Logic
+
+| Policy | Base Score |
+|--------|------------|
+| `unrestricted` | 100 |
+| `fair-chance` | 85 |
+| `ban-the-box` | 75 |
+| `case-by-case` | 55 |
+
+Bonuses: +10 for post-offer background check timing, +5 for post-interview,
++5 for remote match, +3 for state-specific employer.
+Penalty: −15 for case-by-case with violent/sexual convictions.
+
+### Extending the Database
+
+To add employers: append to `FAIR_CHANCE_EMPLOYERS` in `fair-chance-db.ts`.
+To update state laws: edit `BAN_THE_BOX_RULES` in `ban-the-box.ts`.
+Both are plain TypeScript objects — no migrations, no DB writes required.
+The matcher is a pure function and will automatically use new data.
+
+### Why This Advances the Mission
+
+Employment within 90 days of release is the single strongest predictor of
+non-recidivism. The current national rate is 40%. Our target is 60%.
+This matcher removes the guesswork — a returning citizen answers three
+questions (state, conviction type, remote?) and gets a ranked, explained
+list of employers who will actually consider them, plus their legal rights
+under ban-the-box law, delivered in plain language suitable for voice output.
