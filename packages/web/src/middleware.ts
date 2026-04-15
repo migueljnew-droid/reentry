@@ -7,11 +7,12 @@ const PUBLIC_PATHS = ['/api/health'];
 // Demo / fixture endpoints — no real user data, safe to expose for MVP dashboards.
 // Remove as each endpoint is wired to real auth'd user context.
 const PUBLIC_PREFIXES = [
-  '/api/po/',               // Caseload + compliance-report fixtures
-  '/api/employment/match',  // Fair-chance matcher (stateless search)
-  '/api/resources',         // 211.org stub
-  '/api/intake/voice',      // Voice intake FSM
-  '/api/deadlines',         // Deadline cascade compute (stateless)
+  '/api/po/',                 // Caseload + compliance-report fixtures
+  '/api/employment/match',    // Fair-chance matcher (stateless search)
+  '/api/resources',           // 211.org stub
+  '/api/intake/voice',        // Voice intake FSM
+  '/api/deadlines',           // Deadline cascade compute (stateless)
+  '/api/plans/ai-narrative',  // SOVEREIGN multi-agent narrative (stateless)
 ];
 
 function addSecurityHeaders(response: NextResponse): NextResponse {
