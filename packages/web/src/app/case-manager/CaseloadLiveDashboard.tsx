@@ -1,16 +1,16 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { AppShell } from '@/components/layout/AppShell';
+import { Badge, Card, Skeleton, StatCard } from '@/components/ui/primitives';
 
 type CaseloadSummary = {
-  // API today returns these names:
   total?: number;
   averageRiskScore?: number;
   abscondedCount?: number;
   missedCheckInsTotal?: number;
   byRisk?: Record<string, number>;
   byStatus?: Record<string, number>;
-  // Older mental model kept for back-compat.
   totalMembers?: number;
   avgRiskScore?: number;
   atRiskCount?: number;
@@ -19,45 +19,78 @@ type CaseloadSummary = {
 
 type CaseloadMember = {
   id: string;
-  // API returns firstName + lastName; older shape had `name` — accept both.
   name?: string;
   firstName?: string;
   lastName?: string;
   riskScore: number;
   riskLevel?: string;
-  // `lastContact` (old) or `nextCheckIn` (current API).
   lastContact?: string;
   nextCheckIn?: string | null;
   missedCheckIns: number;
   status?: string;
   supervisionState?: string;
-  employmentStatus?: string;
-  housingStatus?: string;
+  convictionType?: string;
+  daysUntilDischarge?: number;
 };
 
 type CaseloadResponse = {
   ok: boolean;
-  // Route nests payload under `data` today — accept either shape.
   data?: { members: CaseloadMember[]; summary?: CaseloadSummary };
   members?: CaseloadMember[];
   summary?: CaseloadSummary;
 };
 
-function riskColor(score: number): string {
-  if (score >= 8) return 'bg-red-100 text-red-900 border-red-300';
-  if (score >= 5) return 'bg-orange-100 text-orange-900 border-orange-300';
-  if (score >= 3) return 'bg-yellow-100 text-yellow-900 border-yellow-300';
-  return 'bg-green-100 text-green-900 border-green-300';
+function memberName(m: CaseloadMember): string {
+  return m.name ?? ([m.firstName, m.lastName].filter(Boolean).join(' ') || 'Unknown');
 }
 
-export default function CaseloadDashboard() {
+function initials(name: string): string {
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? '')
+    .join('') || '?';
+}
+
+function avatarColor(id: string): string {
+  const colors = [
+    'bg-primary-100 text-primary-800',
+    'bg-accent-100 text-accent-800',
+    'bg-warm-100 text-warm-700',
+    'bg-pink-100 text-pink-800',
+    'bg-indigo-100 text-indigo-800',
+    'bg-teal-100 text-teal-800',
+  ];
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h + id.charCodeAt(i)) % colors.length;
+  return colors[h];
+}
+
+function riskTone(score: number): 'success' | 'warn' | 'danger' | 'neutral' {
+  if (score >= 80) return 'danger';
+  if (score >= 60) return 'warn';
+  if (score >= 40) return 'neutral';
+  return 'success';
+}
+
+function riskLabel(score: number): string {
+  if (score >= 80) return 'Critical';
+  if (score >= 60) return 'High';
+  if (score >= 40) return 'Medium';
+  return 'Low';
+}
+
+export default function CaseloadLiveDashboard() {
   const [data, setData] = useState<CaseloadResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useState<'all' | 'atRisk' | 'compliant' | 'absconded'>('all');
 
   useEffect(() => {
     let cancelled = false;
-    async function load() {
+    (async () => {
       try {
         const res = await fetch('/api/po/caseload');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -72,101 +105,161 @@ export default function CaseloadDashboard() {
           setLoading(false);
         }
       }
-    }
-    void load();
+    })();
     return () => { cancelled = true; };
   }, []);
 
-  if (loading) return <div className="p-6 text-slate-600">Loading caseload…</div>;
-  if (error) return <div className="p-6 text-red-700">Failed to load: {error}</div>;
-  if (!data) return null;
-
-  const members = data.data?.members ?? data.members ?? [];
-  const rawSummary = data.data?.summary ?? data.summary ?? {};
-  // Normalise to the shape the card grid expects.
+  const members = data?.data?.members ?? data?.members ?? [];
+  const raw = data?.data?.summary ?? data?.summary ?? {};
   const summary = {
-    totalMembers: rawSummary.totalMembers ?? rawSummary.total ?? members.length,
-    avgRiskScore: rawSummary.avgRiskScore ?? rawSummary.averageRiskScore ?? 0,
-    atRiskCount:
-      rawSummary.atRiskCount ??
-      (rawSummary.byRisk
-        ? (rawSummary.byRisk.high ?? 0) + (rawSummary.byRisk.critical ?? 0)
-        : 0),
-    overdueCount:
-      rawSummary.overdueCount ?? rawSummary.missedCheckInsTotal ?? 0,
+    total: raw.totalMembers ?? raw.total ?? members.length,
+    avgRisk: raw.avgRiskScore ?? raw.averageRiskScore ?? 0,
+    atRisk:
+      raw.atRiskCount ??
+      (raw.byRisk ? (raw.byRisk.high ?? 0) + (raw.byRisk.critical ?? 0) : 0),
+    overdue: raw.overdueCount ?? raw.missedCheckInsTotal ?? 0,
   };
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    return members.filter((m) => {
+      if (q && !memberName(m).toLowerCase().includes(q)) return false;
+      if (filter === 'atRisk' && m.riskScore < 60) return false;
+      if (filter === 'compliant' && (m.riskScore >= 60 || (m.missedCheckIns ?? 0) > 0)) return false;
+      if (filter === 'absconded' && m.status !== 'absconded') return false;
+      return true;
+    });
+  }, [members, query, filter]);
+
   return (
-    <main className="min-h-screen bg-slate-50 text-slate-900 p-6">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-2">Caseload Dashboard</h1>
-        <p className="text-slate-600 mb-6">
-          Parole / probation officer view · {summary.totalMembers} active members
-        </p>
+    <AppShell>
+      <div className="mx-auto max-w-6xl px-4 py-8 md:py-10">
+        <div className="mb-6 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <div className="text-xs font-semibold uppercase tracking-wider text-primary-700">
+              Case Manager
+            </div>
+            <h1 className="mt-1 font-display text-3xl md:text-4xl font-bold tracking-tight">
+              Caseload
+            </h1>
+            <p className="mt-2 text-slate-600">
+              {loading ? 'Loading…' : `${summary.total} active member${summary.total === 1 ? '' : 's'}`}
+            </p>
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search members…"
+              className="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm placeholder:text-slate-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-200"
+            />
+          </div>
+        </div>
 
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <StatCard label="Total" value={summary.totalMembers} tone="neutral" />
-          <StatCard label="Avg Risk" value={summary.avgRiskScore.toFixed(1)} tone="neutral" />
-          <StatCard label="At Risk" value={summary.atRiskCount} tone="warn" />
-          <StatCard label="Overdue Deadlines" value={summary.overdueCount} tone="danger" />
-        </section>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+          {loading ? (
+            <>
+              <Skeleton className="h-24" />
+              <Skeleton className="h-24" />
+              <Skeleton className="h-24" />
+              <Skeleton className="h-24" />
+            </>
+          ) : (
+            <>
+              <StatCard label="Total" value={summary.total} tone="primary" />
+              <StatCard label="Avg risk" value={Number(summary.avgRisk).toFixed(1)} tone="neutral" />
+              <StatCard label="At risk" value={summary.atRisk} tone="warn" sub="risk score ≥ 60" />
+              <StatCard label="Missed check-ins" value={summary.overdue} tone="danger" />
+            </>
+          )}
+        </div>
 
-        <section>
-          <h2 className="text-xl font-semibold mb-3">Members</h2>
-          <div className="grid gap-3">
-            {members.map((m) => (
-              <article
-                key={m.id}
-                className={`border-l-4 p-4 rounded-lg bg-white shadow ${riskColor(m.riskScore)}`}
-              >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-semibold">
-                      {m.name ?? [m.firstName, m.lastName].filter(Boolean).join(' ') ?? 'Unknown'}
-                    </h3>
-                    <p className="text-sm text-slate-600">
-                      {m.nextCheckIn
-                        ? `Next check-in: ${new Date(m.nextCheckIn).toLocaleDateString()}`
-                        : m.lastContact
-                          ? `Last contact: ${new Date(m.lastContact).toLocaleDateString()}`
-                          : 'No contact scheduled'}
-                      {' · '}
-                      {m.missedCheckIns ?? 0} missed check-in(s)
-                      {m.status && ` · ${m.status}`}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold">{m.riskScore}</div>
-                    <div className="text-xs uppercase tracking-wide text-slate-500">risk</div>
-                  </div>
-                </div>
-              </article>
+        <div className="mb-4 flex flex-wrap gap-2">
+          {(['all', 'atRisk', 'compliant', 'absconded'] as const).map((k) => (
+            <button
+              key={k}
+              onClick={() => setFilter(k)}
+              className={`rounded-full px-3 py-1 text-sm font-medium transition ${
+                filter === k
+                  ? 'bg-slate-900 text-white'
+                  : 'bg-white text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100'
+              }`}
+            >
+              {k === 'all' ? 'All' : k === 'atRisk' ? 'At risk' : k === 'compliant' ? 'Compliant' : 'Absconded'}
+            </button>
+          ))}
+        </div>
+
+        {error && (
+          <Card className="border-red-200 bg-red-50">
+            <div className="p-4 text-red-800">Failed to load: {error}</div>
+          </Card>
+        )}
+
+        {loading && !error && (
+          <div className="space-y-3">
+            {[0, 1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-24 rounded-xl" />
             ))}
           </div>
-        </section>
-      </div>
-    </main>
-  );
-}
+        )}
 
-function StatCard({
-  label,
-  value,
-  tone,
-}: {
-  label: string;
-  value: number | string;
-  tone: 'neutral' | 'warn' | 'danger';
-}) {
-  const toneClass =
-    tone === 'danger'
-      ? 'bg-red-50 border-red-200 text-red-900'
-      : tone === 'warn'
-      ? 'bg-orange-50 border-orange-200 text-orange-900'
-      : 'bg-white border-slate-200 text-slate-900';
-  return (
-    <div className={`p-4 rounded-lg border ${toneClass}`}>
-      <div className="text-xs uppercase tracking-wide text-slate-500">{label}</div>
-      <div className="text-3xl font-bold mt-1">{value}</div>
-    </div>
+        {!loading && !error && filtered.length === 0 && (
+          <Card>
+            <div className="p-8 text-center text-slate-500">
+              No members match your filters.
+            </div>
+          </Card>
+        )}
+
+        {!loading && !error && filtered.length > 0 && (
+          <div className="grid gap-3">
+            {filtered.map((m) => {
+              const name = memberName(m);
+              const tone = riskTone(m.riskScore);
+              return (
+                <Card key={m.id} className="hover:shadow-md transition">
+                  <div className="flex items-start gap-4 p-4 md:p-5">
+                    <div
+                      className={`flex h-12 w-12 flex-none items-center justify-center rounded-full text-base font-semibold ${avatarColor(m.id)}`}
+                      aria-hidden="true"
+                    >
+                      {initials(name)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-lg font-semibold text-slate-900 truncate">{name}</h3>
+                        {m.status && (
+                          <Badge tone={m.status === 'absconded' ? 'danger' : m.status === 'at_risk' ? 'warn' : 'neutral'}>
+                            {m.status.replace(/_/g, ' ')}
+                          </Badge>
+                        )}
+                        {m.supervisionState && (
+                          <Badge tone="neutral">{m.supervisionState}</Badge>
+                        )}
+                      </div>
+                      <p className="mt-1 text-sm text-slate-500">
+                        {m.nextCheckIn
+                          ? `Next check-in ${new Date(m.nextCheckIn).toLocaleDateString()}`
+                          : m.lastContact
+                          ? `Last contact ${new Date(m.lastContact).toLocaleDateString()}`
+                          : 'No contact scheduled'}
+                        {(m.missedCheckIns ?? 0) > 0 && ` · ${m.missedCheckIns} missed`}
+                        {m.convictionType && ` · ${m.convictionType}`}
+                      </p>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <div className="text-2xl font-bold tracking-tight text-slate-900">{m.riskScore}</div>
+                      <Badge tone={tone}>{riskLabel(m.riskScore)}</Badge>
+                    </div>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </AppShell>
   );
 }
