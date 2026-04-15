@@ -165,3 +165,39 @@ Built by **Miguel Louis Jiminez** — a father who fought through the justice sy
 [![Get Started](https://img.shields.io/badge/Get_Started-reentry.vercel.app-2577eb?style=for-the-badge&logo=vercel)](https://reentry.vercel.app)
 
 </div>
+
+---
+
+## Input Validation
+
+All API route handlers **must** validate incoming data with the Zod schemas in
+`packages/web/src/lib/validation/schemas.ts` before any business logic runs.
+
+```ts
+import { parseOrThrow, IntakeSchema } from '@/lib/validation/schemas';
+
+export async function POST(req: Request) {
+  const data = parseOrThrow(IntakeSchema, await req.json());
+  // data is fully typed — proceed safely
+}
+```
+
+`parseOrThrow` throws a `ValidationError` with `statusCode: 422` and a
+structured `issues` array on failure. Catch it in a shared error handler and
+return the issues to the client so the UI can surface field-level errors.
+
+### Why this matters
+
+Wrong release dates break eligibility calculations. Wrong state codes silently
+return empty resource lists. For a justice-involved population, silent failures
+cause real harm — **validate at the boundary, always**.
+
+### Available schemas
+
+| Schema | Used by |
+|---|---|
+| `IntakeSchema` | `POST /api/intake` — primary user form |
+| `ResourceQuerySchema` | `GET /api/resources` — resource lookup |
+| `ActionPlanRequestSchema` | `POST /api/plan` — AI plan generation |
+
+Run `npm test` from the repo root to execute the full schema test suite.

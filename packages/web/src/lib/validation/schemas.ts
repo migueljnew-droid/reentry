@@ -1,139 +1,161 @@
+/**
+ * Reentry — Zod validation schemas
+ *
+ * All API route handlers MUST import from here and call parseOrThrow().
+ * See CLAUDE.md §Input Validation for the contract.
+ */
 import { z } from 'zod';
 
-// ── Intake / Onboarding ──────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
+// Primitives
+// ---------------------------------------------------------------------------
 
-export const US_STATES = [
-  'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA',
-  'KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ',
-  'NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT',
-  'VA','WA','WV','WI','WY','DC',
-] as const;
+/** ISO-8601 date string (YYYY-MM-DD) */
+const ISODateString = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, 'Must be YYYY-MM-DD format');
 
-export type USState = typeof US_STATES[number];
+/** Two-letter US state code */
+const StateCode = z
+  .string()
+  .length(2)
+  .toUpperCase()
+  .refine(
+    (s) =>
+      [
+        'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN',
+        'IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV',
+        'NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN',
+        'TX','UT','VT','VA','WA','WV','WI','WY','DC','FED',
+      ].includes(s),
+    { message: 'Invalid US state code' },
+  );
+
+// ---------------------------------------------------------------------------
+// Intake schema — primary user-facing form
+// ---------------------------------------------------------------------------
 
 export const IntakeSchema = z.object({
-  /** ISO date string — release date cannot be in the future by more than 1 year */
-  releaseDate: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Must be YYYY-MM-DD')
-    .refine((d) => {
-      const date = new Date(d);
-      const now = new Date();
-      const oneYearFromNow = new Date();
-      oneYearFromNow.setFullYear(now.getFullYear() + 1);
-      return date <= oneYearFromNow;
-    }, 'Release date cannot be more than 1 year in the future'),
+  /** ISO date the user was / will be released */
+  releaseDate: ISODateString,
 
-  state: z.enum(US_STATES, {
-    errorMap: () => ({ message: 'Must be a valid US state abbreviation' }),
-  }),
+  /** Two-letter state of release / current residence */
+  state: StateCode,
 
-  county: z.string().min(2).max(100).optional(),
+  /** Broad conviction category — drives eligibility filtering */
+  convictionType: z.enum([
+    'nonviolent_drug',
+    'nonviolent_property',
+    'violent',
+    'sex_offense',
+    'dui',
+    'other',
+  ]),
 
-  convictionType: z
-    .enum(['felony', 'misdemeanor', 'federal', 'unknown'])
-    .default('unknown'),
-
-  /** Comma-separated conviction categories for benefits eligibility */
-  convictionCategories: z
+  /** Self-reported needs — at least one required */
+  needs: z
     .array(
       z.enum([
-        'drug_possession',
-        'drug_trafficking',
-        'violent',
-        'sex_offense',
-        'financial',
-        'other',
-      ])
+        'id_replacement',
+        'housing',
+        'employment',
+        'benefits',
+        'healthcare',
+        'legal_aid',
+        'transportation',
+        'childcare',
+        'education',
+      ]),
     )
-    .max(10)
-    .default([]),
+    .min(1, 'Select at least one need'),
 
-  needsHousing: z.boolean().default(false),
-  needsEmployment: z.boolean().default(false),
-  needsIdReplacement: z.boolean().default(false),
-  needsBenefits: z.boolean().default(false),
-  needsLegalAid: z.boolean().default(false),
-
-  /** Optional — used for deadline reminders */
-  phoneNumber: z
+  /** Optional — used for employment matching and resource proximity */
+  zipCode: z
     .string()
-    .regex(/^\+?[1-9]\d{1,14}$/, 'Must be a valid E.164 phone number')
+    .regex(/^\d{5}(-\d{4})?$/, 'Must be a valid ZIP code')
     .optional(),
 
-  email: z.string().email().optional(),
+  /** Optional voice transcript that seeded this intake */
+  voiceTranscript: z.string().max(4000).optional(),
 });
 
-export type IntakeInput = z.infer<typeof IntakeSchema>;
+export type Intake = z.infer<typeof IntakeSchema>;
 
-// ── Benefits Screening ───────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
+// Resource query schema — used by /api/resources route
+// ---------------------------------------------------------------------------
 
-export const BenefitsScreeningSchema = z.object({
-  state: z.enum(US_STATES),
-  householdSize: z.number().int().min(1).max(20),
-  monthlyIncome: z.number().min(0).max(1_000_000),
-  hasChildren: z.boolean().default(false),
-  isPregnant: z.boolean().default(false),
-  isVeteran: z.boolean().default(false),
-  isDisabled: z.boolean().default(false),
-  convictionCategories: z
-    .array(
-      z.enum([
-        'drug_possession',
-        'drug_trafficking',
-        'violent',
-        'sex_offense',
-        'financial',
-        'other',
-      ])
-    )
-    .max(10)
-    .default([]),
+export const ResourceQuerySchema = z.object({
+  state: StateCode,
+  need: z.enum([
+    'id_replacement',
+    'housing',
+    'employment',
+    'benefits',
+    'healthcare',
+    'legal_aid',
+    'transportation',
+    'childcare',
+    'education',
+  ]),
+  zipCode: z
+    .string()
+    .regex(/^\d{5}(-\d{4})?$/)
+    .optional(),
+  /** Max results — default 20, max 100 */
+  limit: z.coerce.number().int().min(1).max(100).default(20),
 });
 
-export type BenefitsScreeningInput = z.infer<typeof BenefitsScreeningSchema>;
+export type ResourceQuery = z.infer<typeof ResourceQuerySchema>;
 
-// ── Contact / Referral Form ──────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
+// Action plan generation schema — sent to AI engine
+// ---------------------------------------------------------------------------
 
-export const ContactSchema = z.object({
-  name: z.string().min(1).max(200),
-  email: z.string().email(),
-  subject: z.string().min(1).max(300),
-  message: z.string().min(10).max(5000),
-  /** Honeypot — must be empty */
-  website: z.literal('').optional(),
-});
-
-export type ContactInput = z.infer<typeof ContactSchema>;
-
-// ── Action Plan ──────────────────────────────────────────────────────────────
-
-export const ActionPlanRequestSchema = z.object({
-  intake: IntakeSchema,
-  language: z.enum(['en', 'es']).default('en'),
-  voiceMode: z.boolean().default(false),
+export const ActionPlanRequestSchema = IntakeSchema.extend({
+  /** Resume token from a previous session (optional) */
+  resumeToken: z.string().uuid().optional(),
 });
 
 export type ActionPlanRequest = z.infer<typeof ActionPlanRequestSchema>;
 
-// ── Shared helpers ───────────────────────────────────────────────────────────
+// ---------------------------------------------------------------------------
+// parseOrThrow — shared helper referenced in CLAUDE.md
+// ---------------------------------------------------------------------------
+
+export class ValidationError extends Error {
+  readonly statusCode = 422;
+  readonly issues: z.ZodIssue[];
+
+  constructor(issues: z.ZodIssue[]) {
+    super('Validation failed');
+    this.name = 'ValidationError';
+    this.issues = issues;
+  }
+}
 
 /**
- * Parse and return typed data, or throw a structured error.
- * Use in API route handlers:
+ * Parse `data` against `schema` and return the typed result.
+ * Throws a {@link ValidationError} (statusCode 422) on failure so that
+ * API route error handlers can return structured field-level errors to the UI.
+ *
+ * @example
+ * ```ts
+ * import { parseOrThrow, IntakeSchema } from '@/lib/validation/schemas';
+ *
+ * export async function POST(req: Request) {
  *   const data = parseOrThrow(IntakeSchema, await req.json());
+ *   // data is fully typed — proceed safely
+ * }
+ * ```
  */
-export function parseOrThrow<T>(schema: z.ZodSchema<T>, raw: unknown): T {
-  const result = schema.safeParse(raw);
+export function parseOrThrow<T extends z.ZodTypeAny>(
+  schema: T,
+  data: unknown,
+): z.infer<T> {
+  const result = schema.safeParse(data);
   if (!result.success) {
-    const issues = result.error.issues.map((i) => ({
-      path: i.path.join('.'),
-      message: i.message,
-    }));
-    const err = new Error('Validation failed');
-    (err as Error & { issues: typeof issues; statusCode: number }).issues = issues;
-    (err as Error & { issues: typeof issues; statusCode: number }).statusCode = 422;
-    throw err;
+    throw new ValidationError(result.error.issues);
   }
   return result.data;
 }
