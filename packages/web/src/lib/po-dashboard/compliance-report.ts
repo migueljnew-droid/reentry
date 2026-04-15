@@ -31,9 +31,10 @@ export interface ComplianceReport {
 /** Determine if a member is at risk based on risk score and recent activity */
 function getMemberRiskFactors(member: CaseloadMember): string[] {
   const factors: string[] = [];
-  const riskScore = (member as Record<string, unknown>).riskScore ?? (member as Record<string, unknown>).risk_score ?? 0;
-  const lastContact = (member as Record<string, unknown>).lastContact ?? (member as Record<string, unknown>).last_contact;
-  const missedCheckIns = (member as Record<string, unknown>).missedCheckIns ?? (member as Record<string, unknown>).missed_check_ins ?? 0;
+  const m = member as unknown as Record<string, unknown>;
+  const riskScore = Number(m.riskScore ?? m.risk_score ?? 0);
+  const lastContact = (m.lastContact ?? m.last_contact) as string | undefined;
+  const missedCheckIns = Number(m.missedCheckIns ?? m.missed_check_ins ?? 0);
 
   if (riskScore >= 7) factors.push('High risk score');
   else if (riskScore >= 5) factors.push('Elevated risk score');
@@ -48,10 +49,10 @@ function getMemberRiskFactors(member: CaseloadMember): string[] {
     if (daysSinceContact > 14) factors.push(`No contact in ${daysSinceContact} days`);
   }
 
-  const employmentStatus = (member as Record<string, unknown>).employmentStatus ?? (member as Record<string, unknown>).employment_status;
+  const employmentStatus = (member as unknown as Record<string, unknown>).employmentStatus ?? (member as unknown as Record<string, unknown>).employment_status;
   if (employmentStatus === 'unemployed') factors.push('Currently unemployed');
 
-  const housingStatus = (member as Record<string, unknown>).housingStatus ?? (member as Record<string, unknown>).housing_status;
+  const housingStatus = (member as unknown as Record<string, unknown>).housingStatus ?? (member as unknown as Record<string, unknown>).housing_status;
   if (housingStatus === 'unstable' || housingStatus === 'homeless') {
     factors.push('Unstable housing');
   }
@@ -66,11 +67,14 @@ function getOverdueDeadlines(
   periodEnd: Date
 ): Array<{ deadlineType: string; dueDate: Date; daysOverdue: number }> {
   const deadlines: Array<{ deadlineType: string; dueDate: Date; daysOverdue: number }> = [];
-  const memberDeadlines: unknown[] = (member as Record<string, unknown>).deadlines ?? [];
-  const now = periodEnd;
+  const rawDeadlines = (member as unknown as Record<string, unknown>).deadlines;
+  const memberDeadlines: Array<Record<string, unknown>> = Array.isArray(rawDeadlines)
+    ? (rawDeadlines as Array<Record<string, unknown>>)
+    : [];
 
+  const now = periodEnd;
   for (const dl of memberDeadlines) {
-    const dueDate = new Date(dl.dueDate ?? dl.due_date);
+    const dueDate = new Date(String(dl.dueDate ?? dl.due_date ?? ''));
     if (dueDate >= periodStart && dueDate <= periodEnd) {
       const isCompleted = dl.completed ?? dl.status === 'completed';
       if (!isCompleted && dueDate < now) {
@@ -78,7 +82,7 @@ function getOverdueDeadlines(
           (now.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)
         );
         deadlines.push({
-          deadlineType: dl.type ?? dl.deadlineType ?? 'Unknown',
+          deadlineType: String(dl.type ?? dl.deadlineType ?? 'Unknown'),
           dueDate,
           daysOverdue,
         });
@@ -96,12 +100,18 @@ function getPositiveOutcomes(
   periodEnd: Date
 ): Array<{ outcome: string; achievedAt: Date }> {
   const outcomes: Array<{ outcome: string; achievedAt: Date }> = [];
-  const memberOutcomes: unknown[] = (member as Record<string, unknown>).outcomes ?? [];
+  const rawOutcomes = (member as unknown as Record<string, unknown>).outcomes;
+  const memberOutcomes: Array<Record<string, unknown>> = Array.isArray(rawOutcomes)
+    ? (rawOutcomes as Array<Record<string, unknown>>)
+    : [];
 
   for (const o of memberOutcomes) {
-    const achievedAt = new Date(o.achievedAt ?? o.achieved_at);
+    const achievedAt = new Date(String(o.achievedAt ?? o.achieved_at ?? ''));
     if (achievedAt >= periodStart && achievedAt <= periodEnd) {
-      outcomes.push({ outcome: o.description ?? o.outcome ?? 'Achievement', achievedAt });
+      outcomes.push({
+        outcome: String(o.description ?? o.outcome ?? 'Achievement'),
+        achievedAt,
+      });
     }
   }
 
@@ -187,7 +197,7 @@ export function formatReportAsMarkdown(report: ComplianceReport): string {
   if (report.atRiskMembers.length > 0) {
     lines.push(`## At-Risk Members (${report.atRiskMembers.length})`, ``);
     for (const { member, riskFactors } of report.atRiskMembers) {
-      const name = (member as Record<string, unknown>).name ?? (member as Record<string, unknown>).fullName ?? 'Unknown';
+      const name = (member as unknown as Record<string, unknown>).name ?? (member as unknown as Record<string, unknown>).fullName ?? 'Unknown';
       lines.push(`### ${name}`);
       for (const f of riskFactors) lines.push(`- ${f}`);
       lines.push(``);
@@ -199,7 +209,7 @@ export function formatReportAsMarkdown(report: ComplianceReport): string {
     lines.push(`| Member | Type | Due Date | Days Overdue |`);
     lines.push(`|--------|------|----------|--------------|`);
     for (const { member, deadlineType, dueDate, daysOverdue } of report.overdueDeadlines) {
-      const name = (member as Record<string, unknown>).name ?? 'Unknown';
+      const name = (member as unknown as Record<string, unknown>).name ?? 'Unknown';
       lines.push(`| ${name} | ${deadlineType} | ${fmt(dueDate)} | ${daysOverdue} |`);
     }
     lines.push(``);
@@ -208,7 +218,7 @@ export function formatReportAsMarkdown(report: ComplianceReport): string {
   if (report.positiveOutcomes.length > 0) {
     lines.push(`## Positive Outcomes (${report.positiveOutcomes.length})`, ``);
     for (const { member, outcome, achievedAt } of report.positiveOutcomes) {
-      const name = (member as Record<string, unknown>).name ?? 'Unknown';
+      const name = (member as unknown as Record<string, unknown>).name ?? 'Unknown';
       lines.push(`- **${name}**: ${outcome} _(${fmt(achievedAt)})_`);
     }
     lines.push(``);
