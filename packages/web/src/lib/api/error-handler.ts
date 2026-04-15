@@ -5,8 +5,10 @@ type RouteHandler = (req: Request, ctx?: unknown) => Promise<Response>;
 /**
  * Wraps an App Router route handler with structured error handling.
  *
- * - `ValidationError` (thrown by `parseOrThrow`) → 422 with `issues` array
- * - Any other thrown value → 500 with sanitised message
+ * - ValidationError  → 422 with { error, statusCode, issues[] }
+ * - Unknown errors   → 500 with { error, statusCode } (no leak of internals)
+ *
+ * MUST be used alongside parseOrThrow — see CLAUDE.md for the full pattern.
  *
  * @example
  * export const POST = withErrorHandler(async (req) => {
@@ -34,18 +36,14 @@ export function withErrorHandler(handler: RouteHandler): RouteHandler {
         );
       }
 
-      // Log unexpected errors — replace with structured logger when available
+      // Log unexpected errors server-side without leaking internals
       console.error('[withErrorHandler] Unhandled error:', err);
 
-      const message =
-        process.env.NODE_ENV === 'production'
-          ? 'An unexpected error occurred. Please try again.'
-          : err instanceof Error
-          ? err.message
-          : String(err);
-
       return Response.json(
-        { error: message, statusCode: 500 },
+        {
+          error: 'An unexpected error occurred. Please try again.',
+          statusCode: 500,
+        },
         { status: 500 }
       );
     }

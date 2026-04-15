@@ -12,3 +12,9 @@ dist/
 .vercel
 supabase/.temp/
 coverage/
+
+# Quantum/turbo caches
+.turbo/
+packages/*/.turbo/
+packages/graphify-out/
+*.tsbuildinfo

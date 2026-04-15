@@ -104,8 +104,21 @@ literacy.
 `packages/web/src/lib/validation/schemas.ts` — add new schemas here as new
 routes are created. Export both the Zod schema and its inferred TypeScript type.
 
+Available schemas:
+- `IntakeSchema` / `IntakeData` — voice/form intake (release date, state, needs)
+- `BenefitsScreeningSchema` / `BenefitsScreeningData` — 100+ program eligibility
+- `EmploymentSearchSchema` / `EmploymentSearchData` — conviction-aware job matching
+- `DeadlineSchema` / `DeadlineData` — parole check-ins, court dates, reminders
+
+`ValidationError` is exported from the same file — `withErrorHandler` catches it
+automatically. Do not catch it manually in route handlers.
+
+### Error Handler Location
+`packages/web/src/lib/api/error-handler.ts` — exports `withErrorHandler`.
+
 ### Test Location
 `packages/web/src/__tests__/validation/schemas.test.ts`
+`packages/web/src/__tests__/api/error-handler.test.ts``
 `packages/web/src/__tests__/api/error-handler.test.ts`
 
 ### Import Paths (canonical)
