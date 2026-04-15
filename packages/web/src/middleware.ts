@@ -4,6 +4,16 @@ import { checkRateLimit, getTier } from '@/lib/rate-limit';
 
 const PUBLIC_PATHS = ['/api/health'];
 
+// Demo / fixture endpoints — no real user data, safe to expose for MVP dashboards.
+// Remove as each endpoint is wired to real auth'd user context.
+const PUBLIC_PREFIXES = [
+  '/api/po/',               // Caseload + compliance-report fixtures
+  '/api/employment/match',  // Fair-chance matcher (stateless search)
+  '/api/resources',         // 211.org stub
+  '/api/intake/voice',      // Voice intake FSM
+  '/api/deadlines',         // Deadline cascade compute (stateless)
+];
+
 function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
@@ -18,8 +28,13 @@ function addSecurityHeaders(response: NextResponse): NextResponse {
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip auth for public paths
+  // Skip auth for public paths (exact match)
   if (PUBLIC_PATHS.some((p) => pathname === p)) {
+    return addSecurityHeaders(NextResponse.next());
+  }
+
+  // Skip auth for fixture/demo prefixes (no user PII)
+  if (PUBLIC_PREFIXES.some((p) => pathname.startsWith(p))) {
     return addSecurityHeaders(NextResponse.next());
   }
 

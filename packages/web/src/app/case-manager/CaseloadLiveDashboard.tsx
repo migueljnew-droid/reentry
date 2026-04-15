@@ -3,25 +3,43 @@
 import { useEffect, useState } from 'react';
 
 type CaseloadSummary = {
-  totalMembers: number;
-  avgRiskScore: number;
-  atRiskCount: number;
-  overdueCount: number;
+  // API today returns these names:
+  total?: number;
+  averageRiskScore?: number;
+  abscondedCount?: number;
+  missedCheckInsTotal?: number;
+  byRisk?: Record<string, number>;
+  byStatus?: Record<string, number>;
+  // Older mental model kept for back-compat.
+  totalMembers?: number;
+  avgRiskScore?: number;
+  atRiskCount?: number;
+  overdueCount?: number;
 };
 
 type CaseloadMember = {
   id: string;
-  name: string;
+  // API returns firstName + lastName; older shape had `name` — accept both.
+  name?: string;
+  firstName?: string;
+  lastName?: string;
   riskScore: number;
-  lastContact: string;
+  riskLevel?: string;
+  // `lastContact` (old) or `nextCheckIn` (current API).
+  lastContact?: string;
+  nextCheckIn?: string | null;
   missedCheckIns: number;
+  status?: string;
+  supervisionState?: string;
   employmentStatus?: string;
   housingStatus?: string;
 };
 
 type CaseloadResponse = {
   ok: boolean;
-  members: CaseloadMember[];
+  // Route nests payload under `data` today — accept either shape.
+  data?: { members: CaseloadMember[]; summary?: CaseloadSummary };
+  members?: CaseloadMember[];
   summary?: CaseloadSummary;
 };
 
@@ -63,14 +81,20 @@ export default function CaseloadDashboard() {
   if (error) return <div className="p-6 text-red-700">Failed to load: {error}</div>;
   if (!data) return null;
 
-  const members = data.members ?? [];
-  const summary = data.summary ?? {
-    totalMembers: members.length,
-    avgRiskScore: 0,
-    atRiskCount: 0,
-    overdueCount: 0,
+  const members = data.data?.members ?? data.members ?? [];
+  const rawSummary = data.data?.summary ?? data.summary ?? {};
+  // Normalise to the shape the card grid expects.
+  const summary = {
+    totalMembers: rawSummary.totalMembers ?? rawSummary.total ?? members.length,
+    avgRiskScore: rawSummary.avgRiskScore ?? rawSummary.averageRiskScore ?? 0,
+    atRiskCount:
+      rawSummary.atRiskCount ??
+      (rawSummary.byRisk
+        ? (rawSummary.byRisk.high ?? 0) + (rawSummary.byRisk.critical ?? 0)
+        : 0),
+    overdueCount:
+      rawSummary.overdueCount ?? rawSummary.missedCheckInsTotal ?? 0,
   };
-
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900 p-6">
       <div className="max-w-6xl mx-auto">
@@ -96,10 +120,18 @@ export default function CaseloadDashboard() {
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-lg font-semibold">{m.name}</h3>
+                    <h3 className="text-lg font-semibold">
+                      {m.name ?? [m.firstName, m.lastName].filter(Boolean).join(' ') ?? 'Unknown'}
+                    </h3>
                     <p className="text-sm text-slate-600">
-                      Last contact: {new Date(m.lastContact).toLocaleDateString()} ·{' '}
-                      {m.missedCheckIns} missed check-in(s)
+                      {m.nextCheckIn
+                        ? `Next check-in: ${new Date(m.nextCheckIn).toLocaleDateString()}`
+                        : m.lastContact
+                          ? `Last contact: ${new Date(m.lastContact).toLocaleDateString()}`
+                          : 'No contact scheduled'}
+                      {' · '}
+                      {m.missedCheckIns ?? 0} missed check-in(s)
+                      {m.status && ` · ${m.status}`}
                     </p>
                   </div>
                   <div className="text-right">
