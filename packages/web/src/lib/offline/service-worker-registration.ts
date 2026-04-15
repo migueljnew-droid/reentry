@@ -1,4 +1,18 @@
 /**
+ * Unregister every currently-installed service worker. Useful in dev and
+ * in production when a stale SW is caching pre-hydration HTML or intercepting
+ * fetches for pages it shouldn't, causing empty-state bugs.
+ */
+export async function unregisterAllServiceWorkers(): Promise<number> {
+  if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return 0;
+  const regs = await navigator.serviceWorker.getRegistrations();
+  for (const r of regs) {
+    try { await r.unregister(); } catch { /* ignore */ }
+  }
+  return regs.length;
+}
+
+/**
  * Service Worker Registration
  *
  * Registers /sw.js in production browser environments.

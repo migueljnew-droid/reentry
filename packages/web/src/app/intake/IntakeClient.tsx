@@ -7,6 +7,7 @@ import {
   type IntakeSession,
   type CollectedData,
 } from '@/lib/voice/transcript';
+import { unregisterAllServiceWorkers } from '@/lib/offline/service-worker-registration';
 
 /**
  * Voice-first intake UI for digital-newcomer users.
@@ -25,6 +26,10 @@ export default function IntakeClient() {
 
   // Session init on mount.
   useEffect(() => {
+    // Nuke any stale SW from prior sessions — it intercepts navigations
+    // and serves pre-hydration HTML, leaving the assistant reply blank.
+    void unregisterAllServiceWorkers();
+
     const s = createSession(
       typeof crypto !== 'undefined' && crypto.randomUUID
         ? crypto.randomUUID()
