@@ -1,0 +1,3850 @@
+{
+  "AL": [
+    {
+      "id": "al-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Alabama Parole Officer",
+      "description": "VERIFY: Report to your Alabama supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "al-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "al-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Alabama state ID",
+      "description": "VERIFY: Obtain a Alabama state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "al-snap",
+        "al-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "al-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Alabama SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Alabama social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "al-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Alabama Medicaid",
+      "description": "VERIFY: Apply for Alabama Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "AK": [
+    {
+      "id": "ak-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Alaska Parole Officer",
+      "description": "VERIFY: Report to your Alaska supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ak-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ak-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Alaska state ID",
+      "description": "VERIFY: Obtain a Alaska state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ak-snap",
+        "ak-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ak-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Alaska SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Alaska social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ak-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Alaska Medicaid",
+      "description": "VERIFY: Apply for Alaska Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "AZ": [
+    {
+      "id": "az-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Arizona Parole Officer",
+      "description": "VERIFY: Report to your Arizona supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "az-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "az-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Arizona state ID",
+      "description": "VERIFY: Obtain a Arizona state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "az-snap",
+        "az-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "az-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Arizona SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Arizona social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "az-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Arizona Medicaid",
+      "description": "VERIFY: Apply for Arizona Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "AR": [
+    {
+      "id": "ar-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Arkansas Parole Officer",
+      "description": "VERIFY: Report to your Arkansas supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ar-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ar-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Arkansas state ID",
+      "description": "VERIFY: Obtain a Arkansas state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ar-snap",
+        "ar-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ar-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Arkansas SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Arkansas social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ar-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Arkansas Medicaid",
+      "description": "VERIFY: Apply for Arkansas Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "CA": [
+    {
+      "id": "ca-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to California Parole Officer",
+      "description": "Report to your CDCR parole agent within 24 hours. California GPS monitoring may apply.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ca-parole-weekly"
+      ],
+      "agencyContact": "CDCR Parole: 916-445-6713",
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ca-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get California state ID",
+      "description": "VERIFY: Obtain a California state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ca-snap",
+        "ca-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ca-snap",
+      "category": "BENEFITS",
+      "title": "Apply for California SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through California social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ca-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for California Medicaid",
+      "description": "VERIFY: Apply for California Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "CO": [
+    {
+      "id": "co-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Colorado Parole Officer",
+      "description": "VERIFY: Report to your Colorado supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "co-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "co-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Colorado state ID",
+      "description": "VERIFY: Obtain a Colorado state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "co-snap",
+        "co-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "co-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Colorado SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Colorado social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "co-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Colorado Medicaid",
+      "description": "VERIFY: Apply for Colorado Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "CT": [
+    {
+      "id": "ct-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Connecticut Parole Officer",
+      "description": "VERIFY: Report to your Connecticut supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ct-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ct-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Connecticut state ID",
+      "description": "VERIFY: Obtain a Connecticut state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ct-snap",
+        "ct-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ct-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Connecticut SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Connecticut social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ct-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Connecticut Medicaid",
+      "description": "VERIFY: Apply for Connecticut Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "DE": [
+    {
+      "id": "de-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Delaware Parole Officer",
+      "description": "VERIFY: Report to your Delaware supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "de-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "de-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Delaware state ID",
+      "description": "VERIFY: Obtain a Delaware state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "de-snap",
+        "de-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "de-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Delaware SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Delaware social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "de-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Delaware Medicaid",
+      "description": "VERIFY: Apply for Delaware Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "FL": [
+    {
+      "id": "fl-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Florida Parole Officer",
+      "description": "VERIFY: Report to your Florida supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "fl-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "fl-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Florida state ID",
+      "description": "VERIFY: Obtain a Florida state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "fl-snap",
+        "fl-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "fl-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Florida SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Florida social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "fl-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Florida Medicaid",
+      "description": "VERIFY: Apply for Florida Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "GA": [
+    {
+      "id": "ga-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Georgia Parole Officer",
+      "description": "Report to your Georgia State Board of Pardons and Paroles officer within 24 hours. Bring your release certificate.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ga-parole-weekly"
+      ],
+      "agencyContact": "GA State Board of Pardons and Paroles: 404-651-6600",
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ga-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Georgia state ID",
+      "description": "VERIFY: Obtain a Georgia state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ga-snap",
+        "ga-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ga-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Georgia SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Georgia social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ga-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Georgia Medicaid",
+      "description": "VERIFY: Apply for Georgia Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "HI": [
+    {
+      "id": "hi-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Hawaii Parole Officer",
+      "description": "VERIFY: Report to your Hawaii supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "hi-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "hi-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Hawaii state ID",
+      "description": "VERIFY: Obtain a Hawaii state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "hi-snap",
+        "hi-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "hi-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Hawaii SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Hawaii social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "hi-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Hawaii Medicaid",
+      "description": "VERIFY: Apply for Hawaii Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "ID": [
+    {
+      "id": "id-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Idaho Parole Officer",
+      "description": "VERIFY: Report to your Idaho supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "id-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "id-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Idaho state ID",
+      "description": "VERIFY: Obtain a Idaho state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "id-snap",
+        "id-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "id-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Idaho SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Idaho social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "id-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Idaho Medicaid",
+      "description": "VERIFY: Apply for Idaho Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "IL": [
+    {
+      "id": "il-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Illinois Parole Officer",
+      "description": "VERIFY: Report to your Illinois supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "il-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "il-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Illinois state ID",
+      "description": "VERIFY: Obtain a Illinois state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "il-snap",
+        "il-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "il-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Illinois SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Illinois social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "il-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Illinois Medicaid",
+      "description": "VERIFY: Apply for Illinois Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "IN": [
+    {
+      "id": "in-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Indiana Parole Officer",
+      "description": "VERIFY: Report to your Indiana supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "in-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "in-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Indiana state ID",
+      "description": "VERIFY: Obtain a Indiana state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "in-snap",
+        "in-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "in-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Indiana SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Indiana social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "in-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Indiana Medicaid",
+      "description": "VERIFY: Apply for Indiana Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "IA": [
+    {
+      "id": "ia-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Iowa Parole Officer",
+      "description": "VERIFY: Report to your Iowa supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ia-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ia-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Iowa state ID",
+      "description": "VERIFY: Obtain a Iowa state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ia-snap",
+        "ia-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ia-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Iowa SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Iowa social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ia-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Iowa Medicaid",
+      "description": "VERIFY: Apply for Iowa Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "KS": [
+    {
+      "id": "ks-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Kansas Parole Officer",
+      "description": "VERIFY: Report to your Kansas supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ks-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ks-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Kansas state ID",
+      "description": "VERIFY: Obtain a Kansas state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ks-snap",
+        "ks-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ks-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Kansas SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Kansas social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ks-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Kansas Medicaid",
+      "description": "VERIFY: Apply for Kansas Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "KY": [
+    {
+      "id": "ky-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Kentucky Parole Officer",
+      "description": "VERIFY: Report to your Kentucky supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ky-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ky-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Kentucky state ID",
+      "description": "VERIFY: Obtain a Kentucky state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ky-snap",
+        "ky-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ky-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Kentucky SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Kentucky social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ky-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Kentucky Medicaid",
+      "description": "VERIFY: Apply for Kentucky Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "LA": [
+    {
+      "id": "la-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Louisiana Parole Officer",
+      "description": "VERIFY: Report to your Louisiana supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "la-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "la-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Louisiana state ID",
+      "description": "VERIFY: Obtain a Louisiana state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "la-snap",
+        "la-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "la-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Louisiana SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Louisiana social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "la-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Louisiana Medicaid",
+      "description": "VERIFY: Apply for Louisiana Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "ME": [
+    {
+      "id": "me-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Maine Parole Officer",
+      "description": "VERIFY: Report to your Maine supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "me-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "me-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Maine state ID",
+      "description": "VERIFY: Obtain a Maine state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "me-snap",
+        "me-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "me-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Maine SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Maine social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "me-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Maine Medicaid",
+      "description": "VERIFY: Apply for Maine Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "MD": [
+    {
+      "id": "md-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Maryland Parole Officer",
+      "description": "VERIFY: Report to your Maryland supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "md-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "md-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Maryland state ID",
+      "description": "VERIFY: Obtain a Maryland state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "md-snap",
+        "md-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "md-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Maryland SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Maryland social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "md-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Maryland Medicaid",
+      "description": "VERIFY: Apply for Maryland Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "MA": [
+    {
+      "id": "ma-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Massachusetts Parole Officer",
+      "description": "VERIFY: Report to your Massachusetts supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ma-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ma-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Massachusetts state ID",
+      "description": "VERIFY: Obtain a Massachusetts state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ma-snap",
+        "ma-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ma-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Massachusetts SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Massachusetts social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ma-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Massachusetts Medicaid",
+      "description": "VERIFY: Apply for Massachusetts Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "MI": [
+    {
+      "id": "mi-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Michigan Parole Officer",
+      "description": "VERIFY: Report to your Michigan supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "mi-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "mi-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Michigan state ID",
+      "description": "VERIFY: Obtain a Michigan state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "mi-snap",
+        "mi-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "mi-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Michigan SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Michigan social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "mi-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Michigan Medicaid",
+      "description": "VERIFY: Apply for Michigan Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "MN": [
+    {
+      "id": "mn-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Minnesota Parole Officer",
+      "description": "VERIFY: Report to your Minnesota supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "mn-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "mn-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Minnesota state ID",
+      "description": "VERIFY: Obtain a Minnesota state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "mn-snap",
+        "mn-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "mn-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Minnesota SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Minnesota social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "mn-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Minnesota Medicaid",
+      "description": "VERIFY: Apply for Minnesota Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "MS": [
+    {
+      "id": "ms-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Mississippi Parole Officer",
+      "description": "VERIFY: Report to your Mississippi supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ms-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ms-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Mississippi state ID",
+      "description": "VERIFY: Obtain a Mississippi state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ms-snap",
+        "ms-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ms-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Mississippi SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Mississippi social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ms-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Mississippi Medicaid",
+      "description": "VERIFY: Apply for Mississippi Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "MO": [
+    {
+      "id": "mo-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Missouri Parole Officer",
+      "description": "VERIFY: Report to your Missouri supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "mo-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "mo-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Missouri state ID",
+      "description": "VERIFY: Obtain a Missouri state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "mo-snap",
+        "mo-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "mo-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Missouri SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Missouri social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "mo-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Missouri Medicaid",
+      "description": "VERIFY: Apply for Missouri Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "MT": [
+    {
+      "id": "mt-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Montana Parole Officer",
+      "description": "VERIFY: Report to your Montana supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "mt-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "mt-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Montana state ID",
+      "description": "VERIFY: Obtain a Montana state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "mt-snap",
+        "mt-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "mt-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Montana SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Montana social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "mt-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Montana Medicaid",
+      "description": "VERIFY: Apply for Montana Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "NE": [
+    {
+      "id": "ne-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Nebraska Parole Officer",
+      "description": "VERIFY: Report to your Nebraska supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ne-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ne-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Nebraska state ID",
+      "description": "VERIFY: Obtain a Nebraska state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ne-snap",
+        "ne-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ne-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Nebraska SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Nebraska social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ne-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Nebraska Medicaid",
+      "description": "VERIFY: Apply for Nebraska Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "NV": [
+    {
+      "id": "nv-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Nevada Parole Officer",
+      "description": "VERIFY: Report to your Nevada supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "nv-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "nv-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Nevada state ID",
+      "description": "VERIFY: Obtain a Nevada state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "nv-snap",
+        "nv-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nv-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Nevada SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Nevada social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nv-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Nevada Medicaid",
+      "description": "VERIFY: Apply for Nevada Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "NH": [
+    {
+      "id": "nh-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to New Hampshire Parole Officer",
+      "description": "VERIFY: Report to your New Hampshire supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "nh-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "nh-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get New Hampshire state ID",
+      "description": "VERIFY: Obtain a New Hampshire state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "nh-snap",
+        "nh-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nh-snap",
+      "category": "BENEFITS",
+      "title": "Apply for New Hampshire SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through New Hampshire social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nh-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for New Hampshire Medicaid",
+      "description": "VERIFY: Apply for New Hampshire Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "NJ": [
+    {
+      "id": "nj-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to New Jersey Parole Officer",
+      "description": "VERIFY: Report to your New Jersey supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "nj-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "nj-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get New Jersey state ID",
+      "description": "VERIFY: Obtain a New Jersey state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "nj-snap",
+        "nj-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nj-snap",
+      "category": "BENEFITS",
+      "title": "Apply for New Jersey SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through New Jersey social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nj-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for New Jersey Medicaid",
+      "description": "VERIFY: Apply for New Jersey Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "NM": [
+    {
+      "id": "nm-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to New Mexico Parole Officer",
+      "description": "VERIFY: Report to your New Mexico supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "nm-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "nm-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get New Mexico state ID",
+      "description": "VERIFY: Obtain a New Mexico state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "nm-snap",
+        "nm-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nm-snap",
+      "category": "BENEFITS",
+      "title": "Apply for New Mexico SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through New Mexico social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nm-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for New Mexico Medicaid",
+      "description": "VERIFY: Apply for New Mexico Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "NY": [
+    {
+      "id": "ny-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to New York Parole Officer",
+      "description": "VERIFY: Report to your New York supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ny-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ny-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get New York state ID",
+      "description": "VERIFY: Obtain a New York state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ny-snap",
+        "ny-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ny-snap",
+      "category": "BENEFITS",
+      "title": "Apply for New York SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through New York social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ny-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for New York Medicaid",
+      "description": "VERIFY: Apply for New York Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "NC": [
+    {
+      "id": "nc-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to North Carolina Parole Officer",
+      "description": "VERIFY: Report to your North Carolina supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "nc-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "nc-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get North Carolina state ID",
+      "description": "VERIFY: Obtain a North Carolina state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "nc-snap",
+        "nc-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nc-snap",
+      "category": "BENEFITS",
+      "title": "Apply for North Carolina SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through North Carolina social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nc-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for North Carolina Medicaid",
+      "description": "VERIFY: Apply for North Carolina Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "ND": [
+    {
+      "id": "nd-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to North Dakota Parole Officer",
+      "description": "VERIFY: Report to your North Dakota supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "nd-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "nd-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get North Dakota state ID",
+      "description": "VERIFY: Obtain a North Dakota state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "nd-snap",
+        "nd-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nd-snap",
+      "category": "BENEFITS",
+      "title": "Apply for North Dakota SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through North Dakota social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "nd-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for North Dakota Medicaid",
+      "description": "VERIFY: Apply for North Dakota Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "OH": [
+    {
+      "id": "oh-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Ohio Parole Officer",
+      "description": "VERIFY: Report to your Ohio supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "oh-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "oh-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Ohio state ID",
+      "description": "VERIFY: Obtain a Ohio state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "oh-snap",
+        "oh-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "oh-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Ohio SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Ohio social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "oh-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Ohio Medicaid",
+      "description": "VERIFY: Apply for Ohio Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "OK": [
+    {
+      "id": "ok-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Oklahoma Parole Officer",
+      "description": "VERIFY: Report to your Oklahoma supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ok-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ok-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Oklahoma state ID",
+      "description": "VERIFY: Obtain a Oklahoma state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ok-snap",
+        "ok-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ok-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Oklahoma SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Oklahoma social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ok-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Oklahoma Medicaid",
+      "description": "VERIFY: Apply for Oklahoma Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "OR": [
+    {
+      "id": "or-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Oregon Parole Officer",
+      "description": "VERIFY: Report to your Oregon supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "or-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "or-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Oregon state ID",
+      "description": "VERIFY: Obtain a Oregon state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "or-snap",
+        "or-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "or-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Oregon SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Oregon social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "or-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Oregon Medicaid",
+      "description": "VERIFY: Apply for Oregon Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "PA": [
+    {
+      "id": "pa-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Pennsylvania Parole Officer",
+      "description": "VERIFY: Report to your Pennsylvania supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "pa-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "pa-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Pennsylvania state ID",
+      "description": "VERIFY: Obtain a Pennsylvania state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "pa-snap",
+        "pa-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "pa-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Pennsylvania SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Pennsylvania social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "pa-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Pennsylvania Medicaid",
+      "description": "VERIFY: Apply for Pennsylvania Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "RI": [
+    {
+      "id": "ri-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Rhode Island Parole Officer",
+      "description": "VERIFY: Report to your Rhode Island supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ri-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ri-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Rhode Island state ID",
+      "description": "VERIFY: Obtain a Rhode Island state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ri-snap",
+        "ri-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ri-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Rhode Island SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Rhode Island social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ri-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Rhode Island Medicaid",
+      "description": "VERIFY: Apply for Rhode Island Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "SC": [
+    {
+      "id": "sc-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to South Carolina Parole Officer",
+      "description": "VERIFY: Report to your South Carolina supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "sc-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "sc-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get South Carolina state ID",
+      "description": "VERIFY: Obtain a South Carolina state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "sc-snap",
+        "sc-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "sc-snap",
+      "category": "BENEFITS",
+      "title": "Apply for South Carolina SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through South Carolina social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "sc-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for South Carolina Medicaid",
+      "description": "VERIFY: Apply for South Carolina Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "SD": [
+    {
+      "id": "sd-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to South Dakota Parole Officer",
+      "description": "VERIFY: Report to your South Dakota supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "sd-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "sd-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get South Dakota state ID",
+      "description": "VERIFY: Obtain a South Dakota state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "sd-snap",
+        "sd-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "sd-snap",
+      "category": "BENEFITS",
+      "title": "Apply for South Dakota SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through South Dakota social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "sd-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for South Dakota Medicaid",
+      "description": "VERIFY: Apply for South Dakota Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "TN": [
+    {
+      "id": "tn-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Tennessee Parole Officer",
+      "description": "VERIFY: Report to your Tennessee supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "tn-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "tn-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Tennessee state ID",
+      "description": "VERIFY: Obtain a Tennessee state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "tn-snap",
+        "tn-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "tn-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Tennessee SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Tennessee social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "tn-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Tennessee Medicaid",
+      "description": "VERIFY: Apply for Tennessee Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "TX": [
+    {
+      "id": "tx-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Texas Parole Officer",
+      "description": "VERIFY: Report to your Texas supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "tx-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "tx-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Texas state ID",
+      "description": "VERIFY: Obtain a Texas state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "tx-snap",
+        "tx-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "tx-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Texas SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Texas social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "tx-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Texas Medicaid",
+      "description": "VERIFY: Apply for Texas Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "UT": [
+    {
+      "id": "ut-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Utah Parole Officer",
+      "description": "VERIFY: Report to your Utah supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "ut-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "ut-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Utah state ID",
+      "description": "VERIFY: Obtain a Utah state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "ut-snap",
+        "ut-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ut-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Utah SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Utah social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "ut-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Utah Medicaid",
+      "description": "VERIFY: Apply for Utah Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "VT": [
+    {
+      "id": "vt-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Vermont Parole Officer",
+      "description": "VERIFY: Report to your Vermont supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "vt-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "vt-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Vermont state ID",
+      "description": "VERIFY: Obtain a Vermont state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "vt-snap",
+        "vt-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "vt-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Vermont SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Vermont social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "vt-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Vermont Medicaid",
+      "description": "VERIFY: Apply for Vermont Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "VA": [
+    {
+      "id": "va-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Virginia Parole Officer",
+      "description": "VERIFY: Report to your Virginia supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "va-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "va-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Virginia state ID",
+      "description": "VERIFY: Obtain a Virginia state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "va-snap",
+        "va-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "va-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Virginia SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Virginia social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "va-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Virginia Medicaid",
+      "description": "VERIFY: Apply for Virginia Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "WA": [
+    {
+      "id": "wa-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Washington Parole Officer",
+      "description": "VERIFY: Report to your Washington supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "wa-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "wa-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Washington state ID",
+      "description": "VERIFY: Obtain a Washington state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "wa-snap",
+        "wa-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "wa-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Washington SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Washington social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "wa-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Washington Medicaid",
+      "description": "VERIFY: Apply for Washington Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "WV": [
+    {
+      "id": "wv-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to West Virginia Parole Officer",
+      "description": "VERIFY: Report to your West Virginia supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "wv-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "wv-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get West Virginia state ID",
+      "description": "VERIFY: Obtain a West Virginia state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "wv-snap",
+        "wv-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "wv-snap",
+      "category": "BENEFITS",
+      "title": "Apply for West Virginia SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through West Virginia social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "wv-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for West Virginia Medicaid",
+      "description": "VERIFY: Apply for West Virginia Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "WI": [
+    {
+      "id": "wi-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Wisconsin Parole Officer",
+      "description": "VERIFY: Report to your Wisconsin supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "wi-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "wi-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Wisconsin state ID",
+      "description": "VERIFY: Obtain a Wisconsin state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "wi-snap",
+        "wi-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "wi-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Wisconsin SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Wisconsin social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "wi-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Wisconsin Medicaid",
+      "description": "VERIFY: Apply for Wisconsin Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "WY": [
+    {
+      "id": "wy-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Wyoming Parole Officer",
+      "description": "VERIFY: Report to your Wyoming supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "wy-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "wy-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Wyoming state ID",
+      "description": "VERIFY: Obtain a Wyoming state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "wy-snap",
+        "wy-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "wy-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Wyoming SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Wyoming social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "wy-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Wyoming Medicaid",
+      "description": "VERIFY: Apply for Wyoming Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "DC": [
+    {
+      "id": "dc-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to District of Columbia Parole Officer",
+      "description": "VERIFY: Report to your District of Columbia supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "dc-parole-weekly"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "dc-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get District of Columbia state ID",
+      "description": "VERIFY: Obtain a District of Columbia state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "dc-snap",
+        "dc-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "dc-snap",
+      "category": "BENEFITS",
+      "title": "Apply for District of Columbia SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through District of Columbia social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "dc-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for District of Columbia Medicaid",
+      "description": "VERIFY: Apply for District of Columbia Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ],
+  "FED": [
+    {
+      "id": "fed-parole-report-24h",
+      "category": "PAROLE",
+      "title": "Report to Federal USPO",
+      "description": "VERIFY: Report to your Federal supervising officer within 24 hours of release. Missed report = warrant.",
+      "daysAfterRelease": 1,
+      "urgency": "CRITICAL",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE"
+      ],
+      "cascadesTo": [
+        "fed-parole-weekly"
+      ],
+      "agencyContact": "Federal Probation: district-specific",
+      "reincarcerationRisk": true
+    },
+    {
+      "id": "fed-id",
+      "category": "ID_DOCUMENTS",
+      "title": "Get Federal state ID",
+      "description": "VERIFY: Obtain a Federal state-issued photo ID. Required for all downstream benefits + employment applications.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [
+        "fed-snap",
+        "fed-medicaid"
+      ],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "fed-snap",
+      "category": "BENEFITS",
+      "title": "Apply for Federal SNAP (food assistance)",
+      "description": "VERIFY: Apply for SNAP through Federal social services. Drug felony restrictions vary \u2014 check state rule.",
+      "daysAfterRelease": 10,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    },
+    {
+      "id": "fed-medicaid",
+      "category": "HEALTHCARE",
+      "title": "Apply for Federal Medicaid",
+      "description": "VERIFY: Apply for Federal Medicaid. Covers mental health + substance use treatment.",
+      "daysAfterRelease": 14,
+      "urgency": "HIGH",
+      "applicableReleaseTypes": [
+        "PAROLE",
+        "PROBATION",
+        "SUPERVISED_RELEASE",
+        "UNCONDITIONAL"
+      ],
+      "cascadesTo": [],
+      "agencyContact": null,
+      "reincarcerationRisk": false
+    }
+  ]
+}
