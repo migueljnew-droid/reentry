@@ -1,46 +1,58 @@
+/**
+ * withErrorHandler — wraps every App Router route handler.
+ *
+ * Catches ValidationError (from parseOrThrow) and any unexpected Error,
+ * returning structured JSON so the UI can surface field-level messages.
+ *
+ * Usage (from CLAUDE.md):
+ *
+ *   export const POST = withErrorHandler(async (req: Request) => {
+ *     const data = parseOrThrow(IntakeSchema, await req.json());
+ *     return Response.json({ ok: true, data });
+ *   });
+ */
 import { ValidationError } from '@/lib/validation/schemas';
 
 type RouteHandler = (req: Request, ctx?: unknown) => Promise<Response>;
 
 /**
- * Wraps an App Router handler with structured error handling.
- *
- * - ValidationError  → 422 + { error, statusCode, issues }
- * - Any other thrown → 500 + { error, statusCode } (no stack in prod)
- *
- * Usage (see CLAUDE.md):
- *   export const POST = withErrorHandler(async (req) => { ... });
+ * Structured error shape returned to clients.
  */
+interface ErrorBody {
+  error: string;
+  statusCode: number;
+  issues?: { path: (string | number)[]; message: string; code: string }[];
+}
+
+function jsonError(body: ErrorBody, status: number): Response {
+  return Response.json(body, { status });
+}
+
 export function withErrorHandler(handler: RouteHandler): RouteHandler {
   return async (req: Request, ctx?: unknown): Promise<Response> => {
     try {
       return await handler(req, ctx);
     } catch (err) {
       if (err instanceof ValidationError) {
-        return Response.json(
+        return jsonError(
           {
             error: 'Validation failed',
             statusCode: 422,
             issues: err.issues,
           },
-          { status: 422 }
+          422
         );
       }
 
-      // Log unexpected errors server-side only
+      // Log unexpected errors server-side without leaking internals
       console.error('[withErrorHandler] Unhandled error:', err);
 
-      const message =
-        process.env.NODE_ENV === 'development' && err instanceof Error
-          ? err.message
-          : 'An unexpected error occurred. Please try again.';
-
-      return Response.json(
+      return jsonError(
         {
-          error: message,
+          error: 'An unexpected error occurred. Please try again.',
           statusCode: 500,
         },
-        { status: 500 }
+        500
       );
     }
   };

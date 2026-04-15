@@ -106,6 +106,21 @@ routes are created. Export both the Zod schema and its inferred TypeScript type.
 
 ### Test Location
 `packages/web/src/__tests__/validation/schemas.test.ts`
+`packages/web/src/__tests__/api/error-handler.test.ts`
+
+### Import Paths (canonical)
+```ts
+import { parseOrThrow, IntakeSchema, ValidationError } from '@/lib/validation/schemas';
+import { withErrorHandler } from '@/lib/api/error-handler';
+```
+
+### Available Schemas
+| Schema | Type | Use case |
+|--------|------|----------|
+| `IntakeSchema` | `Intake` | POST /api/intake — conversational intake form |
+| `ResourceQuerySchema` | `ResourceQuery` | GET /api/resources — resource search |
+| `ActionPlanRequestSchema` | `ActionPlanRequest` | POST /api/action-plan — plan generation |
+| `StateCodeSchema` | `StateCode` | Reusable state code validator |`
 
 ### Dependency
 `zod` must be listed in `packages/web/package.json` dependencies:
