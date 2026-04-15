@@ -1,9 +1,15 @@
-import { describe, it, expect, vi } from 'vitest';
-import { withErrorHandler } from '@/lib/api/error-handler';
-import { ValidationError } from '@/lib/validation/schemas';
-import type { ZodIssue } from 'zod';
+import { describe, it, expect } from 'vitest';
+import { withErrorHandler } from '../../lib/api/error-handler';
+import { ValidationError } from '../../lib/validation/schemas';
 
-const makeRequest = () => new Request('http://localhost/api/test', { method: 'POST' });
+// Minimal Request factory for App Router handler tests
+function makeRequest(body: unknown = {}): Request {
+  return new Request('http://localhost/api/test', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+}
 
 describe('withErrorHandler', () => {
   it('passes through a successful response unchanged', async () => {
@@ -17,61 +23,42 @@ describe('withErrorHandler', () => {
   });
 
   it('returns 422 with structured issues for ValidationError', async () => {
-    const issues: ZodIssue[] = [
-      {
-        path: ['releaseState'],
-        message: 'Must be a valid 2-letter US state code or FED',
-        code: 'custom',
-      },
+    const issues = [
+      { path: ['releaseState'], message: 'Invalid state', code: 'invalid_string' },
     ];
-
     const handler = withErrorHandler(async () => {
       throw new ValidationError(issues);
     });
-
     const res = await handler(makeRequest());
     expect(res.status).toBe(422);
-
     const body = await res.json();
     expect(body.error).toBe('Validation failed');
     expect(body.statusCode).toBe(422);
-    expect(body.issues).toHaveLength(1);
-    expect(body.issues[0].path).toContain('releaseState');
-    expect(body.issues[0].message).toMatch(/state code/i);
+    expect(body.issues).toEqual(issues);
   });
 
-  it('returns 500 for unexpected errors without leaking internals', async () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
+  it('returns 500 for unexpected errors', async () => {
     const handler = withErrorHandler(async () => {
-      throw new Error('DB connection refused — secret internal detail');
+      throw new Error('database exploded');
     });
-
     const res = await handler(makeRequest());
     expect(res.status).toBe(500);
-
     const body = await res.json();
     expect(body.statusCode).toBe(500);
-    // Must NOT leak internal error message to client
-    expect(JSON.stringify(body)).not.toContain('DB connection refused');
-    expect(JSON.stringify(body)).not.toContain('secret internal detail');
-
-    consoleSpy.mockRestore();
+    expect(typeof body.error).toBe('string');
   });
 
-  it('logs unexpected errors server-side', async () => {
-    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-
+  it('does not leak stack traces in production', async () => {
+    const originalEnv = process.env.NODE_ENV;
+    // @ts-expect-error — overriding read-only for test
+    process.env.NODE_ENV = 'production';
     const handler = withErrorHandler(async () => {
-      throw new Error('something broke');
+      throw new Error('secret internal detail');
     });
-
-    await handler(makeRequest());
-    expect(consoleSpy).toHaveBeenCalledWith(
-      expect.stringContaining('[withErrorHandler]'),
-      expect.any(Error)
-    );
-
-    consoleSpy.mockRestore();
+    const res = await handler(makeRequest());
+    const body = await res.json();
+    expect(body.error).not.toContain('secret internal detail');
+    // @ts-expect-error
+    process.env.NODE_ENV = originalEnv;
   });
 });

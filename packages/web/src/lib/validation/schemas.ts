@@ -1,93 +1,105 @@
 import { z } from 'zod';
 
-// ─── US State Codes ────────────────────────────────────────────────────────────
-const US_STATES = [
+// ─── US State codes (50 states + DC + FED) ───────────────────────────────────
+const US_STATE_CODES = [
   'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA',
   'HI','ID','IL','IN','IA','KS','KY','LA','ME','MD',
   'MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ',
   'NM','NY','NC','ND','OH','OK','OR','PA','RI','SC',
   'SD','TN','TX','UT','VT','VA','WA','WV','WI','WY',
-  'DC','FED',
+  'DC','FED'
 ] as const;
 
-export type USStateCode = typeof US_STATES[number];
+export const StateCodeSchema = z
+  .string()
+  .toUpperCase()
+  .refine((v): v is typeof US_STATE_CODES[number] => (US_STATE_CODES as readonly string[]).includes(v), {
+    message: 'Must be a valid 2-letter US state code or FED',
+  });
 
-// ─── Intake Schema ──────────────────────────────────────────────────────────
+// ─── Intake ──────────────────────────────────────────────────────────────────
 export const IntakeSchema = z.object({
-  /** ISO-8601 date string, must not be in the future */
   releaseDate: z
     .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Must be YYYY-MM-DD')
-    .refine((d) => !isNaN(Date.parse(d)), 'Must be a valid calendar date')
-    .refine(
-      (d) => new Date(d) <= new Date(),
-      'Release date cannot be in the future'
-    ),
-
-  releaseState: z
+    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Must be ISO date: YYYY-MM-DD')
+    .refine((d) => !isNaN(Date.parse(d)), 'Must be a valid calendar date'),
+  releaseState: StateCodeSchema,
+  currentZip: z
     .string()
-    .toUpperCase()
-    .refine(
-      (s): s is USStateCode => (US_STATES as readonly string[]).includes(s),
-      'Must be a valid 2-letter US state code or FED'
-    ),
-
-  convictionType: z
-    .enum(['felony', 'misdemeanor', 'federal', 'unknown'])
-    .default('unknown'),
-
-  /** Optional — used for benefits screening */
+    .regex(/^\d{5}(-\d{4})?$/, 'Must be a valid US ZIP code')
+    .optional(),
+  convictionTypes: z
+    .array(z.string().min(1).max(120))
+    .max(20, 'Too many conviction types')
+    .optional()
+    .default([]),
   hasChildren: z.boolean().optional(),
-  isVeteran: z.boolean().optional(),
   needsHousing: z.boolean().optional(),
   needsEmployment: z.boolean().optional(),
-  needsSubstanceSupport: z.boolean().optional(),
-
-  /** Voice transcript if intake was voice-first */
-  voiceTranscript: z.string().max(4000).optional(),
+  needsBenefits: z.boolean().optional(),
+  needsIdReplacement: z.boolean().optional(),
+  preferredLanguage: z.enum(['en', 'es', 'fr', 'zh', 'vi', 'ko']).default('en'),
 });
 
 export type IntakeInput = z.infer<typeof IntakeSchema>;
 
-// ─── Resource Query Schema ──────────────────────────────────────────────────
+// ─── Resource lookup ─────────────────────────────────────────────────────────
 export const ResourceQuerySchema = z.object({
-  state: z
+  state: StateCodeSchema,
+  zip: z
     .string()
-    .toUpperCase()
-    .refine(
-      (s): s is USStateCode => (US_STATES as readonly string[]).includes(s),
-      'Must be a valid 2-letter US state code or FED'
-    ),
-  category: z
-    .enum(['housing', 'employment', 'benefits', 'legal', 'healthcare', 'all'])
-    .default('all'),
-  limit: z.coerce.number().int().min(1).max(100).default(20),
-  offset: z.coerce.number().int().min(0).default(0),
+    .regex(/^\d{5}(-\d{4})?$/, 'Must be a valid US ZIP code')
+    .optional(),
+  categories: z
+    .array(
+      z.enum([
+        'housing',
+        'employment',
+        'benefits',
+        'legal',
+        'healthcare',
+        'id',
+        'education',
+        'transportation',
+      ])
+    )
+    .min(1, 'At least one category required')
+    .max(8),
+  radiusMiles: z.number().int().min(1).max(100).default(25),
 });
 
-export type ResourceQueryInput = z.infer<typeof ResourceQuerySchema>;
+export type ResourceQuery = z.infer<typeof ResourceQuerySchema>;
 
-// ─── parseOrThrow helper ────────────────────────────────────────────────────
+// ─── Action plan request ─────────────────────────────────────────────────────
+export const ActionPlanRequestSchema = z.object({
+  intakeId: z.string().uuid('Must be a valid UUID'),
+  regenerate: z.boolean().default(false),
+});
+
+export type ActionPlanRequest = z.infer<typeof ActionPlanRequestSchema>;
+
+// ─── parseOrThrow helper ─────────────────────────────────────────────────────
 export class ValidationError extends Error {
-  readonly statusCode = 422;
-  readonly issues: z.ZodIssue[];
+  statusCode = 422;
+  issues: { path: (string | number)[]; message: string; code: string }[];
 
-  constructor(issues: z.ZodIssue[]) {
+  constructor(issues: { path: (string | number)[]; message: string; code: string }[]) {
     super('Validation failed');
     this.name = 'ValidationError';
     this.issues = issues;
   }
 }
 
-/**
- * Parse `data` against `schema`. Returns the typed, parsed value on success.
- * Throws `ValidationError` (statusCode 422) on failure so `withErrorHandler`
- * can convert it to a structured JSON response.
- */
 export function parseOrThrow<T>(schema: z.ZodSchema<T>, data: unknown): T {
   const result = schema.safeParse(data);
   if (!result.success) {
-    throw new ValidationError(result.error.issues);
+    throw new ValidationError(
+      result.error.issues.map((i) => ({
+        path: i.path,
+        message: i.message,
+        code: i.code,
+      }))
+    );
   }
   return result.data;
 }
