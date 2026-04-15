@@ -191,10 +191,7 @@ describe('parseStateCode', () => {
 // ---------------------------------------------------------------------------
 // Retry logic
 // ---------------------------------------------------------------------------
-// TODO(voice-intake): quantum-generated retry logic disagrees with its own
-// implementation — advance() moves past invalid input on first try, but tests
-// expect it to stay and increment retryCount. Pin down spec + fix engine.
-describe.skip('retry logic', () => {
+describe('retry logic', () => {
   it('stays on same state when input is invalid', () => {
     let s = makeSession();
     s = advanceSession(s, 'yes').nextSession; // greeting→name

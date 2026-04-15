@@ -92,9 +92,7 @@ describe('generateComplianceReport', () => {
     expect(report.positiveOutcomes[0].outcome).toBe('Secured employment');
   });
 
-  // TODO(po-dashboard): quantum-generated test uses riskScore:9 as "at-risk"
-  // but impl's at-risk threshold is higher — spec mismatch.
-  it.skip('calculates compliance rate correctly for mixed caseload', () => {
+  it('calculates compliance rate correctly for mixed caseload', () => {
     const compliant = makeMember({ id: 'c1' });
     const atRisk = makeMember({ id: 'c2', riskScore: 9 });
     const report = generateComplianceReport([compliant, atRisk], periodStart, periodEnd);

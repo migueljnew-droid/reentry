@@ -83,13 +83,21 @@ describe('saveActionPlan + loadActionPlan', () => {
     expect(loaded?.version).toBe(2);
   });
 
-  it('updates updatedAt on save', async () => {
+  it('touchAndSaveActionPlan stamps updatedAt to now', async () => {
+    const { touchAndSaveActionPlan } = await import('@/lib/offline/plan-store');
     const plan = makePlan({ updatedAt: '2020-01-01T00:00:00.000Z' });
     const before = Date.now();
-    await saveActionPlan('plan-001', plan);
+    await touchAndSaveActionPlan('plan-001', plan);
     const loaded = await loadActionPlan('plan-001');
     const savedAt = new Date(loaded!.updatedAt).getTime();
     expect(savedAt).toBeGreaterThanOrEqual(before);
+  });
+
+  it('saveActionPlan preserves an explicit updatedAt', async () => {
+    const plan = makePlan({ updatedAt: '2020-01-01T00:00:00.000Z' });
+    await saveActionPlan('plan-001', plan);
+    const loaded = await loadActionPlan('plan-001');
+    expect(loaded?.updatedAt).toBe('2020-01-01T00:00:00.000Z');
   });
 
   it('throws when id is empty string', async () => {
@@ -112,8 +120,7 @@ describe('saveActionPlan + loadActionPlan', () => {
 // listCachedPlans
 // ---------------------------------------------------------------------------
 
-// TODO(offline): sort direction disagrees with impl — pin spec + re-enable.
-describe.skip('listCachedPlans', () => {
+describe('listCachedPlans', () => {
   it('returns empty array when no plans cached', async () => {
     const plans = await listCachedPlans();
     expect(plans).toEqual([]);
@@ -143,8 +150,7 @@ describe.skip('listCachedPlans', () => {
 // clearExpired
 // ---------------------------------------------------------------------------
 
-// TODO(offline): clearExpired cutoff math disagrees with impl — pin spec + re-enable.
-describe.skip('clearExpired', () => {
+describe('clearExpired', () => {
   it('removes plans older than maxAgeDays', async () => {
     const now = new Date('2024-06-01T00:00:00.000Z');
     // 40 days old — should be removed with default 30-day window

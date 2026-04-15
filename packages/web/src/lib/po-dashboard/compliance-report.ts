@@ -29,7 +29,7 @@ export interface ComplianceReport {
 }
 
 /** Determine if a member is at risk based on risk score and recent activity */
-function getMemberRiskFactors(member: CaseloadMember): string[] {
+function getMemberRiskFactors(member: CaseloadMember, referenceDate: Date = new Date()): string[] {
   const factors: string[] = [];
   const m = member as unknown as Record<string, unknown>;
   const riskScore = Number(m.riskScore ?? m.risk_score ?? 0);
@@ -44,7 +44,7 @@ function getMemberRiskFactors(member: CaseloadMember): string[] {
 
   if (lastContact) {
     const daysSinceContact = Math.floor(
-      (Date.now() - new Date(lastContact).getTime()) / (1000 * 60 * 60 * 24)
+      (referenceDate.getTime() - new Date(lastContact).getTime()) / (1000 * 60 * 60 * 24)
     );
     if (daysSinceContact > 14) factors.push(`No contact in ${daysSinceContact} days`);
   }
@@ -132,7 +132,7 @@ export function generateComplianceReport(
   const positiveOutcomes: ComplianceReport['positiveOutcomes'] = [];
 
   for (const member of caseload) {
-    const riskFactors = getMemberRiskFactors(member);
+    const riskFactors = getMemberRiskFactors(member, periodEnd);
     if (riskFactors.length > 0) {
       atRiskMembers.push({ member, riskFactors });
     }
@@ -148,10 +148,21 @@ export function generateComplianceReport(
     }
   }
 
+  // Compliance rate reflects HARD non-compliance only (overdue deadlines,
+  // or a high risk score, or multiple missed check-ins). Lighter signals
+  // like "No contact in X days" surface in atRiskMembers for PO review
+  // but don't flip a member out of compliance on their own.
   const overdueSet = new Set(overdueDeadlines.map((d) => (d.member as { id: string }).id));
-  const atRiskSet = new Set(atRiskMembers.map((a) => (a.member as { id: string }).id));
-  const nonCompliantSet = new Set([...overdueSet, ...atRiskSet]);
-  const compliantCount = caseload.length - nonCompliantSet.size;
+  const hardNonCompliant = new Set<string>(overdueSet);
+  for (const member of caseload) {
+    const m = member as unknown as Record<string, unknown>;
+    const riskScore = Number(m.riskScore ?? m.risk_score ?? 0);
+    const missed = Number(m.missedCheckIns ?? m.missed_check_ins ?? 0);
+    if (riskScore >= 7 || missed >= 2) {
+      hardNonCompliant.add(String(m.id ?? ''));
+    }
+  }
+  const compliantCount = caseload.length - hardNonCompliant.size;
   const complianceRate = caseload.length > 0 ? compliantCount / caseload.length : 1;
 
   return {

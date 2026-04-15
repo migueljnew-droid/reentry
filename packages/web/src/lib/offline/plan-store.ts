@@ -176,8 +176,23 @@ export function _resetStores(): void {
 export async function saveActionPlan(id: string, plan: ActionPlan): Promise<void> {
   if (!id || typeof id !== 'string') throw new Error('saveActionPlan: id is required');
   const store = await getPlanStore();
-  const record = { ...plan, updatedAt: new Date().toISOString() };
+  // Respect an explicit updatedAt on the incoming plan so tests + back-dated
+  // imports behave deterministically; auto-touch only when missing.
+  const record: ActionPlan = {
+    ...plan,
+    updatedAt: plan.updatedAt ?? new Date().toISOString(),
+  };
   await store.set(`plan:${id}`, record);
+}
+
+/**
+ * Variant that always stamps updatedAt to now — for live UI save flows
+ * that want the "most recently edited" semantic.
+ */
+export async function touchAndSaveActionPlan(id: string, plan: ActionPlan): Promise<void> {
+  if (!id || typeof id !== 'string') throw new Error('touchAndSaveActionPlan: id is required');
+  const store = await getPlanStore();
+  await store.set(`plan:${id}`, { ...plan, updatedAt: new Date().toISOString() });
 }
 
 /**

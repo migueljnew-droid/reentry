@@ -83,6 +83,10 @@ function nextState(current: IntakeState): IntakeState {
 export function parseName(text: string): string | null {
   const trimmed = text.trim().replace(/^(my name is|i'm|i am|call me)\s+/i, '');
   if (trimmed.length < 2 || trimmed.length > 80) return null;
+  // Must contain at least 2 alphabetic characters — rejects pure punctuation
+  // ("???") and numeric-only inputs while still accepting hyphenated + apostrophe names.
+  const alphaCount = (trimmed.match(/\p{L}/gu) ?? []).length;
+  if (alphaCount < 2) return null;
   return trimmed
     .split(' ')
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
