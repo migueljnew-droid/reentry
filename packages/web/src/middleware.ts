@@ -6,13 +6,16 @@ const PUBLIC_PATHS = ['/api/health'];
 
 // Demo / fixture endpoints — no real user data, safe to expose for MVP dashboards.
 // Remove as each endpoint is wired to real auth'd user context.
+// Stateless / no-PII endpoints — safe without a session.
+// The PO routes are deliberately NOT here: /api/po/* require a
+// case_manager session and self-gate in their own handlers.
 const PUBLIC_PREFIXES = [
-  '/api/po/',                 // Caseload + compliance-report fixtures
   '/api/employment/match',    // Fair-chance matcher (stateless search)
   '/api/resources',           // 211.org stub
   '/api/intake/voice',        // Voice intake FSM
   '/api/deadlines',           // Deadline cascade compute (stateless)
   '/api/plans/ai-narrative',  // SOVEREIGN multi-agent narrative (stateless)
+  '/api/po/me',               // Role probe for the login flow (401s when no session)
 ];
 
 function addSecurityHeaders(response: NextResponse): NextResponse {

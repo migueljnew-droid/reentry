@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import { AppShell } from '@/components/layout/AppShell';
 import { Badge, Card, Skeleton, StatCard } from '@/components/ui/primitives';
 
@@ -220,6 +221,7 @@ export default function CaseloadLiveDashboard() {
               const tone = riskTone(m.riskScore);
               return (
                 <Card key={m.id} className="hover:shadow-md transition">
+                  <Link href={`/caseload/${m.id}`} className="block focus:outline-none focus:ring-2 focus:ring-primary-300 rounded-xl">
                   <div className="flex items-start gap-4 p-4 md:p-5">
                     <div
                       className={`flex h-12 w-12 flex-none items-center justify-center rounded-full text-base font-semibold ${avatarColor(m.id)}`}
@@ -254,6 +256,7 @@ export default function CaseloadLiveDashboard() {
                       <Badge tone={tone}>{riskLabel(m.riskScore)}</Badge>
                     </div>
                   </div>
+                  </Link>
                 </Card>
               );
             })}
