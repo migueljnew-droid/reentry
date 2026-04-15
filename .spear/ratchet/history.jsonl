@@ -1,0 +1,7 @@
+{"timestamp":"2026-04-15T03:30:00Z","type":"threshold_introduce","metric":"test_count","new":280,"reason":"Quantum cycle established 284-test baseline; floor set at 280 (~2% buffer)"}
+{"timestamp":"2026-04-15T03:30:00Z","type":"threshold_replace","metric":"max_bundle_size->max_first_load_js","old":500,"new":110,"reason":"Replaced aggregate kb ceiling with Next-aware page-level first-load JS. Measured 103kb on /intake (largest page)."}
+{"timestamp":"2026-04-15T03:30:00Z","type":"threshold_tighten","metric":"max_build_time","old":120,"new":15,"reason":"auto-tighten: next build cold=11s vs 120s ceiling. 87% improvement; new ceiling 15s leaves ~35% buffer."}
+{"timestamp":"2026-04-15T03:30:00Z","type":"rule_created","rule_id":"RULE-001","from_finding":"AUDIT-001","description":"Quantum validator must run next build in addition to vitest"}
+{"timestamp":"2026-04-15T03:30:00Z","type":"rule_created","rule_id":"RULE-002","from_finding":"AUDIT-002","description":"Planner context must include resolved dependency versions"}
+{"timestamp":"2026-04-15T03:30:00Z","type":"rule_created","rule_id":"RULE-003","from_finding":"AUDIT-003","description":"Turbo monorepos must declare packageManager field"}
+{"timestamp":"2026-04-15T03:30:00Z","type":"rule_created","rule_id":"RULE-004","from_finding":"AUDIT-004","description":"External targets validate/checkpoint/commit in target root, not Council repo"}

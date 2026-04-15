@@ -1,0 +1,12 @@
+id: "RULE-004"
+created_from: "AUDIT-004"
+category: "architecture"
+description: |
+  council-quantum External targets MUST validate, checkpoint, and commit
+  inside the target project's own root — never inside the Council workspace.
+  resolve_target_workspace() derives this from ExternalTarget variant.
+check: |
+  grep -q 'resolve_target_workspace' ~/the-council-rs/crates/council-quantum/src/cycle.rs
+severity: "HIGH"
+auto_generated: true
+created: "2026-04-15T03:30:00Z"

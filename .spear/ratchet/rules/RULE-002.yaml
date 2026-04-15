@@ -1,0 +1,12 @@
+id: "RULE-002"
+created_from: "AUDIT-002"
+category: "dependencies"
+description: |
+  Planner context MUST include resolved dependency versions from package.json
+  + Cargo.toml. Without version context, the LLM can emit code against the
+  wrong major version of a library (e.g. Zod v3 errorMap against Zod v4).
+check: |
+  grep -q 'dependency_versions' ~/the-council-rs/crates/council-quantum/src/plan.rs
+severity: "HIGH"
+auto_generated: true
+created: "2026-04-15T03:30:00Z"

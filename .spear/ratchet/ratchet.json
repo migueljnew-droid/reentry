@@ -1,18 +1,50 @@
 {
-  "version": "1.0.0",
-  "last_updated": "2026-03-17T06:15:00Z",
+  "version": "1.1.0",
+  "last_updated": "2026-04-15T03:30:00Z",
   "thresholds": {
+    "test_count": {
+      "value": 280,
+      "direction": "floor",
+      "unit": "count",
+      "measured": 284,
+      "tightened_from": null,
+      "reason": "Introduced by Quantum cycle — 284 tests passing; floor set at 280 (2% buffer)"
+    },
     "test_coverage": { "value": 70, "direction": "floor", "unit": "percent" },
     "doc_coverage": { "value": 60, "direction": "floor", "unit": "percent" },
     "max_complexity": { "value": 20, "direction": "ceiling", "unit": "cyclomatic" },
-    "max_bundle_size": { "value": 500, "direction": "ceiling", "unit": "kb" },
-    "max_build_time": { "value": 120, "direction": "ceiling", "unit": "seconds" }
+    "max_first_load_js": {
+      "value": 110,
+      "direction": "ceiling",
+      "unit": "kb",
+      "measured": 103,
+      "tightened_from": 500,
+      "reason": "Replaced max_bundle_size. Old ceiling wasn't Next-aware. Tightened to page-level first-load JS with ~7% buffer over /intake (largest page, 103kb)."
+    },
+    "max_build_time": {
+      "value": 15,
+      "direction": "ceiling",
+      "unit": "seconds",
+      "measured": 11,
+      "tightened_from": 120,
+      "reason": "Next build cold=11s; tightened ceiling to 15s (+~35% buffer). 8x safety margin vs prior 120s."
+    }
   },
-  "active_rules": [],
+  "active_rules": ["RULE-001", "RULE-002", "RULE-003", "RULE-004"],
   "policy": {
     "auto_tighten": true,
     "tighten_buffer_percent": 2,
     "improvement_threshold_percent": 5,
     "require_justification_to_loosen": true
-  }
+  },
+  "temporal_metrics": [
+    {
+      "cycle_id": "quantum-2026-04-15",
+      "cycle_duration_minutes": 60,
+      "execution_velocity_loc_per_hour": 1522,
+      "finding_density_per_kloc": 3.28,
+      "fix_recurrence_rate_percent": 0,
+      "note": "First Quantum+SPEAR cycle for REENTRY — no prior categories for recurrence"
+    }
+  ]
 }

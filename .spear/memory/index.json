@@ -1,7 +1,44 @@
 {
   "version": "1.0.0",
-  "last_updated": null,
-  "entries": [],
+  "last_updated": "2026-04-15T03:30:00Z",
+  "entries": [
+    {
+      "id": "adr-001-quantum-evolution",
+      "type": "decision",
+      "title": "Adopt Quantum Evolution Protocol for REENTRY continuous improvement",
+      "summary": "11 Quantum Accept cycles shipped 37 tests + 3 API routes + validation lib + CI; auto-rollback on regression works",
+      "category": "automation",
+      "tags": ["quantum", "spear", "automation", "evolution"],
+      "created": "2026-04-15T03:30:00Z",
+      "updated": "2026-04-15T03:30:00Z",
+      "file": "decisions/ADR-001-quantum-evolution-protocol.md",
+      "references": []
+    },
+    {
+      "id": "pattern-zod-boundary-validation",
+      "type": "pattern",
+      "title": "Boundary Validation with Zod + parseOrThrow",
+      "summary": "Every API route MUST parseOrThrow(Schema, body) before business logic; silent empties are harmful to justice-involved users",
+      "category": "validation",
+      "tags": ["validation", "zod", "api", "justice-involved", "boundary"],
+      "created": "2026-04-15T03:30:00Z",
+      "updated": "2026-04-15T03:30:00Z",
+      "file": "patterns/PATTERN-boundary-validation-with-zod.md",
+      "references": []
+    },
+    {
+      "id": "antipattern-test-only-validation",
+      "type": "antipattern",
+      "title": "Test-only Validation in Evolution Engines",
+      "summary": "vitest tolerates what next build rejects; evolution engines must run build too",
+      "category": "engine",
+      "tags": ["validation", "tests", "build", "quantum", "evolution"],
+      "created": "2026-04-15T03:30:00Z",
+      "updated": "2026-04-15T03:30:00Z",
+      "file": "antipatterns/ANTIPATTERN-test-only-validation.md",
+      "references": ["adr-001-quantum-evolution"]
+    }
+  ],
   "schema": {
     "id": "string (uuid)",
     "type": "decision|finding|pattern|antipattern",

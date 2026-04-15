@@ -1,0 +1,13 @@
+id: "RULE-001"
+created_from: "AUDIT-001"
+category: "architecture"
+description: |
+  Quantum validator for External Node.js targets must run the project's
+  `build` script (next build / tsc) in addition to its test suite. Test-only
+  validation misses TypeScript errors, unused-var lint failures, and any
+  regression that vitest's lazy module resolution tolerates.
+check: |
+  cd ${workspace} && TMPDIR=/tmp npx turbo run test build 2>&1 | tail -5 | grep -q "successful"
+severity: "HIGH"
+auto_generated: true
+created: "2026-04-15T03:30:00Z"

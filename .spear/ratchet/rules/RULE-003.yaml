@@ -1,0 +1,12 @@
+id: "RULE-003"
+created_from: "AUDIT-003"
+category: "dependencies"
+description: |
+  Turbo-based monorepo roots MUST declare a "packageManager" field in
+  package.json. Without it, turbo 2.x refuses to resolve workspaces and
+  every test/build/lint task fails silently.
+check: |
+  jq -e '.packageManager' package.json > /dev/null
+severity: "MEDIUM"
+auto_generated: true
+created: "2026-04-15T03:30:00Z"
