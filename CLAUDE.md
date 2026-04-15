@@ -259,3 +259,109 @@ export const POST = withErrorHandler(async (req: Request) => {
 - [ ] Schema is defined and exported from `packages/web/src/lib/validation/schemas.ts`
 - [ ] Tests exist in `packages/web/src/__tests__/validation/schemas.test.ts`
 - [ ] No raw `req.json()` result is used without parsing
+
+## Voice-First Intake Pipeline
+
+### Why Voice-First Is Mandatory
+
+Many returning citizens have been incarcerated for 5–25 years. They may have
+never owned a smartphone. Reading comprehension may be at a 4th–6th grade
+level. Typing is slow and error-prone on a phone keyboard. For this population,
+**voice is not a nice-to-have — it is the only viable primary interface.**
+
+The intake pipeline is designed so that a person can complete the entire
+onboarding process by speaking, with zero typing required.
+
+### Architecture: Pure Finite-State Machine
+
+The intake FSM lives in `packages/web/src/lib/voice/transcript.ts`.
+It is **100% pure** — no I/O, no side effects, no async. This makes it:
+- Fully unit-testable without mocks
+- Safe to run offline (React Native)
+- Easy to replay / audit for CJIS compliance
+
+#### States (in order)
+
+```
+greeting → name → release_date → state → release_type
+         → obligations → benefits_needed → employment_goals
+         → summary → done
+```
+
+Each state has:
+- A **prompt** (plain English, ≤ 5th-grade level)
+- A **parser** that extracts structured data from free-form speech
+- A **retry prompt** if the parser returns null (max retries tracked)
+
+#### Key Functions
+
+| Function | Purpose |
+|---|---|
+| `createSession(id)` | Create a fresh `IntakeSession` |
+| `advanceSession(session, userText)` | Pure FSM transition → `AdvanceResult` |
+| `parseName(text)` | Extract name, strip prefixes, title-case |
+| `parseReleaseDate(text)` | Parse spoken dates → YYYY-MM-DD |
+| `parseStateCode(text)` | Map state name or abbreviation → 2-letter code |
+| `parseReleaseType(text)` | Classify parole / probation / time_served / other |
+| `parseList(text)` | Split comma/and-separated spoken lists |
+
+#### Data Shape
+
+```ts
+interface CollectedData {
+  name?: string;
+  releaseDate?: string;    // YYYY-MM-DD
+  releaseState?: string;   // 2-letter code or FED
+  releaseType?: string;    // parole | probation | time_served | other
+  obligations?: string[];
+  benefitsNeeded?: string[];
+  employmentGoals?: string;
+}
+```
+
+### API Route
+
+`POST /api/intake/voice`
+
+```json
+// Request
+{ "sessionId": "uuid", "userText": "My name is John Smith", "audioRef": "s3://..." }
+
+// Response
+{ "assistantReply": "Thanks, John! When did you get out?",
+  "done": false, "collected": { "name": "John Smith" },
+  "currentState": "release_date", "sessionId": "uuid" }
+```
+
+`GET /api/intake/voice?sessionId=xxx` — resume a session after page reload.
+
+Session store is currently in-memory (Map + 30-min TTL). Swap
+`getOrCreateSession` / `saveSession` in `route.ts` for Supabase calls
+when the DB layer is ready — no FSM changes required.
+
+### Prompt Design Rules
+
+All prompts in `packages/web/src/lib/voice/prompts.ts` follow:
+1. One question per turn — never compound questions
+2. Confirm what was heard before asking the next question
+3. Offer a concrete example for any format (dates, state names)
+4. Use "you" not "the user" — direct, warm, human
+5. Never use legal jargon (parole officer → "your check-in person")
+
+### Extending the FSM
+
+To add a new intake state:
+1. Add the state name to `IntakeState` union in `transcript.ts`
+2. Insert it into `STATE_ORDER` at the correct position
+3. Add a `case` block in `advanceSession` with a parser
+4. Add prompt + retry prompt in `prompts.ts`
+5. Add ≥ 3 tests in `transcript.test.ts`
+
+### Files
+
+| File | Purpose |
+|---|---|
+| `packages/web/src/lib/voice/transcript.ts` | FSM types, parsers, `advanceSession` |
+| `packages/web/src/lib/voice/prompts.ts` | Plain-English prompt templates |
+| `packages/web/src/app/api/intake/voice/route.ts` | HTTP route (POST + GET) |
+| `packages/web/src/__tests__/voice/transcript.test.ts` | 18 vitest tests |
