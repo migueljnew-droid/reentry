@@ -1,30 +1,24 @@
-/**
- * withErrorHandler — wraps every App Router route handler.
- *
- * Catches ValidationError (from parseOrThrow) and returns a structured 422
- * with field-level `issues` so the UI can surface inline errors.
- * Catches all other errors and returns a safe 500 without leaking internals.
- *
- * CLAUDE.md mandate: every route uses BOTH parseOrThrow AND withErrorHandler.
- *
- * @example
- * export const POST = withErrorHandler(async (req) => {
- *   const data = parseOrThrow(IntakeSchema, await req.json());
- *   return Response.json({ ok: true, data });
- * });
- */
+import { NextResponse } from 'next/server';
 import { ValidationError } from '@/lib/validation/schemas';
 
 type RouteHandler = (req: Request, ctx?: unknown) => Promise<Response>;
 
+/**
+ * Wraps an App Router route handler with structured error handling.
+ *
+ * - ValidationError  → 422 + { error, statusCode, issues }
+ * - Any other Error  → 500 + { error, statusCode } (message scrubbed in prod)
+ *
+ * Usage:
+ *   export const POST = withErrorHandler(async (req) => { ... });
+ */
 export function withErrorHandler(handler: RouteHandler): RouteHandler {
   return async (req: Request, ctx?: unknown): Promise<Response> => {
     try {
       return await handler(req, ctx);
     } catch (err) {
-      // ── Validation errors (422) ──────────────────────────────────────────
       if (err instanceof ValidationError) {
-        return Response.json(
+        return NextResponse.json(
           {
             error: 'Validation failed',
             statusCode: 422,
@@ -38,15 +32,16 @@ export function withErrorHandler(handler: RouteHandler): RouteHandler {
         );
       }
 
-      // ── Unexpected errors (500) ──────────────────────────────────────────
-      // Log the real error server-side; never leak internals to the client.
+      // Unknown error — log server-side, return safe message to client
       console.error('[withErrorHandler] Unhandled error:', err);
 
-      return Response.json(
-        {
-          error: 'An unexpected error occurred. Please try again.',
-          statusCode: 500,
-        },
+      const message =
+        process.env.NODE_ENV === 'development' && err instanceof Error
+          ? err.message
+          : 'An unexpected error occurred. Please try again.';
+
+      return NextResponse.json(
+        { error: message, statusCode: 500 },
         { status: 500 }
       );
     }

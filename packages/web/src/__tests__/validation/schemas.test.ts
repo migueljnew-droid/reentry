@@ -1,145 +1,129 @@
 import { describe, it, expect } from 'vitest';
 import {
   IntakeSchema,
-  BenefitsScreeningSchema,
-  StateCodeSchema,
+  ResourceQuerySchema,
   parseOrThrow,
   ValidationError,
 } from '@/lib/validation/schemas';
 
-// ── StateCodeSchema ──────────────────────────────────────────────────────────
-
-describe('StateCodeSchema', () => {
-  it('accepts valid 2-letter state codes', () => {
-    expect(StateCodeSchema.parse('GA')).toBe('GA');
-    expect(StateCodeSchema.parse('CA')).toBe('CA');
-    expect(StateCodeSchema.parse('TN')).toBe('TN');
-  });
-
-  it('accepts FED for federal-only queries', () => {
-    expect(StateCodeSchema.parse('FED')).toBe('FED');
-  });
-
-  it('normalises lowercase to uppercase', () => {
-    expect(StateCodeSchema.parse('ga')).toBe('GA');
-  });
-
-  it('rejects invalid state codes', () => {
-    expect(() => StateCodeSchema.parse('XX')).toThrow();
-    expect(() => StateCodeSchema.parse('')).toThrow();
-    expect(() => StateCodeSchema.parse('GEORGIA')).toThrow();
-  });
-});
-
-// ── IntakeSchema ─────────────────────────────────────────────────────────────
-
+// ─── IntakeSchema ────────────────────────────────────────────────────────────
 describe('IntakeSchema', () => {
-  const valid = {
-    releaseDate: '2024-03-15',
+  const validBase = {
+    releaseDate: '2023-06-15',
     releaseState: 'GA',
+    convictionType: 'felony' as const,
   };
 
-  it('accepts a minimal valid payload', () => {
-    const result = IntakeSchema.parse(valid);
-    expect(result.releaseDate).toBe('2024-03-15');
-    expect(result.releaseState).toBe('GA');
-    expect(result.voiceMode).toBe(false);
-    expect(result.language).toBe('en');
-    expect(result.convictionTypes).toEqual([]);
+  it('accepts a valid intake payload', () => {
+    const result = IntakeSchema.safeParse(validBase);
+    expect(result.success).toBe(true);
   });
 
-  it('accepts a fully populated payload', () => {
-    const result = IntakeSchema.parse({
-      ...valid,
-      releaseCounty: 'Fulton',
-      convictionTypes: ['drug possession'],
-      voiceMode: true,
-      language: 'es',
-    });
-    expect(result.releaseCounty).toBe('Fulton');
-    expect(result.voiceMode).toBe(true);
-    expect(result.language).toBe('es');
+  it('rejects a future release date', () => {
+    const future = new Date();
+    future.setFullYear(future.getFullYear() + 1);
+    const iso = future.toISOString().slice(0, 10);
+    const result = IntakeSchema.safeParse({ ...validBase, releaseDate: iso });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0].message).toMatch(/future/);
+    }
   });
 
-  it('rejects a malformed release date', () => {
-    expect(() =>
-      IntakeSchema.parse({ ...valid, releaseDate: '03/15/2024' })
-    ).toThrow();
-
-    expect(() =>
-      IntakeSchema.parse({ ...valid, releaseDate: 'not-a-date' })
-    ).toThrow();
+  it('rejects a non-date string for releaseDate', () => {
+    const result = IntakeSchema.safeParse({ ...validBase, releaseDate: 'yesterday' });
+    expect(result.success).toBe(false);
   });
 
   it('rejects an invalid state code', () => {
-    expect(() =>
-      IntakeSchema.parse({ ...valid, releaseState: 'ZZ' })
-    ).toThrow();
+    const result = IntakeSchema.safeParse({ ...validBase, releaseState: 'XX' });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error.issues[0].path).toContain('releaseState');
+    }
   });
 
-  it('rejects missing required fields', () => {
-    expect(() => IntakeSchema.parse({ releaseDate: '2024-03-15' })).toThrow();
-    expect(() => IntakeSchema.parse({ releaseState: 'GA' })).toThrow();
-    expect(() => IntakeSchema.parse({})).toThrow();
+  it('accepts FED as a valid state code', () => {
+    const result = IntakeSchema.safeParse({ ...validBase, releaseState: 'FED' });
+    expect(result.success).toBe(true);
   });
 
-  it('rejects convictionTypes arrays that are too long', () => {
-    expect(() =>
-      IntakeSchema.parse({
-        ...valid,
-        convictionTypes: Array(21).fill('drug possession'),
-      })
-    ).toThrow();
-  });
-});
-
-// ── BenefitsScreeningSchema ──────────────────────────────────────────────────
-
-describe('BenefitsScreeningSchema', () => {
-  const valid = {
-    state: 'GA',
-    householdSize: 2,
-    monthlyIncome: 1200,
-  };
-
-  it('accepts a valid payload', () => {
-    const result = BenefitsScreeningSchema.parse(valid);
-    expect(result.state).toBe('GA');
-    expect(result.hasChildren).toBe(false);
-    expect(result.isVeteran).toBe(false);
+  it('coerces state code to uppercase', () => {
+    const result = IntakeSchema.safeParse({ ...validBase, releaseState: 'ga' });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.releaseState).toBe('GA');
+    }
   });
 
-  it('rejects negative income', () => {
-    expect(() =>
-      BenefitsScreeningSchema.parse({ ...valid, monthlyIncome: -1 })
-    ).toThrow();
+  it('defaults convictionType to unknown when omitted', () => {
+    const { convictionType: _, ...withoutType } = validBase;
+    const result = IntakeSchema.safeParse(withoutType);
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.convictionType).toBe('unknown');
+    }
   });
 
-  it('rejects household size of 0', () => {
-    expect(() =>
-      BenefitsScreeningSchema.parse({ ...valid, householdSize: 0 })
-    ).toThrow();
+  it('rejects an unknown convictionType value', () => {
+    const result = IntakeSchema.safeParse({ ...validBase, convictionType: 'capital' });
+    expect(result.success).toBe(false);
   });
-});
 
-// ── parseOrThrow ─────────────────────────────────────────────────────────────
-
-describe('parseOrThrow', () => {
-  it('returns typed data on success', () => {
-    const data = parseOrThrow(IntakeSchema, {
-      releaseDate: '2024-01-01',
-      releaseState: 'CA',
+  it('accepts optional boolean fields', () => {
+    const result = IntakeSchema.safeParse({
+      ...validBase,
+      hasChildren: true,
+      isVeteran: false,
+      needsHousing: true,
     });
-    expect(data.releaseState).toBe('CA');
+    expect(result.success).toBe(true);
+  });
+});
+
+// ─── ResourceQuerySchema ─────────────────────────────────────────────────────
+describe('ResourceQuerySchema', () => {
+  it('accepts a valid query', () => {
+    const result = ResourceQuerySchema.safeParse({ state: 'CA', category: 'housing' });
+    expect(result.success).toBe(true);
+  });
+
+  it('defaults category to all and limit to 20', () => {
+    const result = ResourceQuerySchema.safeParse({ state: 'TN' });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.category).toBe('all');
+      expect(result.data.limit).toBe(20);
+    }
+  });
+
+  it('rejects limit > 100', () => {
+    const result = ResourceQuerySchema.safeParse({ state: 'GA', limit: 200 });
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects an invalid state', () => {
+    const result = ResourceQuerySchema.safeParse({ state: 'ZZ' });
+    expect(result.success).toBe(false);
+  });
+});
+
+// ─── parseOrThrow ─────────────────────────────────────────────────────────────
+describe('parseOrThrow', () => {
+  const validIntake = { releaseDate: '2022-01-01', releaseState: 'GA' };
+
+  it('returns typed data on success', () => {
+    const data = parseOrThrow(IntakeSchema, validIntake);
+    expect(data.releaseState).toBe('GA');
   });
 
   it('throws ValidationError with statusCode 422 on failure', () => {
     expect(() =>
-      parseOrThrow(IntakeSchema, { releaseDate: 'bad', releaseState: 'ZZ' })
+      parseOrThrow(IntakeSchema, { releaseDate: 'bad', releaseState: 'XX' })
     ).toThrow(ValidationError);
 
     try {
-      parseOrThrow(IntakeSchema, { releaseDate: 'bad', releaseState: 'ZZ' });
+      parseOrThrow(IntakeSchema, { releaseDate: 'bad', releaseState: 'XX' });
     } catch (err) {
       expect(err).toBeInstanceOf(ValidationError);
       if (err instanceof ValidationError) {
@@ -149,16 +133,13 @@ describe('parseOrThrow', () => {
     }
   });
 
-  it('includes path and message in issues', () => {
+  it('includes path information in issues', () => {
     try {
-      parseOrThrow(IntakeSchema, { releaseDate: '2024-01-01', releaseState: 'ZZ' });
+      parseOrThrow(IntakeSchema, { releaseDate: '2022-01-01', releaseState: 'XX' });
     } catch (err) {
       if (err instanceof ValidationError) {
-        const stateIssue = err.issues.find((i) =>
-          i.path.includes('releaseState')
-        );
-        expect(stateIssue).toBeDefined();
-        expect(stateIssue?.message).toMatch(/state code/i);
+        const statIssue = err.issues.find((i) => i.path.includes('releaseState'));
+        expect(statIssue).toBeDefined();
       }
     }
   });

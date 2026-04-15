@@ -105,7 +105,20 @@ literacy.
 routes are created. Export both the Zod schema and its inferred TypeScript type.
 
 ### Test Location
-`packages/web/src/__tests__/validation/schemas.test.ts` — every new schema
+`packages/web/src/__tests__/validation/schemas.test.ts`
+
+### Dependency
+`zod` must be listed in `packages/web/package.json` dependencies:
+```bash
+npm install zod --workspace=packages/web
+```
+
+### Files
+| File | Purpose |
+|------|---------|
+| `packages/web/src/lib/validation/schemas.ts` | All Zod schemas + `parseOrThrow` + `ValidationError` |
+| `packages/web/src/lib/api/error-handler.ts` | `withErrorHandler` App Router wrapper |
+| `packages/web/src/__tests__/validation/schemas.test.ts` | Vitest suite — run with `npm test` |` — every new schema
 MUST have at least: one passing test, one test for an invalid state code (if
 applicable), and one test verifying `parseOrThrow` throws `ValidationError`.
 
