@@ -572,3 +572,40 @@ dependencies.
 ```bash
 npm install idb-keyval --workspace=packages/web
 ```
+## Parole Officer Dashboard (B2G Revenue Engine)
+
+The `po-dashboard` namespace implements the core data layer for the B2G SaaS
+product — a caseload management dashboard sold to parole/probation departments.
+
+### Files
+
+| File | Purpose |
+|------|---------|
+| `packages/web/src/lib/po-dashboard/caseload.ts` | `CaseloadMember` type, `sortByRisk`, `filterByStatus`, `filterByRisk`, `computeCaseloadSummary`, `getUpcomingCheckIns` |
+| `packages/web/src/lib/po-dashboard/risk-heatmap.ts` | 5-bucket risk color system, `getRiskColor`, `buildRiskHeatmap`, `scoreToRiskLevel` |
+| `packages/web/src/app/api/po/caseload/route.ts` | `GET /api/po/caseload` — fixture caseload + summary (replace with Supabase query in production) |
+| `packages/web/src/__tests__/po-dashboard/caseload.test.ts` | Vitest suite — sort, filter, summary, heatmap, color |
+
+### Risk Buckets
+
+| Level | Score Range | Hex |
+|-------|-------------|-----|
+| critical | 80–100 | `#dc2626` |
+| high | 60–79 | `#f97316` |
+| medium | 40–59 | `#facc15` |
+| low | 20–39 | `#60a5fa` |
+| minimal | 0–19 | `#4ade80` |
+
+### Why this advances the mission
+
+Government contracts (DOJ/DOL) and B2G SaaS are the primary revenue path that
+funds the free reentry navigator. Parole officers managing 50–150 cases need
+risk-sorted views, missed check-in alerts, and discharge countdowns. This
+module is the data foundation for that dashboard — without it, the B2G pitch
+has no working demo.
+
+### Next cycle TODOs
+- Wire `GET /api/po/caseload` to Supabase with officer JWT filtering
+- Add `POST /api/po/caseload/:id/checkin` to record check-in events
+- Build the React dashboard page at `app/dashboard/po/page.tsx`
+- Expand fixture to cover absconded-alert workflow
