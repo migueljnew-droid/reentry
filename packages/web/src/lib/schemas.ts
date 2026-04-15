@@ -87,9 +87,12 @@ export const stepUpdateSchema = z.object({
 // Auth routes
 // ==========================================
 
+// Note: stateOfRelease accepts '' (empty) OR a valid 2-letter code. Using
+// stateCode.optional().default('') trips Zod v4's strict .length(2) check
+// against the default empty string, so we build a tolerant union here.
 export const signupSchema = z.object({
   fullName: z.string().min(1, 'Name is required').max(200).trim(),
-  stateOfRelease: stateCode.optional().default(''),
+  stateOfRelease: z.union([z.literal(''), stateCode]).optional().default(''),
   convictionType: z.string().max(100).optional().default(''),
 });
 

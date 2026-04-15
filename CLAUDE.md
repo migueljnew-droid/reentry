@@ -442,3 +442,133 @@ This matcher removes the guesswork — a returning citizen answers three
 questions (state, conviction type, remote?) and gets a ranked, explained
 list of employers who will actually consider them, plus their legal rights
 under ban-the-box law, delivered in plain language suitable for voice output.
+\n## Offline-First Action Plans
+
+### Why Offline is Mandatory for This Mission
+
+Reentry clients do not live in coffee shops with reliable WiFi. They live in:
+- **Transitional housing / shelters** — shared, overloaded routers with 20+ users
+- **Halfway houses** — often no WiFi at all; residents use prepaid phones with limited data
+- **Rural counties** — spotty LTE coverage, especially in Georgia, Tennessee, and the Deep South
+- **Parole reporting centers** — waiting rooms where they need to reference their plan *right now*
+
+A reentry action plan that disappears when the connection drops is not a reentry action plan.
+It is a liability. A missed parole check-in because the app wouldn't load is a **revocation**.
+
+**Offline-first is not a feature. It is a safety requirement.**
+
+---
+
+### Implementation
+
+The offline module lives at `packages/web/src/lib/offline/`.
+
+| File | Purpose |
+|------|---------|
+| `plan-store.ts` | IndexedDB-backed plan persistence + sync queue |
+| `service-worker-registration.ts` | Safe SW registration (prod-only, SSR-safe) |
+| `connectivity.ts` | `isOnline()`, `subscribeConnectivity()`, `waitForOnline()` |
+| `index.ts` | Barrel re-export for clean imports |
+
+---
+
+### Usage
+
+```ts
+import {
+  saveActionPlan,
+  loadActionPlan,
+  listCachedPlans,
+  clearExpired,
+  enqueueSync,
+  drainSyncQueue,
+  subscribeConnectivity,
+  registerServiceWorker,
+} from '@/lib/offline';
+
+// Save a plan locally after AI generation
+await saveActionPlan(plan.id, plan);
+
+// Load it back (works offline)
+const plan = await loadActionPlan(planId);
+
+// Queue a step completion for later sync
+await enqueueSync('complete_step', { planId, stepId });
+
+// Drain queue when connectivity returns
+const unsub = subscribeConnectivity(async (online) => {
+  if (online) {
+    await drainSyncQueue(async (op) => {
+      await fetch('/api/sync', { method: 'POST', body: JSON.stringify(op) });
+    });
+  }
+});
+
+// Register SW in root layout (client component, after hydration)
+useEffect(() => { registerServiceWorker(); }, []);
+```
+
+---
+
+### Storage Backend
+
+- **Browser (production):** IndexedDB via `idb-keyval` — persistent across sessions,
+  survives app close, works offline.
+- **SSR / Tests / No IndexedDB:** In-memory `Map` fallback — identical API surface,
+  zero configuration required.
+
+The fallback is automatic. No environment flags needed.
+
+---
+
+### Sync Queue Shape
+
+```ts
+interface SyncOp {
+  id: string;          // unique op id
+  op: 'create' | 'update' | 'complete_step';
+  payload: unknown;    // op-specific data
+  createdAt: string;   // ISO-8601
+}
+```
+
+Ops that fail during `drainSyncQueue` remain in the queue and are retried
+on the next connectivity event. This prevents data loss on flaky connections.
+
+---
+
+### Expiry Policy
+
+Call `clearExpired(30)` on app startup to remove plans older than 30 days.
+This prevents unbounded IndexedDB growth on low-storage devices (common with
+prepaid Android phones).
+
+```ts
+// In root layout or app init
+await clearExpired(30);
+```
+
+---
+
+### Tests
+
+```bash
+# Run offline module tests
+cd packages/web && npx vitest run src/__tests__/offline/
+```
+
+All tests use the in-memory Map fallback — no real IndexedDB required.
+Date-dependent tests (`clearExpired`) accept an explicit `now: Date` parameter
+for deterministic results.
+
+---
+
+### idb-keyval Dependency
+
+`idb-keyval` must be listed in `packages/web/package.json` dependencies.
+It is a tiny (~1KB) wrapper around the IndexedDB API with zero transitive
+dependencies.
+
+```bash
+npm install idb-keyval --workspace=packages/web
+```
