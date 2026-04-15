@@ -644,3 +644,36 @@ This module surfaces the highest-risk members and overdue obligations in a
 single API call — enabling proactive intervention before a technical violation
 becomes a reincarceration. It is the analytical backbone of the B2G revenue
 stream (DOJ/DOL contracts, parole agency SaaS).
+
+## Voice-First Intake UI (`/intake`)
+
+Shipped in QEP INNOVATE cycle. Advances the core mission by giving returning
+citizens a guided, conversational intake flow that works without any prior
+digital literacy.
+
+### Files
+
+| File | Purpose |
+|------|---------|
+| `packages/web/src/app/intake/page.tsx` | Next.js App Router page (server wrapper, SSR metadata) |
+| `packages/web/src/app/intake/IntakeClient.tsx` | Client FSM component — full interaction logic |
+| `packages/web/src/lib/voice/transcript.ts` | `createSession` / `advanceSession` FSM engine |
+| `packages/web/src/lib/voice/prompts.ts` | Plain-language prompt strings (GREETING_PROMPT + step prompts) |
+| `packages/web/src/__tests__/intake/page.test.tsx` | Vitest suite (5 tests) |
+
+### Design Decisions
+- **No API round-trip for MVP** — `advanceSession` runs client-side so the
+  flow works offline and costs $0/interaction.
+- **Large fonts (text-2xl base), high-contrast** — yellow-on-dark palette
+  meets WCAG AA for users with low vision or limited literacy.
+- **`aria-live="polite"`** on the assistant reply div — screen readers
+  announce every new message automatically.
+- **Voice button stubbed** with `aria-label="Start voice input (coming soon)"`
+  — wires to Whisper API in the next cycle.
+- **FSM steps:** `greeting → state → releaseDate → needs → done`
+- **Summary panel** shown on completion; data ready to POST to `/api/intake`.
+
+### Next Steps
+1. Wire the voice button to `window.SpeechRecognition` / Whisper API.
+2. POST collected `session.data` to `POST /api/intake` (validated by `IntakeSchema`).
+3. Trigger Action Plan Generator from the `done` state.
