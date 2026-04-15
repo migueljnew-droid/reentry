@@ -5,3 +5,6 @@
 {"timestamp":"2026-04-15T03:30:00Z","type":"rule_created","rule_id":"RULE-002","from_finding":"AUDIT-002","description":"Planner context must include resolved dependency versions"}
 {"timestamp":"2026-04-15T03:30:00Z","type":"rule_created","rule_id":"RULE-003","from_finding":"AUDIT-003","description":"Turbo monorepos must declare packageManager field"}
 {"timestamp":"2026-04-15T03:30:00Z","type":"rule_created","rule_id":"RULE-004","from_finding":"AUDIT-004","description":"External targets validate/checkpoint/commit in target root, not Council repo"}
+{"timestamp":"2026-04-15T14:30:00Z","type":"threshold_tighten","metric":"test_count","old":280,"new":390,"reason":"auto-tighten: post-UI-push cycle shipped 398 tests (+118); new floor 390 (~2% buffer)"}
+{"timestamp":"2026-04-15T14:30:00Z","type":"rule_candidate","rule_id":"RULE-005-candidate","description":"LLM-emitted code frequently uses 'any' + loose member casts — mandate typescript-eslint no-explicit-any in Innovate system prompt"}
+{"timestamp":"2026-04-15T14:30:00Z","type":"rule_candidate","rule_id":"RULE-006-candidate","description":"When planner re-creates a module that already exists, surface schema mismatch early — feed current exports into planner context"}

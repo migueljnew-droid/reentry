@@ -1,14 +1,14 @@
 {
-  "version": "1.1.0",
-  "last_updated": "2026-04-15T03:30:00Z",
+  "version": "1.2.0",
+  "last_updated": "2026-04-15T14:30:00Z",
   "thresholds": {
     "test_count": {
-      "value": 280,
+      "value": 390,
       "direction": "floor",
       "unit": "count",
-      "measured": 284,
-      "tightened_from": null,
-      "reason": "Introduced by Quantum cycle — 284 tests passing; floor set at 280 (2% buffer)"
+      "measured": 398,
+      "tightened_from": 280,
+      "reason": "Post-UI-push cycle. 398 tests passing after Voice/Caseload/Employer pages + PO compliance-report + engine self-repair."
     },
     "test_coverage": { "value": 70, "direction": "floor", "unit": "percent" },
     "doc_coverage": { "value": 60, "direction": "floor", "unit": "percent" },
@@ -45,6 +45,14 @@
       "finding_density_per_kloc": 3.28,
       "fix_recurrence_rate_percent": 0,
       "note": "First Quantum+SPEAR cycle for REENTRY — no prior categories for recurrence"
+    },
+    {
+      "cycle_id": "quantum-2026-04-15-evening",
+      "cycle_duration_minutes": 180,
+      "execution_velocity_loc_per_hour": 800,
+      "finding_density_per_kloc": 1.8,
+      "fix_recurrence_rate_percent": 40,
+      "note": "Post-engine self-repair + UI push. 7 new commits: PO compliance, /intake page, /caseload page, /employers page, ratchet v2. Recurrence high because same any→unknown and FSM-schema-mismatch patterns repeated."
     }
   ]
 }
