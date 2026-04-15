@@ -609,3 +609,38 @@ has no working demo.
 - Add `POST /api/po/caseload/:id/checkin` to record check-in events
 - Build the React dashboard page at `app/dashboard/po/page.tsx`
 - Expand fixture to cover absconded-alert workflow
+
+## PO Dashboard — Compliance Report Module
+
+Added `packages/web/src/lib/po-dashboard/compliance-report.ts` — a pure,
+testable module that generates period-based compliance reports for parole
+officers. This is the core analytical output of the B2G SaaS dashboard.
+
+### Types
+- `ComplianceReport` — structured report with summary, atRiskMembers,
+  overdueDeadlines, and positiveOutcomes.
+
+### Functions
+- `generateComplianceReport(caseload, periodStart, periodEnd)` — pure fn,
+  no I/O. Scans each `CaseloadMember` for risk factors, overdue deadlines
+  (within the period), and positive outcomes. Returns a typed report.
+- `formatReportAsMarkdown(report)` — renders the report as a Markdown string
+  suitable for email, PDF export, or dashboard display.
+
+### API Route
+`POST /api/po/compliance-report` — accepts `{ periodStart, periodEnd, format? }`
+(ISO 8601 datetimes). Returns JSON report or `text/markdown` depending on
+`format` field. Validated with Zod + `withErrorHandler`.
+
+### Tests
+`packages/web/src/__tests__/po-dashboard/compliance-report.test.ts` — 7 vitest
+tests covering: empty caseload, at-risk detection, missed check-ins, overdue
+deadlines, completed deadline exclusion, positive outcomes, compliance rate
+math, and Markdown output.
+
+### Why this advances the mission
+Parole officers managing 50-100 cases cannot manually track who is slipping.
+This module surfaces the highest-risk members and overdue obligations in a
+single API call — enabling proactive intervention before a technical violation
+becomes a reincarceration. It is the analytical backbone of the B2G revenue
+stream (DOJ/DOL contracts, parole agency SaaS).
