@@ -67,3 +67,44 @@ client so the UI can surface field-level errors.
 Wrong release dates break eligibility calculations. Wrong state codes silently
 return empty resource lists. For a justice-involved population, silent failures
 cause real harm — validate at the boundary, always.
+
+## API Route Pattern (Validation + Error Handling)
+
+Every App Router route handler MUST use both `parseOrThrow` (validation) and
+`withErrorHandler` (structured error responses). Using one without the other
+leaves either unvalidated inputs or unhandled thrown errors.
+
+```ts
+import { withErrorHandler } from '@/lib/api/error-handler';
+import { parseOrThrow, IntakeSchema } from '@/lib/validation/schemas';
+
+export const POST = withErrorHandler(async (req: Request) => {
+  const data = parseOrThrow(IntakeSchema, await req.json());
+  // data is fully typed — proceed safely
+  return Response.json({ ok: true, data });
+});
+```
+
+`withErrorHandler` catches `ValidationError` and returns:
+```json
+{
+  "error": "Validation failed",
+  "statusCode": 422,
+  "issues": [
+    { "path": ["releaseState"], "message": "Must be a valid 2-letter US state code or FED", "code": "invalid_string" }
+  ]
+}
+```
+
+The UI reads `issues` and surfaces field-level errors inline — no generic
+"something went wrong" messages for a population that may have low digital
+literacy.
+
+### Schema Location
+`packages/web/src/lib/validation/schemas.ts` — add new schemas here as new
+routes are created. Export both the Zod schema and its inferred TypeScript type.
+
+### Test Location
+`packages/web/src/__tests__/validation/schemas.test.ts` — every new schema
+MUST have at least: one passing test, one test for an invalid state code (if
+applicable), and one test verifying `parseOrThrow` throws `ValidationError`.
