@@ -151,3 +151,58 @@ To add a new route:
 2. Wrap the handler with `withErrorHandler`.
 3. Call `parseOrThrow(YourSchema, await req.json())` before any business logic.
 4. Add tests in `packages/web/src/__tests__/`.
+
+## Accessibility Testing (WCAG 2.1 AA)
+
+All UI components MUST pass WCAG 2.1 AA before merge. This is both a legal
+requirement (ADA) and a mission requirement — reentry clients include people
+with disabilities, limited literacy, and aging populations.
+
+### Setup (one-time, inside `packages/web`)
+
+```bash
+npm install --save-dev vitest-axe axe-core
+```
+
+### Running Accessibility Tests
+
+```bash
+# From repo root
+turbo run test
+
+# Or directly
+cd packages/web && npx vitest run src/__tests__/accessibility/
+```
+
+### Adding New Component Tests
+
+For every new page or form component, add an axe audit in
+`packages/web/src/__tests__/accessibility/`. Pattern:
+
+```ts
+import { configureAxe } from 'vitest-axe';
+import { render } from '@testing-library/react';
+
+const axe = configureAxe({ /* WCAG 2.1 AA rules */ });
+
+it('has no accessibility violations', async () => {
+  const { container } = render(<MyComponent />);
+  const results = await axe(container);
+  expect(results.violations).toHaveLength(0);
+});
+```
+
+### Critical Rules for This Population
+
+- All form inputs MUST have explicit `<label>` elements (not placeholder-only)
+- All buttons MUST have visible text or `aria-label`
+- Color contrast ratio MUST be ≥ 4.5:1 for normal text
+- All interactive elements MUST be keyboard-navigable
+- Error messages MUST be associated with fields via `aria-describedby`
+- Voice interface MUST have text fallback for every interaction
+
+### Why This Matters
+
+Silent accessibility failures cause real harm. A screen reader user who cannot
+complete the intake form loses access to housing, benefits, and employment
+resources. Catch violations at $0 cost in CI — not post-deployment.

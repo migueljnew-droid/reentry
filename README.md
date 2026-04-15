@@ -201,3 +201,23 @@ cause real harm — **validate at the boundary, always**.
 | `ActionPlanRequestSchema` | `POST /api/plan` — AI plan generation |
 
 Run `npm test` from the repo root to execute the full schema test suite.
+
+---
+
+## Accessibility & Testing Setup
+
+After cloning, install accessibility testing dependencies inside the web package:
+
+```bash
+cd packages/web
+npm install --save-dev vitest-axe axe-core
+```
+
+All UI must pass **WCAG 2.1 AA** audits before merge. Run:
+
+```bash
+# From repo root
+npm run test
+```
+
+See `CLAUDE.md` → *Accessibility Testing* for the full contract.
