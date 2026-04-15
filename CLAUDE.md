@@ -44,3 +44,26 @@ FathersCAN, Inc. — 501(c)(3), Georgia. EIN: 41-3929662.
 - Foundation funding (Google.org, MacArthur, Ford)
 - B2G SaaS (parole/probation dashboards)
 - Open-source core + premium features
+
+## Input Validation
+
+All API route handlers MUST validate incoming data with the Zod schemas in
+`packages/web/src/lib/validation/schemas.ts` before any business logic runs.
+
+```ts
+import { parseOrThrow, IntakeSchema } from '@/lib/validation/schemas';
+
+export async function POST(req: Request) {
+  const data = parseOrThrow(IntakeSchema, await req.json());
+  // data is fully typed — proceed safely
+}
+```
+
+`parseOrThrow` throws with `statusCode: 422` and a structured `issues` array
+on failure. Catch it in a shared error handler and return the issues to the
+client so the UI can surface field-level errors.
+
+### Why this matters
+Wrong release dates break eligibility calculations. Wrong state codes silently
+return empty resource lists. For a justice-involved population, silent failures
+cause real harm — validate at the boundary, always.
