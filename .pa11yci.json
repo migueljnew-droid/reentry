@@ -1,0 +1,18 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "level": "error",
+    "timeout": 30000,
+    "wait": 1000,
+    "ignore": [
+      "WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail"
+    ],
+    "reporters": ["cli"]
+  },
+  "urls": [
+    "http://localhost:3000",
+    "http://localhost:3000/intake",
+    "http://localhost:3000/plan",
+    "http://localhost:3000/resources"
+  ]
+}

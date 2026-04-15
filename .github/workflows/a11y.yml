@@ -1,0 +1,57 @@
+name: Accessibility Audit
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  a11y:
+    name: WCAG 2.1 AA Audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web package
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+
+      - name: Start dev server in background
+        run: |
+          npm run dev &
+          echo "DEV_PID=$!" >> $GITHUB_ENV
+          # Wait for server to be ready
+          npx wait-on http://localhost:3000 --timeout 60000
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+
+      - name: Run pa11y-ci accessibility audit (warn mode)
+        # TODO: promote to `npm run a11y` (error mode) once baseline is clean
+        run: npm run a11y:warn
+        continue-on-error: true
+
+      - name: Upload accessibility report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a11y-report
+          path: pa11y-report.json
+          retention-days: 30
+
+      - name: Stop dev server
+        if: always()
+        run: kill $DEV_PID || true

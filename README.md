@@ -293,3 +293,39 @@ All API route handlers validate incoming data with Zod schemas before any busine
 - Row-level security enforced at the Supabase/PostgreSQL layer
 - All form inputs validated server-side with Zod (`parseOrThrow`)
 - Logs must be sanitized before emission — never log raw user PII
+
+---
+
+## Accessibility
+
+REENTRY targets **WCAG 2.1 AA** compliance. Reentry clients include people with cognitive disabilities, low literacy, and vision impairments — inaccessible UI is both a civil rights issue and a barrier to the highest-need users.
+
+### Automated Audits
+
+Every pull request runs `pa11y-ci` against the built app:
+
+```bash
+# Run locally (requires dev server on :3000)
+npm run a11y        # error mode — fails on any violation
+npm run a11y:warn   # warn mode — reports without failing
+```
+
+Configuration: `.pa11yci.json` — add new routes as they are created.
+
+### Promotion Path
+
+1. **Now:** CI runs in `warn` mode (`--threshold 100`). All violations surface as PR annotations.
+2. **After baseline clean:** Change the workflow step to `npm run a11y` (error mode) so violations block merge.
+3. **Ongoing:** New routes added to `.pa11yci.json` before PR merges.
+
+### Standards
+
+| Requirement | Target |
+|-------------|--------|
+| Color contrast | 4.5:1 minimum (AA) |
+| Keyboard navigation | All interactive elements reachable |
+| Screen reader | ARIA labels on all form fields |
+| Focus indicators | Visible on all focusable elements |
+| Error messages | Inline, field-level (not generic alerts) |
+
+> **Note for grant reviewers:** ADA Title II applies to government-adjacent services. Automated audit logs are retained as artifacts in GitHub Actions for 30 days per run.

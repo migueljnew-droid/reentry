@@ -1,6 +1,7 @@
 {
   "name": "reentry",
   "private": true,
+  "packageManager": "npm@10.9.0",
   "workspaces": [
     "packages/*"
   ],
@@ -9,10 +10,13 @@
     "build": "turbo run build",
     "type-check": "turbo run type-check",
     "lint": "turbo run lint",
-    "test": "turbo run test"
+    "test": "turbo run test",
+    "a11y": "pa11y-ci --config .pa11yci.json",
+    "a11y:warn": "pa11y-ci --config .pa11yci.json --threshold 100"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.1",
+    "pa11y-ci": "^3.1.0",
     "turbo": "^2.3.0",
     "typescript": "^5.7.0",
     "vitest": "^4.1.0"
