@@ -108,3 +108,33 @@ routes are created. Export both the Zod schema and its inferred TypeScript type.
 `packages/web/src/__tests__/validation/schemas.test.ts` — every new schema
 MUST have at least: one passing test, one test for an invalid state code (if
 applicable), and one test verifying `parseOrThrow` throws `ValidationError`.
+
+## Health Check Endpoint
+
+A liveness + readiness probe is available at `GET /healthz`.
+
+```
+GET /healthz
+→ 200 { status: "ok", uptime: 42.1, responseTimeMs: 1, checks: { server: "ok" }, timestamp: "..." }
+→ 503 { status: "degraded", ... }  ← when any check fails
+```
+
+Hosting platforms (Vercel, Fly.io) should point their health-check config at `/healthz`.
+Add new dependency checks (DB ping, Redis ping) inside `packages/web/src/app/healthz/route.ts`.
+
+## Validation + Error Handling Infrastructure
+
+The following files implement the patterns mandated above:
+
+| File | Purpose |
+|------|---------|
+| `packages/web/src/lib/validation/schemas.ts` | All Zod schemas + `parseOrThrow` + `ValidationError` |
+| `packages/web/src/lib/api/error-handler.ts` | `withErrorHandler` wrapper for App Router handlers |
+| `packages/web/src/__tests__/validation/schemas.test.ts` | Unit tests for all schemas |
+| `packages/web/src/__tests__/api/error-handler.test.ts` | Unit tests for error handler |
+
+To add a new route:
+1. Define a Zod schema in `schemas.ts` and export its inferred type.
+2. Wrap the handler with `withErrorHandler`.
+3. Call `parseOrThrow(YourSchema, await req.json())` before any business logic.
+4. Add tests in `packages/web/src/__tests__/`.

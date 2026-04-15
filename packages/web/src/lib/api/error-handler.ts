@@ -1,82 +1,54 @@
 /**
- * Reentry Navigator — Shared API Error Handler
+ * withErrorHandler — wraps every App Router route handler.
  *
- * Use this in every App Router route handler to ensure consistent,
- * structured error responses. Catches ValidationError from parseOrThrow
- * and returns field-level issues so the UI can surface them inline.
+ * Catches ValidationError (from parseOrThrow) and returns a structured 422
+ * with field-level `issues` so the UI can surface inline errors.
+ * Catches all other errors and returns a safe 500 without leaking internals.
+ *
+ * CLAUDE.md mandate: every route uses BOTH parseOrThrow AND withErrorHandler.
  *
  * @example
- * ```ts
- * import { withErrorHandler } from '@/lib/api/error-handler';
- * import { parseOrThrow, IntakeSchema } from '@/lib/validation/schemas';
- *
- * export const POST = withErrorHandler(async (req: Request) => {
+ * export const POST = withErrorHandler(async (req) => {
  *   const data = parseOrThrow(IntakeSchema, await req.json());
- *   // ... business logic
- *   return Response.json({ ok: true });
+ *   return Response.json({ ok: true, data });
  * });
- * ```
  */
-
-import { NextResponse } from 'next/server';
 import { ValidationError } from '@/lib/validation/schemas';
 
-export interface ApiErrorBody {
-  error: string;
-  statusCode: number;
-  issues?: Array<{
-    path: (string | number)[];
-    message: string;
-    code: string;
-  }>;
-}
+type RouteHandler = (req: Request, ctx?: unknown) => Promise<Response>;
 
-/**
- * Wraps an App Router handler with structured error handling.
- * - ValidationError (422): returns field-level Zod issues
- * - Generic Error: returns 500 with message (no stack in production)
- */
-export function withErrorHandler(
-  handler: (req: Request, ctx?: unknown) => Promise<Response>
-): (req: Request, ctx?: unknown) => Promise<Response> {
-  return async (req: Request, ctx?: unknown) => {
+export function withErrorHandler(handler: RouteHandler): RouteHandler {
+  return async (req: Request, ctx?: unknown): Promise<Response> => {
     try {
       return await handler(req, ctx);
     } catch (err) {
+      // ── Validation errors (422) ──────────────────────────────────────────
       if (err instanceof ValidationError) {
-        const body: ApiErrorBody = {
-          error: 'Validation failed',
-          statusCode: 422,
-          issues: err.issues.map((issue) => ({
-            path: issue.path as (string | number)[],
-            message: issue.message,
-            code: issue.code,
-          })),
-        };
-        return NextResponse.json(body, { status: 422 });
+        return Response.json(
+          {
+            error: 'Validation failed',
+            statusCode: 422,
+            issues: err.issues.map((issue) => ({
+              path: issue.path,
+              message: issue.message,
+              code: issue.code,
+            })),
+          },
+          { status: 422 }
+        );
       }
 
-      // Log unexpected errors server-side (replace with structured logger when available)
-      console.error('[API Error]', {
-        url: req.url,
-        method: req.method,
-        error: err instanceof Error ? err.message : String(err),
-        // Never log stack in production to avoid leaking internals
-        ...(process.env.NODE_ENV !== 'production' && err instanceof Error
-          ? { stack: err.stack }
-          : {}),
-      });
+      // ── Unexpected errors (500) ──────────────────────────────────────────
+      // Log the real error server-side; never leak internals to the client.
+      console.error('[withErrorHandler] Unhandled error:', err);
 
-      const body: ApiErrorBody = {
-        error:
-          process.env.NODE_ENV === 'production'
-            ? 'An unexpected error occurred'
-            : err instanceof Error
-            ? err.message
-            : String(err),
-        statusCode: 500,
-      };
-      return NextResponse.json(body, { status: 500 });
+      return Response.json(
+        {
+          error: 'An unexpected error occurred. Please try again.',
+          statusCode: 500,
+        },
+        { status: 500 }
+      );
     }
   };
 }

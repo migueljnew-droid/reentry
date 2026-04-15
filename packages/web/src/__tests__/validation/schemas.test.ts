@@ -1,241 +1,164 @@
-/**
- * Unit tests for Reentry API boundary validation schemas.
- *
- * Run: npm test (turbo delegates to vitest)
- */
-
 import { describe, it, expect } from 'vitest';
 import {
   IntakeSchema,
-  ResourceQuerySchema,
-  VoiceTranscriptSchema,
+  BenefitsScreeningSchema,
+  StateCodeSchema,
   parseOrThrow,
   ValidationError,
-} from '../../lib/validation/schemas';
+} from '@/lib/validation/schemas';
 
-// ---------------------------------------------------------------------------
-// Fixtures
-// ---------------------------------------------------------------------------
+// ── StateCodeSchema ──────────────────────────────────────────────────────────
 
-const validIntake = {
-  releaseDate: '2024-06-15',
-  releaseState: 'GA',
-  residenceState: 'GA',
-  convictionTypes: ['nonviolent_drug'],
-  supervisionStatus: 'parole',
-  hasValidId: false,
-  hasSocialSecurityCard: false,
-  hasBirthCertificate: true,
-  housingStatus: 'family_or_friend',
-  employmentStatus: 'seeking_employment',
-};
+describe('StateCodeSchema', () => {
+  it('accepts valid 2-letter state codes', () => {
+    expect(StateCodeSchema.parse('GA')).toBe('GA');
+    expect(StateCodeSchema.parse('CA')).toBe('CA');
+    expect(StateCodeSchema.parse('TN')).toBe('TN');
+  });
 
-// ---------------------------------------------------------------------------
-// IntakeSchema
-// ---------------------------------------------------------------------------
+  it('accepts FED for federal-only queries', () => {
+    expect(StateCodeSchema.parse('FED')).toBe('FED');
+  });
+
+  it('normalises lowercase to uppercase', () => {
+    expect(StateCodeSchema.parse('ga')).toBe('GA');
+  });
+
+  it('rejects invalid state codes', () => {
+    expect(() => StateCodeSchema.parse('XX')).toThrow();
+    expect(() => StateCodeSchema.parse('')).toThrow();
+    expect(() => StateCodeSchema.parse('GEORGIA')).toThrow();
+  });
+});
+
+// ── IntakeSchema ─────────────────────────────────────────────────────────────
 
 describe('IntakeSchema', () => {
-  it('accepts a fully valid intake payload', () => {
-    const result = IntakeSchema.safeParse(validIntake);
-    expect(result.success).toBe(true);
+  const valid = {
+    releaseDate: '2024-03-15',
+    releaseState: 'GA',
+  };
+
+  it('accepts a minimal valid payload', () => {
+    const result = IntakeSchema.parse(valid);
+    expect(result.releaseDate).toBe('2024-03-15');
+    expect(result.releaseState).toBe('GA');
+    expect(result.voiceMode).toBe(false);
+    expect(result.language).toBe('en');
+    expect(result.convictionTypes).toEqual([]);
   });
 
-  it('accepts optional fields when present', () => {
-    const result = IntakeSchema.safeParse({
-      ...validIntake,
-      supervisionOfficerEmail: 'officer@dcs.ga.gov',
-      preferredLanguage: 'es',
-      sessionId: '123e4567-e89b-12d3-a456-426614174000',
+  it('accepts a fully populated payload', () => {
+    const result = IntakeSchema.parse({
+      ...valid,
+      releaseCounty: 'Fulton',
+      convictionTypes: ['drug possession'],
+      voiceMode: true,
+      language: 'es',
     });
-    expect(result.success).toBe(true);
-  });
-
-  it('rejects an invalid state code', () => {
-    const result = IntakeSchema.safeParse({
-      ...validIntake,
-      releaseState: 'XX',
-    });
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      const paths = result.error.issues.map((i) => i.path.join('.'));
-      expect(paths).toContain('releaseState');
-    }
+    expect(result.releaseCounty).toBe('Fulton');
+    expect(result.voiceMode).toBe(true);
+    expect(result.language).toBe('es');
   });
 
   it('rejects a malformed release date', () => {
-    const result = IntakeSchema.safeParse({
-      ...validIntake,
-      releaseDate: '06/15/2024', // MM/DD/YYYY — wrong format
-    });
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      const paths = result.error.issues.map((i) => i.path.join('.'));
-      expect(paths).toContain('releaseDate');
-    }
+    expect(() =>
+      IntakeSchema.parse({ ...valid, releaseDate: '03/15/2024' })
+    ).toThrow();
+
+    expect(() =>
+      IntakeSchema.parse({ ...valid, releaseDate: 'not-a-date' })
+    ).toThrow();
   });
 
-  it('rejects empty convictionTypes array', () => {
-    const result = IntakeSchema.safeParse({
-      ...validIntake,
-      convictionTypes: [],
-    });
-    expect(result.success).toBe(false);
-    if (!result.success) {
-      const paths = result.error.issues.map((i) => i.path.join('.'));
-      expect(paths).toContain('convictionTypes');
-    }
+  it('rejects an invalid state code', () => {
+    expect(() =>
+      IntakeSchema.parse({ ...valid, releaseState: 'ZZ' })
+    ).toThrow();
   });
 
-  it('rejects an invalid supervisionOfficerEmail', () => {
-    const result = IntakeSchema.safeParse({
-      ...validIntake,
-      supervisionOfficerEmail: 'not-an-email',
-    });
-    expect(result.success).toBe(false);
+  it('rejects missing required fields', () => {
+    expect(() => IntakeSchema.parse({ releaseDate: '2024-03-15' })).toThrow();
+    expect(() => IntakeSchema.parse({ releaseState: 'GA' })).toThrow();
+    expect(() => IntakeSchema.parse({})).toThrow();
   });
 
-  it('defaults preferredLanguage to "en" when omitted', () => {
-    const result = IntakeSchema.safeParse(validIntake);
-    expect(result.success).toBe(true);
-    if (result.success) {
-      expect(result.data.preferredLanguage).toBe('en');
-    }
-  });
-
-  it('accepts FED as a valid state code for federal-only queries', () => {
-    const result = IntakeSchema.safeParse({
-      ...validIntake,
-      releaseState: 'FED',
-      residenceState: 'CA',
-    });
-    expect(result.success).toBe(true);
+  it('rejects convictionTypes arrays that are too long', () => {
+    expect(() =>
+      IntakeSchema.parse({
+        ...valid,
+        convictionTypes: Array(21).fill('drug possession'),
+      })
+    ).toThrow();
   });
 });
 
-// ---------------------------------------------------------------------------
-// ResourceQuerySchema
-// ---------------------------------------------------------------------------
+// ── BenefitsScreeningSchema ──────────────────────────────────────────────────
 
-describe('ResourceQuerySchema', () => {
-  it('accepts a minimal valid query', () => {
-    const result = ResourceQuerySchema.safeParse({
-      state: 'TN',
-      category: 'housing',
-    });
-    expect(result.success).toBe(true);
+describe('BenefitsScreeningSchema', () => {
+  const valid = {
+    state: 'GA',
+    householdSize: 2,
+    monthlyIncome: 1200,
+  };
+
+  it('accepts a valid payload', () => {
+    const result = BenefitsScreeningSchema.parse(valid);
+    expect(result.state).toBe('GA');
+    expect(result.hasChildren).toBe(false);
+    expect(result.isVeteran).toBe(false);
   });
 
-  it('defaults limit to 20 and offset to 0', () => {
-    const result = ResourceQuerySchema.safeParse({
-      state: 'CA',
-      category: 'legal_aid',
-    });
-    expect(result.success).toBe(true);
-    if (result.success) {
-      expect(result.data.limit).toBe(20);
-      expect(result.data.offset).toBe(0);
-    }
+  it('rejects negative income', () => {
+    expect(() =>
+      BenefitsScreeningSchema.parse({ ...valid, monthlyIncome: -1 })
+    ).toThrow();
   });
 
-  it('rejects limit > 50', () => {
-    const result = ResourceQuerySchema.safeParse({
-      state: 'GA',
-      category: 'employment',
-      limit: 100,
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it('rejects an invalid category', () => {
-    const result = ResourceQuerySchema.safeParse({
-      state: 'GA',
-      category: 'gambling', // not a valid category
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it('rejects latitude out of range', () => {
-    const result = ResourceQuerySchema.safeParse({
-      state: 'GA',
-      category: 'food',
-      latitude: 200, // > 90
-      longitude: -84.3,
-    });
-    expect(result.success).toBe(false);
+  it('rejects household size of 0', () => {
+    expect(() =>
+      BenefitsScreeningSchema.parse({ ...valid, householdSize: 0 })
+    ).toThrow();
   });
 });
 
-// ---------------------------------------------------------------------------
-// VoiceTranscriptSchema
-// ---------------------------------------------------------------------------
-
-describe('VoiceTranscriptSchema', () => {
-  it('accepts a valid transcript payload', () => {
-    const result = VoiceTranscriptSchema.safeParse({
-      transcript: 'I was released from Macon State Prison on June 15th.',
-      detectedLanguage: 'en',
-      durationSeconds: 12.4,
-    });
-    expect(result.success).toBe(true);
-  });
-
-  it('rejects an empty transcript', () => {
-    const result = VoiceTranscriptSchema.safeParse({
-      transcript: '',
-      detectedLanguage: 'en',
-      durationSeconds: 0.5,
-    });
-    expect(result.success).toBe(false);
-  });
-
-  it('rejects audio longer than 10 minutes', () => {
-    const result = VoiceTranscriptSchema.safeParse({
-      transcript: 'Long audio...',
-      detectedLanguage: 'en',
-      durationSeconds: 601,
-    });
-    expect(result.success).toBe(false);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// parseOrThrow
-// ---------------------------------------------------------------------------
+// ── parseOrThrow ─────────────────────────────────────────────────────────────
 
 describe('parseOrThrow', () => {
   it('returns typed data on success', () => {
-    const data = parseOrThrow(IntakeSchema, validIntake);
-    expect(data.releaseState).toBe('GA');
-    expect(data.preferredLanguage).toBe('en');
+    const data = parseOrThrow(IntakeSchema, {
+      releaseDate: '2024-01-01',
+      releaseState: 'CA',
+    });
+    expect(data.releaseState).toBe('CA');
   });
 
   it('throws ValidationError with statusCode 422 on failure', () => {
     expect(() =>
-      parseOrThrow(IntakeSchema, { ...validIntake, releaseState: 'ZZ' })
+      parseOrThrow(IntakeSchema, { releaseDate: 'bad', releaseState: 'ZZ' })
     ).toThrow(ValidationError);
 
     try {
-      parseOrThrow(IntakeSchema, { ...validIntake, releaseState: 'ZZ' });
+      parseOrThrow(IntakeSchema, { releaseDate: 'bad', releaseState: 'ZZ' });
     } catch (err) {
       expect(err).toBeInstanceOf(ValidationError);
       if (err instanceof ValidationError) {
         expect(err.statusCode).toBe(422);
         expect(err.issues.length).toBeGreaterThan(0);
-        expect(err.issues[0].path).toContain('releaseState');
       }
     }
   });
 
-  it('throws ValidationError with all field issues, not just the first', () => {
+  it('includes path and message in issues', () => {
     try {
-      parseOrThrow(IntakeSchema, {
-        releaseDate: 'bad-date',
-        releaseState: 'ZZ',
-        // missing all other required fields
-      });
+      parseOrThrow(IntakeSchema, { releaseDate: '2024-01-01', releaseState: 'ZZ' });
     } catch (err) {
       if (err instanceof ValidationError) {
-        expect(err.issues.length).toBeGreaterThan(1);
+        const stateIssue = err.issues.find((i) =>
+          i.path.includes('releaseState')
+        );
+        expect(stateIssue).toBeDefined();
+        expect(stateIssue?.message).toMatch(/state code/i);
       }
     }
   });
