@@ -16,6 +16,7 @@ const PUBLIC_PREFIXES = [
   '/api/deadlines',           // Deadline cascade compute (stateless)
   '/api/plans/ai-narrative',  // SOVEREIGN multi-agent narrative (stateless)
   '/api/po/me',               // Role probe for the login flow (401s when no session)
+  '/api/po/logout',           // Sign-out: must be reachable even with an expired session
 ];
 
 function addSecurityHeaders(response: NextResponse): NextResponse {
@@ -42,9 +43,34 @@ export async function middleware(request: NextRequest) {
     return addSecurityHeaders(NextResponse.next());
   }
 
-  // Skip auth for non-API routes (pages served by Next.js)
+  // Skip auth for non-API routes (pages served by Next.js).
+  // BUT: for protected page paths we still want to touch the Supabase
+  // session so the refresh-token rotates automatically before expiry.
+  // Without this, a PO whose access_token has lapsed (~1h) would see
+  // silent 401s on /api/po/* until they reload past the login flow.
   if (!pathname.startsWith('/api/')) {
-    return addSecurityHeaders(NextResponse.next());
+    const protectedPagePrefixes = ['/caseload', '/po/'];
+    const needsSessionTouch = protectedPagePrefixes.some((p) => pathname.startsWith(p));
+    if (!needsSessionTouch) {
+      return addSecurityHeaders(NextResponse.next());
+    }
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !anon) return addSecurityHeaders(NextResponse.next());
+    const touchResp = NextResponse.next({ request: { headers: request.headers } });
+    const touchSupabase = createServerClient(url, anon, {
+      cookies: {
+        getAll() { return request.cookies.getAll(); },
+        setAll(cookiesToSet: Array<{ name: string; value: string; options?: Record<string, unknown> }>) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            request.cookies.set(name, value);
+            touchResp.cookies.set(name, value, options);
+          });
+        },
+      },
+    });
+    await touchSupabase.auth.getUser().catch(() => { /* best-effort refresh */ });
+    return addSecurityHeaders(touchResp);
   }
 
   // CORS: allow production domain + localhost in dev

@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { LogoMark } from '@/components/brand/Logo';
 
 const NAV = [
@@ -13,7 +13,32 @@ const NAV = [
 
 export function SiteHeader() {
   const pathname = usePathname() || '';
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [signedInAs, setSignedInAs] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Probe /api/po/me — 200 if signed-in case_manager. Failures are silent.
+    let cancelled = false;
+    (async () => {
+      try {
+        const r = await fetch('/api/po/me', { cache: 'no-store', credentials: 'include' });
+        if (!r.ok) { if (!cancelled) setSignedInAs(null); return; }
+        const d = await r.json();
+        if (!cancelled) setSignedInAs(d?.fullName ?? null);
+      } catch {
+        if (!cancelled) setSignedInAs(null);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [pathname]);
+
+  async function handleSignOut() {
+    await fetch('/api/po/logout', { method: 'POST' }).catch(() => { /* ignore */ });
+    setSignedInAs(null);
+    router.push('/po/login');
+    router.refresh();
+  }
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
@@ -39,12 +64,27 @@ export function SiteHeader() {
               </Link>
             );
           })}
-          <Link
-            href="/intake"
-            className="ml-3 rounded-md bg-slate-900 px-4 py-1.5 text-sm font-semibold text-white hover:bg-primary-700 transition"
-          >
-            Start intake
-          </Link>
+          {signedInAs ? (
+            <div className="ml-3 flex items-center gap-2">
+              <span className="text-xs text-slate-500 hidden lg:inline">
+                Signed in as <span className="font-semibold text-slate-700">{signedInAs}</span>
+              </span>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="rounded-md bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-200 transition"
+              >
+                Sign out
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/intake"
+              className="ml-3 rounded-md bg-slate-900 px-4 py-1.5 text-sm font-semibold text-white hover:bg-primary-700 transition"
+            >
+              Start intake
+            </Link>
+          )}
         </nav>
 
         <button
@@ -86,13 +126,23 @@ export function SiteHeader() {
               {n.label}
             </Link>
           ))}
-          <Link
-            href="/intake"
-            onClick={() => setOpen(false)}
-            className="mt-2 block rounded-md bg-slate-900 px-3 py-2 text-center text-base font-semibold text-white"
-          >
-            Start intake
-          </Link>
+          {signedInAs ? (
+            <button
+              type="button"
+              onClick={() => { setOpen(false); void handleSignOut(); }}
+              className="mt-2 block w-full rounded-md bg-slate-100 px-3 py-2 text-center text-base font-medium text-slate-700"
+            >
+              Sign out ({signedInAs})
+            </button>
+          ) : (
+            <Link
+              href="/intake"
+              onClick={() => setOpen(false)}
+              className="mt-2 block rounded-md bg-slate-900 px-3 py-2 text-center text-base font-semibold text-white"
+            >
+              Start intake
+            </Link>
+          )}
         </nav>
       )}
     </header>
