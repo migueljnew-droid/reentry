@@ -221,3 +221,75 @@ npm run test
 ```
 
 See `CLAUDE.md` → *Accessibility Testing* for the full contract.
+
+---
+
+## Development Setup
+
+### Prerequisites
+- Node.js 20+
+- npm 10+
+
+### Install & Run
+```bash
+# Install all workspace dependencies
+npm ci
+
+# Start all packages in dev mode (Turborepo)
+npm run dev
+
+# Run tests across all packages
+npm run test
+
+# Type-check all packages
+npm run type-check
+```
+
+---
+
+## Docker
+
+A multi-stage `Dockerfile` is included for reproducible production builds.
+
+```bash
+# Build the production image
+docker build -t reentry-web:latest .
+
+# Run locally (set required env vars)
+docker run -p 3000:3000 \
+  -e DATABASE_URL=your_db_url \
+  reentry-web:latest
+```
+
+> **Security:** Never pass secrets via `docker build --build-arg`. Use runtime environment variables or a secrets manager (Fly.io secrets, Vercel env vars).
+
+---
+
+## CI/CD
+
+GitHub Actions runs on every push to `main`/`develop` and on all pull requests:
+
+| Step | Command |
+|------|---------|
+| Lint | `npm run lint` |
+| Type-check | `npm run type-check` |
+| Test | `npm run test` |
+| Build | `npm run build` |
+
+All steps must pass before merging. The pipeline uses Turborepo's remote cache to skip unchanged packages.
+
+---
+
+## Input Validation
+
+All API route handlers validate incoming data with Zod schemas before any business logic runs. See `packages/web/src/lib/validation/schemas.ts` and the pattern documented in `CLAUDE.md`.
+
+---
+
+## Security & Compliance
+
+- PII for justice-involved populations is handled per CJIS security guidelines
+- No secrets are baked into Docker images (multi-stage build + runtime env vars)
+- Row-level security enforced at the Supabase/PostgreSQL layer
+- All form inputs validated server-side with Zod (`parseOrThrow`)
+- Logs must be sanitized before emission — never log raw user PII
