@@ -1,10 +1,3 @@
-/**
- * Validation schemas for all REENTRY API routes.
- *
- * RULE (from CLAUDE.md): Every route handler MUST call parseOrThrow before
- * any business logic. Add new schemas here and export both the Zod schema
- * and its inferred TypeScript type.
- */
 import { z } from 'zod';
 
 // ---------------------------------------------------------------------------
@@ -31,8 +24,25 @@ export const StateCodeSchema = z
 export type StateCode = z.infer<typeof StateCodeSchema>;
 
 // ---------------------------------------------------------------------------
-// Intake — primary conversational intake form
+// Intake schema — primary user-facing form
 // ---------------------------------------------------------------------------
+
+export const ConvictionTypeSchema = z.enum([
+  'felony',
+  'misdemeanor',
+  'federal',
+  'juvenile',
+  'unknown',
+]);
+
+export const HousingStatusSchema = z.enum([
+  'homeless',
+  'shelter',
+  'transitional',
+  'family_friend',
+  'stable',
+  'unknown',
+]);
 
 export const IntakeSchema = z.object({
   /** ISO-8601 date string, e.g. "2024-03-15" */
@@ -43,91 +53,60 @@ export const IntakeSchema = z.object({
 
   releaseState: StateCodeSchema,
 
-  /** County or city within the release state (optional but improves resource matching) */
-  releaseCounty: z.string().max(100).optional(),
+  convictionType: ConvictionTypeSchema,
 
-  /** Broad conviction category — used for employment matching and benefit eligibility */
-  convictionType: z.enum([
-    'drug',
-    'property',
-    'violent',
-    'sex_offense',
-    'white_collar',
-    'dui',
-    'other',
-  ]),
+  housingStatus: HousingStatusSchema,
 
-  /** Whether the user is currently on parole or probation */
-  supervisionStatus: z.enum(['parole', 'probation', 'none', 'unknown']),
+  /** Optional — used for employment matching */
+  skills: z
+    .array(z.string().min(1).max(100))
+    .max(20, 'Maximum 20 skills')
+    .optional()
+    .default([]),
 
-  /** Self-reported housing situation on release */
-  housingSituation: z
-    .enum(['family', 'halfway_house', 'shelter', 'none', 'unknown'])
-    .optional(),
+  /** Optional — used for benefits screening */
+  hasChildren: z.boolean().optional(),
 
-  /** Whether the user has a valid government-issued ID */
-  hasId: z.boolean().optional(),
+  /** Optional — used for benefits screening */
+  hasDisability: z.boolean().optional(),
 
-  /** Preferred contact / delivery channel */
-  preferredChannel: z.enum(['web', 'sms', 'voice']).default('web'),
+  /** Optional — voice session ID for correlation */
+  sessionId: z.string().uuid().optional(),
 });
 
-export type Intake = z.infer<typeof IntakeSchema>;
+export type IntakeInput = z.infer<typeof IntakeSchema>;
 
 // ---------------------------------------------------------------------------
-// Resource query — used by /api/resources route
+// Benefits screening schema
 // ---------------------------------------------------------------------------
 
-export const ResourceQuerySchema = z.object({
-  state: StateCodeSchema,
-  county: z.string().max(100).optional(),
-  categories: z
-    .array(
-      z.enum([
-        'housing',
-        'food',
-        'employment',
-        'legal',
-        'healthcare',
-        'id_documents',
-        'benefits',
-        'transportation',
-        'mental_health',
-        'substance_use',
-      ])
-    )
-    .min(1, 'At least one category is required')
-    .max(10),
-  convictionType: z
-    .enum(['drug', 'property', 'violent', 'sex_offense', 'white_collar', 'dui', 'other'])
-    .optional(),
-  limit: z.coerce.number().int().min(1).max(100).default(20),
-  offset: z.coerce.number().int().min(0).default(0),
+export const BenefitsScreeningSchema = z.object({
+  releaseState: StateCodeSchema,
+  convictionType: ConvictionTypeSchema,
+  hasChildren: z.boolean(),
+  hasDisability: z.boolean(),
+  monthlyIncome: z
+    .number()
+    .nonnegative('Income cannot be negative')
+    .max(1_000_000, 'Income value out of range'),
+  householdSize: z
+    .number()
+    .int()
+    .min(1)
+    .max(20, 'Household size out of range'),
 });
 
-export type ResourceQuery = z.infer<typeof ResourceQuerySchema>;
+export type BenefitsScreeningInput = z.infer<typeof BenefitsScreeningSchema>;
 
 // ---------------------------------------------------------------------------
-// Action plan request
-// ---------------------------------------------------------------------------
-
-export const ActionPlanRequestSchema = z.object({
-  intakeId: z.string().uuid('Must be a valid UUID referencing a stored intake record'),
-  /** Override the AI model for cost routing — defaults to server-side decision */
-  modelHint: z.enum(['fast', 'balanced', 'thorough']).optional(),
-});
-
-export type ActionPlanRequest = z.infer<typeof ActionPlanRequestSchema>;
-
-// ---------------------------------------------------------------------------
-// parseOrThrow — the single entry point used by all route handlers
+// parseOrThrow — shared boundary validator
 // ---------------------------------------------------------------------------
 
 export class ValidationError extends Error {
   readonly statusCode = 422;
-  readonly issues: { path: (string | number)[]; message: string; code: string }[];
+  readonly issues: z.ZodIssue[];
 
-  constructor(issues: { path: (string | number)[]; message: string; code: string }[]) {
+  constructor(issues: z.ZodIssue[]) {
     super('Validation failed');
     this.name = 'ValidationError';
     this.issues = issues;
@@ -135,22 +114,17 @@ export class ValidationError extends Error {
 }
 
 /**
- * Parse `data` against `schema`. Returns the typed, coerced value on success.
- * Throws `ValidationError` (statusCode 422) on failure so `withErrorHandler`
- * can convert it to a structured JSON response.
+ * Parse `data` against `schema`. Returns the typed, validated value on
+ * success. Throws `ValidationError` (statusCode 422) on failure so that
+ * `withErrorHandler` can convert it to a structured JSON response.
  *
  * @example
- * const body = parseOrThrow(IntakeSchema, await req.json());
+ * const intake = parseOrThrow(IntakeSchema, await req.json());
  */
-export function parseOrThrow<T>(schema: z.ZodType<T>, data: unknown): T {
+export function parseOrThrow<T>(schema: z.ZodSchema<T>, data: unknown): T {
   const result = schema.safeParse(data);
-  if (result.success) return result.data;
-
-  throw new ValidationError(
-    result.error.issues.map((issue) => ({
-      path: issue.path as (string | number)[],
-      message: issue.message,
-      code: issue.code,
-    }))
-  );
+  if (!result.success) {
+    throw new ValidationError(result.error.issues);
+  }
+  return result.data;
 }

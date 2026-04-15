@@ -5,13 +5,9 @@ import path from 'path';
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: 'node', // API/schema tests run in node; switch to jsdom for component tests
-    globals: true,
+    environment: 'node',
+    globals: false,
     include: ['src/__tests__/**/*.test.ts', 'src/__tests__/**/*.test.tsx'],
-    coverage: {
-      reporter: ['text', 'json-summary'],
-      include: ['src/lib/**'],
-    },
   },
   resolve: {
     alias: {

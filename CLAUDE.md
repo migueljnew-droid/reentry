@@ -221,3 +221,28 @@ it('has no accessibility violations', async () => {
 Silent accessibility failures cause real harm. A screen reader user who cannot
 complete the intake form loses access to housing, benefits, and employment
 resources. Catch violations at $0 cost in CI — not post-deployment.
+
+## Example: Wired Intake Route
+
+Below is a complete, copy-paste-ready App Router route that satisfies both
+mandatory patterns (`parseOrThrow` + `withErrorHandler`):
+
+```ts
+// packages/web/src/app/api/intake/route.ts
+import { withErrorHandler } from '@/lib/api/error-handler';
+import { parseOrThrow, IntakeSchema } from '@/lib/validation/schemas';
+
+export const POST = withErrorHandler(async (req: Request) => {
+  const data = parseOrThrow(IntakeSchema, await req.json());
+  // data is fully typed: IntakeInput
+  // TODO: pass data to SOVEREIGN action-plan generator
+  return Response.json({ ok: true, data }, { status: 201 });
+});
+```
+
+### Checklist for every new API route
+- [ ] Handler is wrapped with `withErrorHandler`
+- [ ] First line of handler calls `parseOrThrow(YourSchema, await req.json())`
+- [ ] Schema is defined and exported from `packages/web/src/lib/validation/schemas.ts`
+- [ ] Tests exist in `packages/web/src/__tests__/validation/schemas.test.ts`
+- [ ] No raw `req.json()` result is used without parsing
